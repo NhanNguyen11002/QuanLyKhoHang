@@ -6,7 +6,11 @@ package org.example.quanlykhohang.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -14,6 +18,24 @@ import javafx.fxml.Initializable;
  * @author pc
  */
 public class SuaSanPhamController implements Initializable {
+    @FXML
+    private TextField  idPhoneTxt;
+    @FXML
+    private  TextField namePhoneTxt;
+    @FXML
+    private  TextField inputPriceTxt;
+    @FXML
+    private  TextField outputPriceTxt;
+    @FXML
+    private  ChoiceBox supplierChoiceBox;
+    @FXML
+    private  Button saveButton;
+    @FXML
+    private  Button cancelButton;
+    @FXML
+    private void onSaveButtonClick(){}
+    @FXML
+    private void onCancelButtonClick(){}
 
     /**
      * Initializes the controller class.

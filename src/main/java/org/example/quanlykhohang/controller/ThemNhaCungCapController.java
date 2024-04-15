@@ -32,7 +32,7 @@ public class ThemNhaCungCapController implements Initializable {
     @FXML
     private void onSaveButtonClick(){}
     @FXML
-    private void onCancelLabelClick(){}
+    private void onCancelButtonClick(){}
 
     /**
      * Initializes the controller class.

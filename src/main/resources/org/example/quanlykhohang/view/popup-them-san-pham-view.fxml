@@ -25,8 +25,8 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="275.0" mnemonicParsing="false" onAction="onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
-            <Button id="cancelButton" fx:id="cancelButton" layoutX="263.0" layoutY="275.0" mnemonicParsing="false" onAction="onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
+            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="275.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
+            <Button id="cancelButton" fx:id="cancelButton" layoutX="263.0" layoutY="275.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
             <Label layoutX="55.0" layoutY="170.0" text="Nhà cung cấp" />
             <ChoiceBox fx:id="supplierChoiceBox" layoutX="54.0" layoutY="196.0" prefWidth="150.0" />
          </children>

@@ -34,8 +34,8 @@
             </Label>
             <DatePicker id="startDatePicker" fx:id="startDatePicker" layoutX="269.0" layoutY="75.0" prefHeight="25.0" prefWidth="149.0" />
             <DatePicker id="endDatePicker" fx:id="endDatePicker" layoutX="268.0" layoutY="126.0" prefHeight="25.0" prefWidth="149.0" />
-            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="321.0" mnemonicParsing="false" onAction="onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
-            <Button id="cancelButton" fx:id="cancelButton" layoutX="260.0" layoutY="321.0" mnemonicParsing="false" onAction="onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
+            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="321.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
+            <Button id="cancelButton" fx:id="cancelButton" layoutX="260.0" layoutY="321.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
             <ChoiceBox id="genderChoiceBox" fx:id="genderChoiceBox" layoutX="54.0" layoutY="271.0" prefWidth="150.0" />
             <DatePicker fx:id="birthdayPicker" layoutX="54.0" layoutY="227.0" prefHeight="25.0" prefWidth="150.0" />
          </children>
