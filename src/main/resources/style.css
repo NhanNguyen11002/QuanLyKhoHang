@@ -4,3 +4,19 @@
 .bg-purple {
     -fx-background-color:  #B7B6E6;
 }
+.bg-teal {
+    -fx-background-color:  #A0E3F2 ;
+}
+.pane-btn:hover{
+    -fx-background-color:  #A0E3F2 ;
+    -fx-cursor: hand;
+}
+.logout-btn:hover{
+    -fx-background-color:  red ;
+    -fx-cursor: hand;
+}
+
+.top-pane {
+    -fx-border-color: gray;
+    -fx-margin: 10;
+}
