@@ -13,6 +13,7 @@ module org.example.quanlykhohang {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome;
     requires org.kordamp.ikonli.materialdesign2;
+    requires java.base;
     opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;
