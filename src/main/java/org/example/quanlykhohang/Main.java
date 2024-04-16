@@ -13,7 +13,7 @@ public class Main extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/admin-sidebar.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Quản lý kho hàng");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

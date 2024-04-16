@@ -21,7 +21,6 @@
                 <TableColumn prefWidth="235.34886169433594" text="Tên điện thoại" />
                   <TableColumn prefWidth="75.0" text="Giá  nhập" />
                   <TableColumn prefWidth="75.0" text="Giá xuất" />
-                  <TableColumn prefWidth="170.42059326171875" text="Nhà cung cấp" />
               </columns>
             </TableView>
          </children></AnchorPane>
