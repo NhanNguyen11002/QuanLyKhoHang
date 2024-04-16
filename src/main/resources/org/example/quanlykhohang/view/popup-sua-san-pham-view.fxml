@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="org.example.quanlykhohang.controller.SuaSanPhamController">
+    <children>
+      <Pane layoutX="60.0" layoutY="13.0" prefHeight="374.0" prefWidth="480.0" styleClass="bg-green" stylesheets="@../../../../style.css">
+         <children>
+            <TextField id="lastNameTxt" fx:id="idPhoneTxt" layoutX="55.0" layoutY="75.0" />
+            <TextField id="firstNameTxt" fx:id="namePhoneTxt" layoutX="55.0" layoutY="126.0" />
+            <TextField id="phoneTxt" fx:id="inputPriceTxt" layoutX="263.0" layoutY="75.0" />
+            <TextField id="addressTxt" fx:id="outputPriceTxt" layoutX="263.0" layoutY="126.0" />
+            <Label layoutX="59.0" layoutY="50.0" text="Mã điện thoại" />
+            <Label layoutX="58.0" layoutY="109.0" text="Tên điện thoại" />
+            <Label layoutX="268.0" layoutY="50.0" text="Giá nhập" />
+            <Label layoutX="272.0" layoutY="109.0" text="Giá xuất" />
+            <Label layoutX="171.0" layoutY="2.0" text="Sửa sản phẩm">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="275.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
+            <Button id="cancelButton" fx:id="cancelButton" layoutX="263.0" layoutY="275.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
+            <Label layoutX="55.0" layoutY="170.0" text="Nhà cung cấp" />
+            <ChoiceBox fx:id="supplierChoiceBox" layoutX="54.0" layoutY="196.0" prefWidth="150.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
