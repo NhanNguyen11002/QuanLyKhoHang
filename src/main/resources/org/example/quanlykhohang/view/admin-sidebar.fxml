@@ -46,17 +46,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2p-package-variant-closed" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="importFormPane" layoutY="213.0" onMouseClicked="#onImportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
-               <children>
-                  <Label layoutX="72.0" layoutY="7.0" text="Đơn nhập" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-import-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
-               </children>
-            </Pane>
-            <Pane fx:id="exportFormPane" layoutY="250.0" onMouseClicked="#onExportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="exportFormPane" layoutY="212.0" onMouseClicked="#onExportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Đơn xuất" textFill="WHITE">
                      <font>
@@ -66,7 +56,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-export-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="importTicketPane" layoutY="287.0" onMouseClicked="#onImportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="importTicketPane" layoutY="249.0" onMouseClicked="#onImportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Phiếu nhập" textFill="WHITE">
                      <font>
@@ -76,7 +66,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-download-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="exportTicketPane" layoutY="324.0" onMouseClicked="#onExportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="exportTicketPane" layoutY="286.0" onMouseClicked="#onExportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Phiếu xuất" textFill="WHITE">
                      <font>
@@ -86,7 +76,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-move-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="storagePane" layoutY="361.0" onMouseClicked="#onStoragePaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="storagePane" layoutY="323.0" onMouseClicked="#onStoragePaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Tồn kho" textFill="WHITE">
                      <font>
@@ -96,7 +86,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-cabinet" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="accountPane" layoutY="398.0" onMouseClicked="#onAccountPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="accountPane" layoutY="360.0" onMouseClicked="#onAccountPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Tài khoản" textFill="WHITE">
                      <font>
@@ -106,7 +96,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-cog-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
                </children>
             </Pane>
-            <Pane fx:id="statisticPane" layoutY="435.0" onMouseClicked="#onStatisticPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+            <Pane fx:id="statisticPane" layoutY="397.0" onMouseClicked="#onStatisticPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                <children>
                   <Label layoutX="72.0" layoutY="7.0" text="Thống kê" textFill="WHITE">
                      <font>
