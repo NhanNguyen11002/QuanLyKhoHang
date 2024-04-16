@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -50,7 +51,11 @@ public class ThemTaiKhoanController implements Initializable {
     @FXML
     private void onSaveButtonClick(){}
     @FXML
-    private void onCancelButtonClick(){}
+    private void onCancelButtonClick(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        // Đóng cửa sổ
+        stage.close();
+    }
 
     /**
      * Initializes the controller class.

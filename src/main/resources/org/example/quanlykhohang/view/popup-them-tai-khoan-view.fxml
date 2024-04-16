@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="org.example.quanlykhohang.controller.ThemTaiKhoanController">
+<AnchorPane id="AnchorPane" prefHeight="479.0" prefWidth="480.0" styleClass="bg-teal" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.ThemTaiKhoanController">
     <children>
-      <Pane layoutX="60.0" layoutY="3.0" prefHeight="392.0" prefWidth="480.0" styleClass="bg-green" stylesheets="@../../../../style.css">
+      <Pane layoutY="50.0" prefHeight="396.0" prefWidth="480.0" styleClass="bg-green">
          <children>
             <TextField id="lastNameTxt" fx:id="lastNameTxt" layoutX="55.0" layoutY="75.0" />
             <TextField id="firstNameTxt" fx:id="firstNameTxt" layoutX="55.0" layoutY="126.0" />
@@ -27,11 +27,6 @@
             <Label layoutX="269.0" layoutY="155.0" text="Số điện thoại" />
             <Label layoutX="273.0" layoutY="206.0" text="Địa chỉ" />
             <Label layoutX="276.0" layoutY="254.0" text="Email" />
-            <Label layoutX="171.0" layoutY="2.0" text="Thêm nhân viên">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
             <DatePicker id="startDatePicker" fx:id="startDatePicker" layoutX="269.0" layoutY="75.0" prefHeight="25.0" prefWidth="149.0" />
             <DatePicker id="endDatePicker" fx:id="endDatePicker" layoutX="268.0" layoutY="126.0" prefHeight="25.0" prefWidth="149.0" />
             <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="353.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
@@ -46,5 +41,10 @@
             <ChoiceBox fx:id="roleChoiceBox" layoutX="270.0" layoutY="321.0" prefWidth="150.0" />
          </children>
       </Pane>
+      <Label layoutX="142.0" layoutY="14.0" prefHeight="35.0" prefWidth="210.0" text="Thêm nhân viên">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
