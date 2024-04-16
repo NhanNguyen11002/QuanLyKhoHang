@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="org.example.quanlykhohang.controller.ThemTaiKhoanController">
+    <children>
+      <Pane layoutX="60.0" layoutY="3.0" prefHeight="392.0" prefWidth="480.0" styleClass="bg-green" stylesheets="@../../../../style.css">
+         <children>
+            <TextField id="lastNameTxt" fx:id="lastNameTxt" layoutX="55.0" layoutY="75.0" />
+            <TextField id="firstNameTxt" fx:id="firstNameTxt" layoutX="55.0" layoutY="126.0" />
+            <TextField id="phoneTxt" fx:id="phoneTxt" layoutX="268.0" layoutY="180.0" />
+            <TextField id="addressTxt" fx:id="addressTxt" layoutX="269.0" layoutY="227.0" />
+            <TextField id="emailTxt" fx:id="emailTxt" layoutX="270.0" layoutY="271.0" />
+            <Label layoutX="59.0" layoutY="50.0" text="Tên" />
+            <Label layoutX="61.0" layoutY="100.0" text="Họ" />
+            <Label layoutX="61.0" layoutY="155.0" text="Ngày sinh" />
+            <Label layoutX="54.0" layoutY="206.0" text="Giới tính" />
+            <Label layoutX="268.0" layoutY="50.0" text="Ngày bắt đầu" />
+            <Label layoutX="271.0" layoutY="100.0" text="Ngày kết thúc" />
+            <Label layoutX="269.0" layoutY="155.0" text="Số điện thoại" />
+            <Label layoutX="273.0" layoutY="206.0" text="Địa chỉ" />
+            <Label layoutX="276.0" layoutY="254.0" text="Email" />
+            <Label layoutX="171.0" layoutY="2.0" text="Thêm nhân viên">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <DatePicker id="startDatePicker" fx:id="startDatePicker" layoutX="269.0" layoutY="75.0" prefHeight="25.0" prefWidth="149.0" />
+            <DatePicker id="endDatePicker" fx:id="endDatePicker" layoutX="268.0" layoutY="126.0" prefHeight="25.0" prefWidth="149.0" />
+            <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="353.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
+            <Button id="cancelButton" fx:id="cancelButton" layoutX="261.0" layoutY="353.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
+            <ChoiceBox id="genderChoiceBox" fx:id="genderChoiceBox" layoutX="54.0" layoutY="227.0" prefWidth="150.0" />
+            <DatePicker fx:id="birthdayPicker" layoutX="54.0" layoutY="180.0" prefHeight="25.0" prefWidth="150.0" />
+            <Label layoutX="51.0" layoutY="254.0" text="Tên tài khoản" />
+            <Label layoutX="276.0" layoutY="304.0" text="Vai trò" />
+            <TextField fx:id="usernameTxt" layoutX="55.0" layoutY="271.0" />
+            <Label layoutX="53.0" layoutY="304.0" text="Mật khẩu" />
+            <TextField fx:id="passwordTxt" layoutX="55.0" layoutY="321.0" />
+            <ChoiceBox fx:id="roleChoiceBox" layoutX="270.0" layoutY="321.0" prefWidth="150.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

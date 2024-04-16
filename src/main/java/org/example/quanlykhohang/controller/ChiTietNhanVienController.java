@@ -18,7 +18,9 @@ import javafx.scene.control.TextField;
  *
  * @author pc
  */
-public class ThemNhanVienController implements Initializable {
+public class ChiTietNhanVienController implements Initializable {
+    @FXML
+    private TextField  idTxt;
     @FXML
     private TextField  lastNameTxt;
     @FXML
@@ -37,14 +39,6 @@ public class ThemNhanVienController implements Initializable {
     private  DatePicker birthdayPicker;
     @FXML
     private  ChoiceBox genderChoiceBox;
-    @FXML
-    private  Button saveButton;
-    @FXML
-    private  Button cancelButton;
-    @FXML
-    private void onSaveButtonClick(){}
-    @FXML
-    private void onCancelButtonClick(){}
 
     /**
      * Initializes the controller class.
