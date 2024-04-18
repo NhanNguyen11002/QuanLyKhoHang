@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -32,7 +33,11 @@ public class ThemNhaCungCapController implements Initializable {
     @FXML
     private void onSaveButtonClick(){}
     @FXML
-    private void onCancelButtonClick(){}
+    private void onCancelButtonClick(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        // Đóng cửa sổ
+        stage.close();
+    }
 
     /**
      * Initializes the controller class.

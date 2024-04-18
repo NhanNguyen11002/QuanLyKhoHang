@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<GridPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.TaoPhieuNhapController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="610.0" minWidth="10.0" prefWidth="610.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <AnchorPane maxWidth="610.0" prefHeight="800.0" prefWidth="610.0">
+         <children>
+            <TextField fx:id="quantityTxt" layoutX="273.0" layoutY="743.0" />
+            <Label layoutX="175.0" layoutY="744.0" text="Số lượng">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="100.0" prefWidth="590.0" styleClass="top-pane" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" prefHeight="50.0" prefWidth="400.0" />
+                  <Button fx:id="resetBtn" layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <FontIcon iconLiteral="mdi2r-reload" iconSize="40" wrappingWidth="43.410980224609375" />
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <TableView fx:id="productTable" layoutX="78.0" layoutY="254.0" prefHeight="580.0" prefWidth="590.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+              <columns>
+                <TableColumn prefWidth="93.19187927246094" text="Mã điện thoại" />
+                <TableColumn prefWidth="94.91792297363281" text="Tên điện thoại" />
+                  <TableColumn prefWidth="67.56184387207031" text="Giá nhập" />
+                  <TableColumn prefWidth="128.92483520507812" text="Số lượng trong kho" />
+              </columns>
+            </TableView>
+            <Button fx:id="addBtn" layoutX="489.0" layoutY="736.0" mnemonicParsing="false" onAction="#onAddBtnClick" text="Thêm">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="30" />
+               </graphic>
+            </Button>
+            <Button fx:id="backBtn" layoutX="16.0" layoutY="735.0" mnemonicParsing="false" onAction="#onBackBtnClick" text="Danh sách">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2k-keyboard-return" iconSize="30" />
+               </graphic>
+            </Button>
+            <Line endX="-1.0180816650390625" endY="-27.940185546875" layoutX="151.0" layoutY="755.0" startX="-1.0180816650390625" startY="30.585205078125" />
+         </children>
+      </AnchorPane>
+      <AnchorPane maxWidth="610.0" prefHeight="200.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
+         <children>
+            <ComboBox fx:id="providerCbbox" layoutX="164.0" layoutY="127.0" onAction="#onProviderCbboxAction" prefHeight="40.0" prefWidth="400.0" />
+            <Label layoutX="35.0" layoutY="22.0" text="Mã phiếu nhập">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="formIdTxt" disable="true" layoutX="164.0" layoutY="13.0" prefHeight="40.0" prefWidth="400.0" />
+            <Label layoutX="34.0" layoutY="78.0" text="Người tạo phiếu">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="creatorTxt" disable="true" layoutX="164.0" layoutY="70.0" prefHeight="40.0" prefWidth="400.0" />
+            <TableView fx:id="importFormTable" layoutX="79.0" layoutY="481.0" prefHeight="470.0" prefWidth="590.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+              <columns>
+                <TableColumn prefWidth="67.0" text="STT" />
+                <TableColumn prefWidth="91.0" text="Mã điện thoại" />
+                  <TableColumn prefWidth="102.0" text="Tên điện  thoại" />
+                  <TableColumn prefWidth="93.0" text="Giá nhập" />
+                  <TableColumn minWidth="0.0" prefWidth="121.0" text="Số lượng nhập" />
+              </columns>
+            </TableView>
+            <Label layoutX="34.0" layoutY="135.0" text="Nhà cung cấp">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="importExcelBtn" layoutX="90.0" layoutY="674.0" mnemonicParsing="false" onAction="#onImportExcelBtnClick" text="Nhập  excel">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2f-file-excel-box-outline" iconSize="30" />
+               </graphic>
+            </Button>
+            <Button fx:id="deleteProductBtn" layoutX="382.0" layoutY="674.0" mnemonicParsing="false" onAction="#onDeleteProductBtnClick" text="Xoá sản phẩm">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2t-trash-can-outline" iconSize="30" />
+               </graphic>
+            </Button>
+            <Button fx:id="editQuantityBtn" layoutX="233.0" layoutY="674.0" mnemonicParsing="false" onAction="#onEditQuantityBtnClick" text="Sửa số lượng">
+               <graphic>
+                  <FontIcon iconLiteral="mdi2p-pencil-box-outline" iconSize="30" />
+               </graphic>
+            </Button>
+            <Label layoutX="57.0" layoutY="743.0" prefHeight="23.0" prefWidth="80.0" text="Tổng tiền">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="importBtn" layoutX="457.0" layoutY="741.0" mnemonicParsing="false" onAction="#onImportBtnClick" text="Nhập ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Label fx:id="totalMoneyLabel" layoutX="170.0" layoutY="740.0" text="1,000,000đ" textFill="RED">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>

@@ -7,6 +7,9 @@ import javafx.scene.layout.*;
 import org.example.quanlykhohang.Main;
 
 import java.io.IOException;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AdminSidebarController {
     @FXML
@@ -15,8 +18,6 @@ public class AdminSidebarController {
     private Pane providerPane;
     @FXML
     private Pane customerPane;
-    @FXML
-    private Pane importFormPane;
     @FXML
     private Pane exportFormPane;
     @FXML
@@ -49,36 +50,117 @@ public class AdminSidebarController {
         }
     }
     @FXML
-    private void onCustomerPaneClick(){}
+    private void onCustomerPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/khach-hang-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(customerPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void onProviderPaneClick(){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/nha-cung-cap-view.fxml"));
-            AnchorPane item = fxmlLoader.load();
+            Pane item = fxmlLoader.load();
             borderPane.setRight(item);
             applyStyle(providerPane);
         } catch (IOException e){
             e.printStackTrace();
         }
     }
+
+
     @FXML
-    private void onImportFormPaneClick(){}
+    private void onExportFormPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/don-xuat-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(exportFormPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void onExportFormPaneClick(){}
+    private void onImportTicketPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-nhap-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(importTicketPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void onImportTicketPaneClick(){}
+    private void onExportTicketPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-xuat-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(storagePane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void onExportTicketPaneClick(){}
+    private void onStoragePaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/ton-kho-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(storagePane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void onStoragePaneClick(){}
+    private void onAccountPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/tai-khoan-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(accountPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
-    private void onAccountPaneClick(){}
-    @FXML
-    private void onStatisticPaneClick(){}
+    private void onStatisticPaneClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/thong-ke-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(statisticPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void onLogoutPaneClick(){}
     @FXML
-    private void onInformationPaneClick(){}
+    private void onInformationPaneClick(){
+        try {
+        // Load the FXML file
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-sua-thong-tin-ca-nhan-view.fxml"));
+            // Load the root pane
+            Pane item = fxmlLoader.load();
+
+            // Create a new scene with the loaded pane
+            Scene scene = new Scene(item);
+
+            // Create a new stage and set the scene
+            Stage stage = new Stage();
+            stage.setScene(scene);
+//            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show(); // Show the stage
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void initialize() {
         try {
@@ -97,8 +179,6 @@ public class AdminSidebarController {
         providerPane.getStyleClass().add("pane-btn");
         customerPane.getStyleClass().clear();
         customerPane.getStyleClass().add("pane-btn");
-        importFormPane.getStyleClass().clear();
-        importFormPane.getStyleClass().add("pane-btn");
         exportFormPane.getStyleClass().clear();
         exportFormPane.getStyleClass().add("pane-btn");
         importTicketPane.getStyleClass().clear();

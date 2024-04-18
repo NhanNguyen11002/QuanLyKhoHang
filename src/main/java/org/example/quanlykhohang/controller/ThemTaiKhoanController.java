@@ -11,15 +11,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author pc
  */
-public class ThemNhanVienController implements Initializable {
+public class ThemTaiKhoanController implements Initializable {
     @FXML
     private TextField  lastNameTxt;
     @FXML
@@ -39,15 +39,23 @@ public class ThemNhanVienController implements Initializable {
     @FXML
     private  ChoiceBox genderChoiceBox;
     @FXML
+    private  TextField usernameTxt;
+    @FXML
+    private  TextField passwordTxt;
+    @FXML
+    private  ChoiceBox roleChoiceBox;
+    @FXML
     private  Button saveButton;
     @FXML
     private  Button cancelButton;
     @FXML
-    private Label forgotPasswordLabel;
-    @FXML
     private void onSaveButtonClick(){}
     @FXML
-    private void onCancelButtonClick(){}
+    private void onCancelButtonClick(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        // Đóng cửa sổ
+        stage.close();
+    }
 
     /**
      * Initializes the controller class.

@@ -2,6 +2,7 @@ package org.example.quanlykhohang.controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.example.quanlykhohang.Main;
 
-public class SanPhamController {
+public class TaiKhoanController {
     @FXML
     private Button addBtn;
     @FXML
@@ -37,12 +38,12 @@ public class SanPhamController {
     private TextField searchTxt;
 
     @FXML
-    private TableView productTable;
+    private TableView accountTable;
     @FXML
     private void onAddBtnClick(){
         try {
         // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-them-san-pham-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-them-tai-khoan-view.fxml"));
             // Load the root pane
             Pane item = fxmlLoader.load();
 
@@ -62,7 +63,7 @@ public class SanPhamController {
     private void onEditBtnClick(){
         try {
         // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-sua-san-pham-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-sua-tai-khoan-view.fxml"));
             // Load the root pane
             Pane item = fxmlLoader.load();
 
@@ -84,7 +85,7 @@ public class SanPhamController {
     private void onDetailBtnClick(){
         try {
         // Load the FXML file
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-chi-tiet-san-pham-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-chi-tiet-tai-khoan-view.fxml"));
             // Load the root pane
             Pane item = fxmlLoader.load();
 
