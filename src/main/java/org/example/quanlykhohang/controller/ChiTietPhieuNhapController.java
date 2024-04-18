@@ -9,40 +9,31 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
  *
  * @author pc
  */
-public class ThemSanPhamController implements Initializable {
+public class ChiTietPhieuNhapController implements Initializable {
     @FXML
-    private TextField  idPhoneTxt;
+    private Label  maPhieuLbl;
     @FXML
-    private  TextField namePhoneTxt;
+    private Label  nhaCungCapLbl;
     @FXML
-    private  TextField inputPriceTxt;
+    private Label  thoiGianTaoLbl;
     @FXML
-    private  TextField outputPriceTxt;
+    private Label  nguoiTaoLbl;
     @FXML
-    private  ChoiceBox supplierChoiceBox;
+    private Label  tongTienLbl;
     @FXML
-    private  Button saveButton;
+    private Button  xuatPDFBtn;
     @FXML
-    private  Button cancelButton;
+    private void onXuatPDFBtnClick(){}
     @FXML
-    private void onSaveButtonClick(){
-        
-    }
-    @FXML
-    private void onCancelButtonClick(){
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        // Đóng cửa sổ
-        stage.close();
-    }
+    private TableView  ctPhieuNhapTbl;
 
     /**
      * Initializes the controller class.

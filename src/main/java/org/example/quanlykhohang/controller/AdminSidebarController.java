@@ -7,6 +7,9 @@ import javafx.scene.layout.*;
 import org.example.quanlykhohang.Main;
 
 import java.io.IOException;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AdminSidebarController {
     @FXML
@@ -139,7 +142,25 @@ public class AdminSidebarController {
     @FXML
     private void onLogoutPaneClick(){}
     @FXML
-    private void onInformationPaneClick(){}
+    private void onInformationPaneClick(){
+        try {
+        // Load the FXML file
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-sua-thong-tin-ca-nhan-view.fxml"));
+            // Load the root pane
+            Pane item = fxmlLoader.load();
+
+            // Create a new scene with the loaded pane
+            Scene scene = new Scene(item);
+
+            // Create a new stage and set the scene
+            Stage stage = new Stage();
+            stage.setScene(scene);
+//            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show(); // Show the stage
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void initialize() {
         try {

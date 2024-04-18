@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.NhaCungCapController">
+<BorderPane prefHeight="800.0" prefWidth="1220.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.NhaCungCapController">
    <center>
       <AnchorPane prefHeight="700.0" prefWidth="1220.0">
          <children>

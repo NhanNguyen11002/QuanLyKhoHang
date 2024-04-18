@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.SuaNhaCungCapController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="480.0" styleClass="bg-teal" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.SuaNhaCungCapController">
     <children>
-      <Pane layoutX="60.0" layoutY="13.0" prefHeight="374.0" prefWidth="480.0" styleClass="bg-green" stylesheets="@../../../../style.css">
+      <Pane layoutY="50.0" prefHeight="316.0" prefWidth="480.0" styleClass="bg-green">
          <children>
             <TextField id="lastNameTxt" fx:id="nameSupplierTxt" layoutX="55.0" layoutY="126.0" />
             <TextField id="firstNameTxt" fx:id="phoneTxt" layoutX="55.0" layoutY="187.0" />
@@ -18,11 +18,6 @@
             <Label layoutX="55.0" layoutY="109.0" text="Tên nhà cung cấp" />
             <Label layoutX="59.0" layoutY="164.0" text="Số điện thoại" />
             <Label layoutX="272.0" layoutY="109.0" text="Email" />
-            <Label layoutX="171.0" layoutY="2.0" text="Sửa nhà cung cấp">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-            </Label>
             <Button id="saveButton" fx:id="saveButton" layoutX="129.0" layoutY="244.0" mnemonicParsing="false" onAction="#onSaveButtonClick" prefHeight="25.0" prefWidth="85.0" text="Lưu" />
             <Button id="cancelButton" fx:id="cancelButton" layoutX="244.0" layoutY="244.0" mnemonicParsing="false" onAction="#onCancelButtonClick" prefHeight="25.0" prefWidth="85.0" text="Hủy" />
             <Label layoutX="272.0" layoutY="50.0" text="Địa chỉ" />
@@ -30,5 +25,10 @@
             <TextField fx:id="idSupplierTxt" editable="false" layoutX="55.0" layoutY="75.0" />
          </children>
       </Pane>
+      <Label layoutX="141.0" layoutY="14.0" text="Sửa nhà cung cấp">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

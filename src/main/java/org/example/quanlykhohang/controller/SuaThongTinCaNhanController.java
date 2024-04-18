@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -19,9 +18,7 @@ import javafx.scene.control.TextField;
  *
  * @author pc
  */
-public class SuaNhanVienController implements Initializable {
-    @FXML
-    private TextField  idTxt;
+public class SuaThongTinCaNhanController implements Initializable {
     @FXML
     private TextField  lastNameTxt;
     @FXML
@@ -33,23 +30,23 @@ public class SuaNhanVienController implements Initializable {
     @FXML
     private  TextField emailTxt;
     @FXML
-    private  DatePicker startDatePicker;
-    @FXML
-    private  DatePicker endDatePicker;
-    @FXML
     private  DatePicker birthdayPicker;
     @FXML
     private  ChoiceBox genderChoiceBox;
     @FXML
+    private  TextField currentPassTxt;
+    @FXML
+    private  TextField newPassTxt;
+    @FXML
+    private  TextField againNewPassTxt;
+    @FXML
     private  Button saveButton;
     @FXML
-    private  Button cancelButton;
-    @FXML
-    private Label forgotPasswordLabel;
+    private  Button saveButton2;
     @FXML
     private void onSaveButtonClick(){}
     @FXML
-    private void onCancelButtonClick(){}
+    private void onSaveButton2Click(){}
 
     /**
      * Initializes the controller class.

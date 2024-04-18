@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -18,25 +19,39 @@ import javafx.stage.Stage;
  *
  * @author pc
  */
-public class ThemSanPhamController implements Initializable {
+public class SuaTaiKhoanController implements Initializable {
     @FXML
-    private TextField  idPhoneTxt;
+    private TextField  idTxt;
     @FXML
-    private  TextField namePhoneTxt;
+    private TextField  lastNameTxt;
     @FXML
-    private  TextField inputPriceTxt;
+    private  TextField firstNameTxt;
     @FXML
-    private  TextField outputPriceTxt;
+    private  TextField phoneTxt;
     @FXML
-    private  ChoiceBox supplierChoiceBox;
+    private  TextField addressTxt;
+    @FXML
+    private  TextField emailTxt;
+    @FXML
+    private  DatePicker startDatePicker;
+    @FXML
+    private  DatePicker endDatePicker;
+    @FXML
+    private  DatePicker birthdayPicker;
+    @FXML
+    private  ChoiceBox genderChoiceBox;
+    @FXML
+    private  TextField usernameTxt;
+    @FXML
+    private  TextField statusTxt;
+    @FXML
+    private  ChoiceBox roleChoiceBox;
     @FXML
     private  Button saveButton;
     @FXML
     private  Button cancelButton;
     @FXML
-    private void onSaveButtonClick(){
-        
-    }
+    private void onSaveButtonClick(){}
     @FXML
     private void onCancelButtonClick(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
