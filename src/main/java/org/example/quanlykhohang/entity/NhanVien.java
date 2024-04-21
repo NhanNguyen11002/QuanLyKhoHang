@@ -31,10 +31,6 @@ public class NhanVien {
     private String diaChi;
     @Column(name="email")
     private String email;
-
-    @OneToOne(mappedBy = "nhanVien")
-    @JoinColumn(name = "maTaiKhoan")
-    private TaiKhoan taiKhoan;
     @OneToMany(mappedBy = "nhanVien")
     private List<DonXuatHang> donXuatHangList;
 

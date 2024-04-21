@@ -17,7 +17,67 @@ public class TaiKhoan {
     private Role vaiTro;
     @Column(name="dangHoatDong")
     private boolean dangHoatDong;
-    @OneToOne(mappedBy = "taiKhoan")
-    @JoinColumn(name = "maNhanVien")
+    @OneToOne
+    @JoinColumn(name = "maNhanVien", nullable = false)
     private NhanVien nhanVien;
+
+    public TaiKhoan() {
+    }
+
+    public TaiKhoan(Integer id, String username, String password, Role vaiTro, boolean dangHoatDong, NhanVien nhanVien) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.vaiTro = vaiTro;
+        this.dangHoatDong = dangHoatDong;
+        this.nhanVien = nhanVien;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getVaiTro() {
+        return vaiTro;
+    }
+
+    public void setVaiTro(Role vaiTro) {
+        this.vaiTro = vaiTro;
+    }
+
+    public boolean isDangHoatDong() {
+        return dangHoatDong;
+    }
+
+    public void setDangHoatDong(boolean dangHoatDong) {
+        this.dangHoatDong = dangHoatDong;
+    }
+
+    public NhanVien getNhanVien() {
+        return nhanVien;
+    }
+
+    public void setNhanVien(NhanVien nhanVien) {
+        this.nhanVien = nhanVien;
+    }
 }
