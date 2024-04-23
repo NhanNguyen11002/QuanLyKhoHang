@@ -2,17 +2,22 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="quanlykhohang">
-            <class>org.example.quanlykhohang.entity.TaiKhoan</class>
-            <class>org.example.quanlykhohang.entity.NhanVien</class>
-            <class>org.example.quanlykhohang.entity.NhaCungCap</class>
-            <class>org.example.quanlykhohang.entity.PhieuNhao</class>
-
+        <class>org.example.quanlykhohang.entity.TaiKhoan</class>
+        <class>org.example.quanlykhohang.entity.NhanVien</class>
+        <class>org.example.quanlykhohang.entity.NhaCungCap</class>
+        <class>org.example.quanlykhohang.entity.PhieuNhap</class>
+        <class>org.example.quanlykhohang.entity.ChiTietDonXuatHang</class>
+        <class>org.example.quanlykhohang.entity.ChiTietPhieuNhap</class>
+        <class>org.example.quanlykhohang.entity.DienThoai</class>
+        <class>org.example.quanlykhohang.entity.DonXuatHang</class>
+        <class>org.example.quanlykhohang.entity.PhieuXuat</class>
+        <class>org.example.quanlykhohang.entity.KhachHang</class>
 <!--        <class>org.example.quanlykhohang.dao</class>-->
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quanlykhohang" />
             <property name="javax.persistence.jdbc.user" value="root" />
-            <property name="javax.persistence.jdbc.password" value="123456" />
+            <property name="javax.persistence.jdbc.password" value="Abc@1234" />
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
         </properties>
