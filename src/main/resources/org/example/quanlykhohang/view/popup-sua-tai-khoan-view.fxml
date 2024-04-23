@@ -37,10 +37,10 @@
             <Label layoutX="276.0" layoutY="304.0" text="Vai trò" />
             <TextField fx:id="usernameTxt" layoutX="55.0" layoutY="271.0" />
             <Label layoutX="53.0" layoutY="304.0" text="Trạng thái" />
-            <TextField fx:id="statusTxt" layoutX="55.0" layoutY="321.0" />
             <ChoiceBox fx:id="roleChoiceBox" layoutX="270.0" layoutY="321.0" prefWidth="150.0" />
-            <TextField fx:id="idTxt" layoutX="55.0" layoutY="55.0" />
+            <TextField fx:id="idTxt" editable="false" layoutX="55.0" layoutY="55.0" />
             <Label layoutX="53.0" layoutY="33.0" text="ID" />
+            <ChoiceBox fx:id="statusChoiceBox" layoutX="54.0" layoutY="321.0" prefWidth="150.0" />
          </children>
       </Pane>
       <Label layoutX="157.0" layoutY="14.0" text="Sửa tài khoản ">

@@ -29,7 +29,22 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         EntityManager em = JpaUtils.getEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(taiKhoan);
+            // Tìm đối tượng TaiKhoan dựa trên maNhanVien
+            TaiKhoan existingTaiKhoan = em.createQuery("SELECT t FROM TaiKhoan t WHERE t.nhanVien.maNhanVien = :maNhanVien", TaiKhoan.class)
+                                        .setParameter("maNhanVien", taiKhoan.getNhanVien().getMaNhanVien())
+                                        .getSingleResult();
+            if (existingTaiKhoan != null) {
+                // Cập nhật thuộc tính của đối tượng existingTaiKhoan từ đối tượng taiKhoan
+                existingTaiKhoan.setUsername(taiKhoan.getUsername());
+//                existingTaiKhoan.setPassword(taiKhoan.getPassword());
+                existingTaiKhoan.setVaiTro(taiKhoan.getVaiTro());
+                existingTaiKhoan.setDangHoatDong(taiKhoan.isDangHoatDong());
+
+                // Merge đối tượng cập nhật vào persistence context
+                em.merge(existingTaiKhoan);
+            } else {
+                throw new EntityNotFoundException("TaiKhoan with maNhanVien " + taiKhoan.getNhanVien().getMaNhanVien() + " not found");
+            }
             em.getTransaction().commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,6 +78,7 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         em.close();
         return entity;
     }
+    
 
     @Override
     public long count() {
@@ -76,9 +92,9 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
     @Override
     public List<TaiKhoan> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM TaiKhoan u order by u.id";
-        TypedQuery<TaiKhoan> query = em.createNamedQuery(japl, TaiKhoan.class);
-        em.close();
+//        String japl = "SELECT * FROM TaiKhoan order by id";
+	TypedQuery<TaiKhoan> query = em.createNamedQuery("TaiKhoan.findAll", TaiKhoan.class);
+//        em.close();
         return query.getResultList();
     }
 
@@ -108,6 +124,21 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
             em.close();
         }
         return result;
+    }
+    public TaiKhoan findByMaNhanVien(Integer maNhanVien){
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            // Query to find TaiKhoan based on maNhanVien
+            TaiKhoan taiKhoan = em.createQuery("SELECT t FROM TaiKhoan t WHERE t.nhanVien.maNhanVien = :maNhanVien", TaiKhoan.class)
+                                    .setParameter("maNhanVien", maNhanVien)
+                                    .getSingleResult();
+            return taiKhoan;
+        } catch (NoResultException e) {
+            // Handle case where no TaiKhoan is found with the given maNhanVien
+            return null;
+        } finally {
+            em.close();
+        }
     }
     public void testDao(){
         EntityManager em = JpaUtils.getEntityManager();

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name="TaiKhoan")
+@NamedQuery(name = "TaiKhoan.findAll", query = "SELECT u FROM TaiKhoan u join NhanVien t on u.nhanVien.maNhanVien = t.maNhanVien order by u.id")
 public class TaiKhoan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,13 +14,14 @@ public class TaiKhoan {
     private String username;
     @Column(name="password")
     private String password;
+    @Enumerated(EnumType.STRING) // Định nghĩa cách ánh xạ enum
     @Column(name="vaiTro")
     private Role vaiTro;
     @Column(name="dangHoatDong")
     private boolean dangHoatDong;
     @OneToOne
     @JoinColumn(name = "maNhanVien", nullable = false)
-    private NhanVien nhanVien;
+    private NhanVien nhanVien;    
 
     public TaiKhoan() {
     }
@@ -33,6 +35,24 @@ public class TaiKhoan {
         this.nhanVien = nhanVien;
     }
 
+    public TaiKhoan(String username, String password, Role vaiTro, boolean dangHoatDong, NhanVien nhanVien) {
+        this.username = username;
+        this.password = password;
+        this.vaiTro = vaiTro;
+        this.dangHoatDong = dangHoatDong;
+        this.nhanVien = nhanVien;
+    }
+
+    public TaiKhoan(String username, Role vaiTro, boolean dangHoatDong, NhanVien nhanVien) {
+//        this.id = id;
+        this.username = username;
+        this.vaiTro = vaiTro;
+        this.dangHoatDong = dangHoatDong;
+        this.nhanVien = nhanVien;
+    }
+
+    
+    
     public Integer getId() {
         return id;
     }
