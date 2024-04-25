@@ -1,5 +1,7 @@
 package org.example.quanlykhohang.entity;
 import jakarta.persistence.*;
+import org.example.quanlykhohang.controller.NhaCungCapController;
+
 import java.sql.Timestamp;
 
 @Entity
