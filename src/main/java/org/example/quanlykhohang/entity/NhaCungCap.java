@@ -1,6 +1,9 @@
 package org.example.quanlykhohang.entity;
 
 import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
 @Table(name="NhaCungCap")
 public class NhaCungCap {
@@ -16,12 +19,20 @@ public class NhaCungCap {
     private String diaChi;
     @Column(name="email")
     private String email;
-
+    @OneToMany(cascade = {CascadeType.MERGE},fetch= FetchType.EAGER, mappedBy = "nhaCungCap")
+    private List<PhieuNhap> phieuNhapList;
     public NhaCungCap() {
     }
 
     public NhaCungCap(Integer maNhaCungCap, String tenNhaCungCap, String sdt, String diaChi, String email) {
         this.maNhaCungCap = maNhaCungCap;
+        this.tenNhaCungCap = tenNhaCungCap;
+        this.sdt = sdt;
+        this.diaChi = diaChi;
+        this.email = email;
+    }
+
+    public NhaCungCap(String tenNhaCungCap, String sdt, String diaChi, String email) {
         this.tenNhaCungCap = tenNhaCungCap;
         this.sdt = sdt;
         this.diaChi = diaChi;
@@ -66,5 +77,13 @@ public class NhaCungCap {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<PhieuNhap> getPhieuNhapList() {
+        return phieuNhapList;
+    }
+
+    public void setPhieuNhapList(List<PhieuNhap> phieuNhapList) {
+        this.phieuNhapList = phieuNhapList;
     }
 }

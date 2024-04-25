@@ -12,7 +12,6 @@
         <class>org.example.quanlykhohang.entity.DonXuatHang</class>
         <class>org.example.quanlykhohang.entity.PhieuXuat</class>
         <class>org.example.quanlykhohang.entity.KhachHang</class>
-<!--        <class>org.example.quanlykhohang.dao</class>-->
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/quanlykhohang" />
