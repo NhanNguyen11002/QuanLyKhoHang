@@ -14,6 +14,7 @@ import org.example.quanlykhohang.util.JpaUtils;
  *
  * @author pc
  */
+
 public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
 
     @Override
@@ -84,21 +85,60 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
     @Override
     public List<NhaCungCap> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM NhaCungCap u order by u.maNhaCungCap";
-        TypedQuery<NhaCungCap> query = em.createQuery(japl, NhaCungCap.class);
-        em.close();
-        return query.getResultList();    
+        try{
+            String japl = "SELECT u FROM NhaCungCap u order by u.maNhaCungCap";
+            TypedQuery<NhaCungCap> query = em.createQuery(japl, NhaCungCap.class);
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public boolean existsById(Integer maNhaCungCap) {
         EntityManager em = JpaUtils.getEntityManager();
-        String jql = "SELECT COUNT(u.maNhaCungCap) FROM NhaCungCap u WHERE u.maNhaCungCap = :maNhaCungCap";
-        TypedQuery<Long> query = em.createQuery(jql, Long.class);
-        query.setParameter("maNhaCungCap", maNhaCungCap);
-        Long count = query.getSingleResult();
-        em.close();
-        return count == 1;    
+        try{
+
+            String jql = "SELECT COUNT(u.maNhaCungCap) FROM NhaCungCap u WHERE u.maNhaCungCap = :maNhaCungCap";
+            TypedQuery<Long> query = em.createQuery(jql, Long.class);
+            query.setParameter("maNhaCungCap", maNhaCungCap);
+            Long count = query.getSingleResult();
+            em.close();
+            return count == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+    public List<NhaCungCap> findByKeyword(String keyword) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String japl = "SELECT u FROM NhaCungCap u WHERE " +
+                    "u.tenNhaCungCap LIKE :keyword " +
+                    "OR u.sdt LIKE :keyword " +
+                    "OR u.diaChi LIKE :keyword " +
+                    "OR u.email LIKE :keyword " +
+                    "ORDER BY CASE " +
+                    "WHEN u.tenNhaCungCap LIKE :keyword THEN 1 " +
+                    "WHEN u.sdt LIKE :keyword THEN 2 " +
+                    "WHEN u.diaChi LIKE :keyword THEN 3 " +
+                    "ELSE 4 " +
+                    "END";
+            TypedQuery<NhaCungCap> query = em.createQuery(japl, NhaCungCap.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+
+
     }
     
 }
