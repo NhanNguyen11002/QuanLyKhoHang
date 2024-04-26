@@ -63,7 +63,10 @@ public class TaiKhoanController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-them-tai-khoan-view.fxml"));
             // Load the root pane
             Pane item = fxmlLoader.load();
-
+            // Get the controller of the loaded FXML file
+            ThemTaiKhoanController controller = fxmlLoader.getController();
+            // Gửi dữ liệu từ table sang controller ThemTaiKhoanController
+            controller.setTaiKhoanController(this); // Truyền đối tượng TaiKhoanController vào ThemTaiKhoanController
             // Create a new scene with the loaded pane
             Scene scene = new Scene(item);
 
@@ -182,8 +185,15 @@ public class TaiKhoanController {
     @FXML
     private void onExportExcelBtnClick(){}
     @FXML
-    private void onResetBtnClick(){
+    public void onResetBtnClick(){
         accountTable.setItems(getAllTaiKhoanNhanVien());
+    }
+    public void updateTable(){
+        accountTable.setItems(getAllTaiKhoanNhanVien());
+    }
+
+    public void setAccountTable(ObservableList<TaiKhoanNhanVienDTO> data) {
+        accountTable.setItems(data);
     }
     @FXML
     private void onFilterCbboxAction(){}
