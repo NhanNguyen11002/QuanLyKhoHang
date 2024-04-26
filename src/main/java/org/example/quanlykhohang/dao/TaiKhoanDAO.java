@@ -3,6 +3,7 @@ package org.example.quanlykhohang.dao;
 import jakarta.persistence.*;
 import org.example.quanlykhohang.entity.TaiKhoan;
 import org.example.quanlykhohang.util.JpaUtils;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 
@@ -110,20 +111,25 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
     }
     public TaiKhoan checkLogin(String username, String password) {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM TaiKhoan u WHERE u.username = :Username AND u.password = :Password";
-        TypedQuery<TaiKhoan> query = em.createQuery(japl, TaiKhoan.class);
-        query.setParameter("Username", username);
-        query.setParameter("Password", password);
-        TaiKhoan result = null;
+        String jql = "SELECT u FROM TaiKhoan u WHERE u.username = :username";
+        TypedQuery<TaiKhoan> query = em.createQuery(jql, TaiKhoan.class);
+        query.setParameter("username", username);
+        TaiKhoan taiKhoan = null;
         try {
-            result = query.getSingleResult();
+            taiKhoan = query.getSingleResult();
+            // Kiểm tra mật khẩu
+            if (BCrypt.checkpw(password, taiKhoan.getPassword())) {
+                // Mật khẩu đúng
+                return taiKhoan;
+            } else {
+                // Mật khẩu không đúng
+                return null;
+            }
         } catch (NoResultException e) {
-            e.printStackTrace();
-            throw e;
+            return  null;
         } finally {
             em.close();
         }
-        return result;
     }
     public TaiKhoan findByMaNhanVien(Integer maNhanVien){
         EntityManager em = JpaUtils.getEntityManager();

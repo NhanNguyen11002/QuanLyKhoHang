@@ -3,24 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package org.example.quanlykhohang.controller;
-
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.quanlykhohang.dao.NhanVienDAO;
 import org.example.quanlykhohang.dao.TaiKhoanDAO;
-import org.example.quanlykhohang.entity.Gender;
-import org.example.quanlykhohang.entity.NhanVien;
-import org.example.quanlykhohang.entity.Role;
-import org.example.quanlykhohang.entity.TaiKhoan;
+import org.example.quanlykhohang.entity.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * FXML Controller class
@@ -40,8 +38,8 @@ public class ThemTaiKhoanController implements Initializable {
     private  TextField emailTxt;
     @FXML
     private  DatePicker startDatePicker;
-    @FXML
-    private  DatePicker endDatePicker;
+//    @FXML
+//    private  DatePicker endDatePicker;
     @FXML
     private  DatePicker birthdayPicker;
     @FXML
@@ -49,31 +47,43 @@ public class ThemTaiKhoanController implements Initializable {
     @FXML
     private  TextField usernameTxt;
     @FXML
-    private  TextField passwordTxt;
+    private  PasswordField passwordTxt;
     @FXML
     private  ChoiceBox roleChoiceBox;
     @FXML
     private  Button saveButton;
     @FXML
     private  Button cancelButton;
+
+    private ObservableList<TaiKhoanNhanVienDTO> data;
+
+    public void setData(ObservableList<TaiKhoanNhanVienDTO> data) {
+        this.data = data;
+    }
+    private TaiKhoanController taiKhoanController;
+    // Tạo setter để thiết lập đối tượng TaiKhoanController
+    public void setTaiKhoanController(TaiKhoanController taiKhoanController) {
+        this.taiKhoanController = taiKhoanController;
+    }
+
     @FXML
-    private void onSaveButtonClick(){
+    private void onSaveButtonClick() throws IOException {
         String ho = lastNameTxt.getText();
         String ten = firstNameTxt.getText();
         String sdt = phoneTxt.getText();
         String diaChi = addressTxt.getText();
         String email = emailTxt.getText();
         LocalDate ngayBatDau = startDatePicker.getValue();
-        LocalDate ngayKetThuc = endDatePicker.getValue();
+//        LocalDate ngayKetThuc = endDatePicker.getValue();
         LocalDate ngaySinh = birthdayPicker.getValue();
         Gender gioiTinh = (Gender) genderChoiceBox.getValue();
         String tenTaiKhoan = usernameTxt.getText();
-        String matKhau = passwordTxt.getText();
+        String matKhau = BCrypt.hashpw(passwordTxt.getText(), BCrypt.gensalt());  
         Role vaiTro = (Role)roleChoiceBox.getValue();
 
         // Kiểm tra xem các trường bắt buộc đã được điền đầy đủ chưa
         if (ho.isEmpty() || ten.isEmpty() || sdt.isEmpty() || diaChi.isEmpty() || email.isEmpty() ||
-                ngayBatDau == null || ngayKetThuc == null || ngaySinh == null || gioiTinh == null ||
+                ngayBatDau == null  || ngaySinh == null || gioiTinh == null ||
                 tenTaiKhoan.isEmpty() || matKhau.isEmpty() || vaiTro == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
@@ -82,8 +92,17 @@ public class ThemTaiKhoanController implements Initializable {
             alert.showAndWait();
             return;
         }
+        if (!isValid(email))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Email không đúng định dạng!!");
+            alert.showAndWait();
+            return;
+        }
         // Tạo một đối tượng Nhân viên
-        NhanVien nhanVien = new NhanVien(ten, ho, ngaySinh, gioiTinh, ngayBatDau, ngayKetThuc, sdt, diaChi, email);
+        NhanVien nhanVien = new NhanVien(ten, ho, ngaySinh, gioiTinh, ngayBatDau, null, sdt, diaChi, email);
         NhanVienDAO nhanVienDAO = new NhanVienDAO();
         nhanVienDAO.create(nhanVien);
         // Tạo một đối tượng TaiKhoan
@@ -105,6 +124,7 @@ public class ThemTaiKhoanController implements Initializable {
         // Đóng cửa sổ
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+        taiKhoanController.updateTable();
     }
     @FXML
     private void onCancelButtonClick(){
@@ -112,7 +132,32 @@ public class ThemTaiKhoanController implements Initializable {
         // Đóng cửa sổ
         stage.close();
     }
+    static boolean isValid(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
+    }
+//    // Hàm tạo salt ngẫu nhiên
+//    private String generateSalt() {
+//        SecureRandom random = new SecureRandom();
+//        byte[] saltBytes = new byte[16];
+//        random.nextBytes(saltBytes);
+//        return Base64.getEncoder().encodeToString(saltBytes);
+//    }
+//
+//    // Hàm kết hợp mật khẩu với salt và mã hóa kết quả
+//    private String hashPassword(String password, String salt) {
+//        String saltedPassword = password + salt;
+//        return DigestUtils.sha256Hex(saltedPassword);
+//    }
 
+    // Hàm hiển thị cảnh báo
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     /**
      * Initializes the controller class.
      */
