@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.example.quanlykhohang.Main;
+import org.example.quanlykhohang.dao.KhachHangDAO;
 import org.example.quanlykhohang.dao.NhaCungCapDAO;
 import org.example.quanlykhohang.dao.NhanVienDAO;
 import org.example.quanlykhohang.dao.TaiKhoanDAO;
@@ -27,10 +28,10 @@ import org.example.quanlykhohang.entity.*;
  *
  * @author pc
  */
-public class ThemNhaCungCapController implements Initializable {
-    private NhaCungCapController nhaCungCapController;
+public class ThemKhachHangController {
+    private KhachHangController khachHangController;
     @FXML
-    private TextField  nameSupplierTxt;
+    private TextField  nameCustomerTxt;
     @FXML
     private  TextField phoneTxt;
     @FXML
@@ -43,7 +44,7 @@ public class ThemNhaCungCapController implements Initializable {
     private  Button cancelButton;
     @FXML
     private void onSaveButtonClick(){
-        String ten = nameSupplierTxt.getText();
+        String ten = nameCustomerTxt.getText();
         String sdt = phoneTxt.getText();
         String diaChi = addressTxt.getText();
         String email = emailTxt.getText();
@@ -57,30 +58,30 @@ public class ThemNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
+        KhachHangDAO khachHangDAO = new KhachHangDAO();
 
-        NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
-        boolean isExistByEmail = nhaCungCapDAO.existByEmail(email);
+        boolean isExistByEmail = khachHangDAO.existsByEmail(email);
         if(isExistByEmail){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
-            alert.setContentText("Đã có nhà cung cấp với email được nhập tồn tại trong hệ thống");
+            alert.setContentText("Đã có khách hàng với email được nhập tồn tại trong hệ thống");
             alert.showAndWait();
             return;
         }
-        boolean isExistBySDT = nhaCungCapDAO.existBySDT(sdt);
+        boolean isExistBySDT = khachHangDAO.existsBySDT(sdt);
         if(isExistBySDT){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Lỗi");
             alert.setHeaderText(null);
-            alert.setContentText("Đã có nhà cung cấp với SĐT được nhập tồn tại trong hệ thống");
+            alert.setContentText("Đã có khách hàng với SĐT được nhập tồn tại trong hệ thống");
             alert.showAndWait();
             return;
         }
-        NhaCungCap nhaCungCap = new NhaCungCap( ten, sdt, diaChi, email);
-        nhaCungCap.setPhieuNhapList(new ArrayList<PhieuNhap>());
-        nhaCungCapDAO.create(nhaCungCap);
-        nhaCungCapController.resetData();
+        KhachHang khachHang = new KhachHang( ten, sdt, diaChi, email);
+
+        khachHangDAO.create(khachHang);
+        khachHangController.resetData();
 
 
 
@@ -89,7 +90,7 @@ public class ThemNhaCungCapController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Thông báo");
         alert.setHeaderText(null);
-        alert.setContentText("Tạo nhà cung cấp thành công.");
+        alert.setContentText("Tạo khách hàng thành công.");
         alert.showAndWait();
 
         Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -105,12 +106,12 @@ public class ThemNhaCungCapController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
+    @FXML
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    public void setNhaCungCapController(NhaCungCapController nhaCungCapController){
-        this.nhaCungCapController = nhaCungCapController;
+    public void setKhachHangController(KhachHangController khachHangController){
+        this.khachHangController = khachHangController;
     }
-    
+
 }

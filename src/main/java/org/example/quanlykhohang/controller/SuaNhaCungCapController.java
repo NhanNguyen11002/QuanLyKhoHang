@@ -28,6 +28,7 @@ import org.example.quanlykhohang.entity.*;
  */
 public class SuaNhaCungCapController implements Initializable {
     private NhaCungCapController nhaCungCapController;
+    private NhaCungCap oldNcc;
     @FXML
     private TextField  idSupplierTxt;
     @FXML
@@ -59,9 +60,28 @@ public class SuaNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
-        // Tạo một đối tượng Nhân viên
-        NhaCungCap nhaCungCap = new NhaCungCap(id, ten, sdt, diaChi, email);
+
         NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
+        boolean isExistByEmail = nhaCungCapDAO.existByEmail(email);
+        if(!email.equals(oldNcc.getEmail()) && isExistByEmail){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có nhà cung cấp với email được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
+        boolean isExistBySDT = nhaCungCapDAO.existBySDT(sdt);
+        if(!sdt.equals(oldNcc.getSdt()) && isExistBySDT){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có nhà cung cấp với SĐT được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
+
+        NhaCungCap nhaCungCap = new NhaCungCap(id, ten, sdt, diaChi, email);
         nhaCungCapDAO.update(nhaCungCap);
         nhaCungCapController.resetData();
 
@@ -71,15 +91,8 @@ public class SuaNhaCungCapController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText("Cập nhật nhà cung cấp thành công.");
         alert.showAndWait();
-        //Làm mới data
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/nha-cung-cap-view.fxml"));
-            fxmlLoader.load();
-            NhaCungCapController controller = fxmlLoader.getController();
-            controller.resetData();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+
+
 
         // Đóng cửa sổ
         Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -100,6 +113,7 @@ public class SuaNhaCungCapController implements Initializable {
         // TODO
     }
     public void initData(NhaCungCap nhaCungCap) {
+        oldNcc = nhaCungCap;
         idSupplierTxt.setText(String.valueOf(nhaCungCap.getMaNhaCungCap()));
         nameSupplierTxt.setText(nhaCungCap.getTenNhaCungCap());
         phoneTxt.setText(nhaCungCap.getSdt());

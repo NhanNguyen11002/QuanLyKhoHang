@@ -1,36 +1,23 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
 package org.example.quanlykhohang.controller;
 
-import java.net.URL;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.example.quanlykhohang.Main;
-import org.example.quanlykhohang.dao.NhaCungCapDAO;
-import org.example.quanlykhohang.dao.NhanVienDAO;
-import org.example.quanlykhohang.dao.TaiKhoanDAO;
-import org.example.quanlykhohang.entity.*;
+import org.example.quanlykhohang.dao.KhachHangDAO;
+import org.example.quanlykhohang.entity.KhachHang;
 
-/**
- * FXML Controller class
- *
- * @author pc
- */
-public class ThemNhaCungCapController implements Initializable {
-    private NhaCungCapController nhaCungCapController;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SuaKhachHangController {
+    private KhachHangController khachHangController;
+    private KhachHang oldKhachHang;
     @FXML
-    private TextField  nameSupplierTxt;
+    private TextField idCustomerTxt;
+    @FXML
+    private TextField nameCustomerTxt;
     @FXML
     private  TextField phoneTxt;
     @FXML
@@ -38,12 +25,13 @@ public class ThemNhaCungCapController implements Initializable {
     @FXML
     private  TextField addressTxt;
     @FXML
-    private  Button saveButton;
+    private Button saveButton;
     @FXML
     private  Button cancelButton;
     @FXML
     private void onSaveButtonClick(){
-        String ten = nameSupplierTxt.getText();
+        Integer id = Integer.valueOf(idCustomerTxt.getText());
+        String ten = nameCustomerTxt.getText();
         String sdt = phoneTxt.getText();
         String diaChi = addressTxt.getText();
         String email = emailTxt.getText();
@@ -57,30 +45,29 @@ public class ThemNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
+        KhachHangDAO khachHangDAO = new KhachHangDAO();
+        boolean isExistByEmail = khachHangDAO.existsByEmail(email);
+        if(!email.equals(oldKhachHang.getEmail()) && isExistByEmail ){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có khách hàng với email được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
+        boolean isExistBySDT = khachHangDAO.existsBySDT(sdt);
+        if(!sdt.equals(oldKhachHang.getSdt()) && isExistBySDT){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có khách hàng với SĐT được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
+        KhachHang khachHang = new KhachHang( id,ten, sdt, diaChi, email);
 
-        NhaCungCapDAO nhaCungCapDAO = new NhaCungCapDAO();
-        boolean isExistByEmail = nhaCungCapDAO.existByEmail(email);
-        if(isExistByEmail){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
-            alert.setHeaderText(null);
-            alert.setContentText("Đã có nhà cung cấp với email được nhập tồn tại trong hệ thống");
-            alert.showAndWait();
-            return;
-        }
-        boolean isExistBySDT = nhaCungCapDAO.existBySDT(sdt);
-        if(isExistBySDT){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
-            alert.setHeaderText(null);
-            alert.setContentText("Đã có nhà cung cấp với SĐT được nhập tồn tại trong hệ thống");
-            alert.showAndWait();
-            return;
-        }
-        NhaCungCap nhaCungCap = new NhaCungCap( ten, sdt, diaChi, email);
-        nhaCungCap.setPhieuNhapList(new ArrayList<PhieuNhap>());
-        nhaCungCapDAO.create(nhaCungCap);
-        nhaCungCapController.resetData();
+        khachHangDAO.update(khachHang);
+        khachHangController.resetData();
 
 
 
@@ -89,7 +76,7 @@ public class ThemNhaCungCapController implements Initializable {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Thông báo");
         alert.setHeaderText(null);
-        alert.setContentText("Tạo nhà cung cấp thành công.");
+        alert.setContentText("Sửa khách hàng thành công.");
         alert.showAndWait();
 
         Stage stage = (Stage) saveButton.getScene().getWindow();
@@ -105,12 +92,18 @@ public class ThemNhaCungCapController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    @Override
+    @FXML
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
-    public void setNhaCungCapController(NhaCungCapController nhaCungCapController){
-        this.nhaCungCapController = nhaCungCapController;
+    public void initData(KhachHang khachHang) {
+        oldKhachHang = khachHang;
+        idCustomerTxt.setText(String.valueOf(khachHang.getMaKhachHang()));
+        nameCustomerTxt.setText(khachHang.getTenKhachHang());
+        phoneTxt.setText(khachHang.getSdt());
+        addressTxt.setText(khachHang.getDiaChi());
+        emailTxt.setText(khachHang.getEmail());
     }
-    
-}
+    public void setKhachHangController(KhachHangController khachHangController){
+        this.khachHangController = khachHangController;
+    }}
