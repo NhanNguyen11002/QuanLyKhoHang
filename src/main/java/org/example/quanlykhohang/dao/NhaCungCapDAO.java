@@ -115,6 +115,42 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
         }
 
     }
+    public boolean existByEmail(String email) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+
+            String jql = "SELECT COUNT(u.email) FROM NhaCungCap u WHERE u.email = :email";
+            TypedQuery<Long> query = em.createQuery(jql, Long.class);
+            query.setParameter("email", email);
+            Long count = query.getSingleResult();
+            em.close();
+            return count == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
+    public boolean existBySDT(String sdt) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+
+            String jql = "SELECT COUNT(u.sdt) FROM NhaCungCap u WHERE u.sdt = :sdt";
+            TypedQuery<Long> query = em.createQuery(jql, Long.class);
+            query.setParameter("sdt", sdt);
+            Long count = query.getSingleResult();
+            em.close();
+            return count == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
+
+    }
     public List<NhaCungCap> findByKeyword(String keyword) {
         EntityManager em = JpaUtils.getEntityManager();
         try{

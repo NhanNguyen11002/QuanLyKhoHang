@@ -31,6 +31,12 @@ public class KhachHang {
         this.diaChi = diaChi;
         this.email = email;
     }
+    public KhachHang( String tenKhachHang, String sdt, String diaChi, String email) {
+        this.tenKhachHang = tenKhachHang;
+        this.sdt = sdt;
+        this.diaChi = diaChi;
+        this.email = email;
+    }
 
     public Integer getMaKhachHang() {
         return maKhachHang;
