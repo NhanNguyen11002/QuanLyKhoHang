@@ -135,7 +135,8 @@ public class NhaCungCapController {
     private void onImportExcelBtnClick(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn file excel cần nhập");
-        fileChooser.setInitialDirectory(new File("/Users"));
+        String userHome = System.getProperty("user.home");
+        fileChooser.setInitialDirectory(new File(userHome));
         Stage stage = new Stage();
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile != null){
@@ -201,7 +202,8 @@ public class NhaCungCapController {
     private void onExportExcelBtnClick(){
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Chọn ví trí lưu file excel");
-        directoryChooser.setInitialDirectory(new File("/Users"));  //cái này có khi phải sửa lại trên window
+        String userHome = System.getProperty("user.home");
+        directoryChooser.setInitialDirectory(new File(userHome));  //cái này có khi phải sửa lại trên window
         Stage stage = new Stage();
         File selectedFile = directoryChooser.showDialog(stage);
         if(selectedFile!=null) {
