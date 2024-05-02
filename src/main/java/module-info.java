@@ -14,6 +14,8 @@ open module org.example.quanlykhohang {
     requires org.kordamp.ikonli.fontawesome;
     requires org.kordamp.ikonli.materialdesign2;
     requires java.base;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 //    opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;
