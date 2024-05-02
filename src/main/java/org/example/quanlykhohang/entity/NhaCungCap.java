@@ -1,6 +1,7 @@
 package org.example.quanlykhohang.entity;
 
 import jakarta.persistence.*;
+import org.example.quanlykhohang.util.Validator;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class NhaCungCap {
     }
 
     public NhaCungCap(Integer maNhaCungCap, String tenNhaCungCap, String sdt, String diaChi, String email) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
         this.maNhaCungCap = maNhaCungCap;
         this.tenNhaCungCap = tenNhaCungCap;
         this.sdt = sdt;
@@ -33,6 +36,8 @@ public class NhaCungCap {
     }
 
     public NhaCungCap(String tenNhaCungCap, String sdt, String diaChi, String email) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
         this.tenNhaCungCap = tenNhaCungCap;
         this.sdt = sdt;
         this.diaChi = diaChi;
@@ -60,6 +65,7 @@ public class NhaCungCap {
     }
 
     public void setSdt(String sdt) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
         this.sdt = sdt;
     }
 
@@ -76,6 +82,7 @@ public class NhaCungCap {
     }
 
     public void setEmail(String email) {
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
         this.email = email;
     }
 

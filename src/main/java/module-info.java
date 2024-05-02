@@ -16,6 +16,8 @@ open module org.example.quanlykhohang {
     requires java.base;
 //    requires org.apache.commons.codec;
     requires jbcrypt;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 //    opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;
