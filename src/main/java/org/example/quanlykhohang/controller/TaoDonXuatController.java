@@ -1,16 +1,38 @@
 package org.example.quanlykhohang.controller;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import org.example.quanlykhohang.Main;
+import org.example.quanlykhohang.dao.DienThoaiDAO;
+import org.example.quanlykhohang.dao.DonXuatHangDAO;
+import org.example.quanlykhohang.dao.KhachHangDAO;
+import org.example.quanlykhohang.dao.NhanVienDAO;
+import org.example.quanlykhohang.entity.*;
+import org.example.quanlykhohang.util.EditQuantityDialog;
 
 import java.io.IOException;
+import java.util.List;
 
 public class TaoDonXuatController {
+    private DienThoaiDAO dienThoaiDAO = new DienThoaiDAO();
+    private KhachHangDAO khachHangDAO = new KhachHangDAO();
+    private DonXuatHangDAO donXuatHangDAO = new DonXuatHangDAO();
+    private NhanVienDAO nhanVienDAO = new NhanVienDAO();
     @FXML
     private Button addBtn;
     @FXML
@@ -30,31 +52,132 @@ public class TaoDonXuatController {
     @FXML
     private TextField creatorTxt;
     @FXML
-    private ComboBox<String> customerCbbox;
+    private ComboBox<KhachHang> customerCbbox;
     @FXML
-    private TableView productTable;
+    private TableView<DienThoai> productTable;
     @FXML
-    private TableView exportFormTable;
+    private TableView<SanPhamTrongDonHangDTO> exportFormTable;
     @FXML
     private Button exportBtn;
     @FXML
     private Label totalMoneyLabel;
     @FXML
     private Button backBtn;
+    private ObservableList<SanPhamTrongDonHangDTO> exportList = FXCollections.observableArrayList();
     @FXML
-    private void onResetBtnClick(){}
+    private void onSearchTxtAction(){
+
+    }
     @FXML
-    private void onAddBtnClick(){}
+    private void onResetBtnClick(){
+        resetData();
+    }
     @FXML
-    private void onCustomerCbboxAction(){}
+    private void onAddBtnClick(){
+        try{
+            DienThoai selectedProd = productTable.getSelectionModel().getSelectedItem();
+            if(selectedProd == null){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Lỗi ");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Chọn sản phẩm muốn thêm số lượng");
+                alert1.showAndWait();
+                return;
+            }
+            Integer soLuong  = Integer.valueOf(quantityTxt.getText());
+            if(soLuong <= 0 ){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Lỗi ");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Số lượng phải là số nguyên dương");
+                alert1.showAndWait();
+                return;
+            }
+            if(soLuong>selectedProd.getSoLuong()){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Lỗi ");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Số lượng xuất không được lớn hơn tồn kho");
+                alert1.showAndWait();
+                return;
+            }
+
+            SanPhamTrongDonHangDTO sanPhamTrongDonHangDTO = new SanPhamTrongDonHangDTO(selectedProd.getMaDT(),selectedProd.getTenDT(),selectedProd.getGiaXuat(),soLuong, selectedProd.getSoLuong());
+            exportList.add(sanPhamTrongDonHangDTO);
+            loadDataExport();
+        } catch (Exception e){
+            e.printStackTrace();
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Lỗi ");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Số lượng xuất phải là số nguyên");
+            alert1.showAndWait();
+        }
+
+    }
+    @FXML
+    private void onCustomerCbboxAction(){
+
+    }
     @FXML
     private void onImportExcelBtnClick(){}
+
+
     @FXML
-    private void onEditQuantityBtnClick(){}
+    private void onEditQuantityBtnClick(){
+        try{
+            SanPhamTrongDonHangDTO selectedProd = exportFormTable.getSelectionModel().getSelectedItem();
+            if(selectedProd == null){
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Lỗi");
+                alert1.setHeaderText(null);
+                alert1.setContentText("Chọn sản phẩm muốn thay đổi số lượng");
+                alert1.showAndWait();
+                return;
+            }
+            Integer soLuong = EditQuantityDialog.display(selectedProd.getSoLuongTon());
+            System.out.println("Edit quantity "+soLuong);
+            for(SanPhamTrongDonHangDTO sp: exportList){
+                if(sp.equals(selectedProd)){
+                    sp.setSoLuong(soLuong);
+                    break;
+                }
+            }
+            loadDataExport();
+        } catch (Exception e){
+            e.printStackTrace();
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Lỗi ");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Số lượng xuất phải là số nguyên");
+            alert1.showAndWait();
+        }
+    }
     @FXML
-    private void onDeleteProductBtnClick(){}
+    private void onDeleteProductBtnClick(){
+        SanPhamTrongDonHangDTO selectedProd = exportFormTable.getSelectionModel().getSelectedItem();
+        if(selectedProd == null){
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Lỗi");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Chọn sản phẩm muốn thay đổi số lượng");
+            alert1.showAndWait();
+            return;
+        }
+        exportList.remove(selectedProd);
+        loadDataExport();
+    }
     @FXML
-    private void onExportBtnClick(){}
+    private void onExportBtnClick(){
+        KhachHang kh  = customerCbbox.getValue();
+        System.out.println(kh.getTenKhachHang());
+        NhanVien nv = nhanVienDAO.findById(UserSession.getInstance().getUserId());
+        System.out.println(nv.getTen());
+        for (SanPhamTrongDonHangDTO dt:exportList){
+            System.out.println(dt.getTenDT()+" "+dt.getSoLuong());
+        }
+
+    }
     @FXML
     private void onBackBtnClick(){
         try {
@@ -63,10 +186,120 @@ public class TaoDonXuatController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/don-xuat-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
+            borderPane.getLeft().setDisable(false);
         } catch (IOException e){
             e.printStackTrace();
         }
     }
+    @FXML
+    private void initialize(){
+        setUpProductTable();
+        setUpExportFormTable();
+        // setup cbbox
+        customerCbbox.setConverter(new StringConverter<KhachHang>() {
+            @Override
+            public String toString(KhachHang khachHang) {
+                if (khachHang != null) {
+                    return khachHang.getTenKhachHang();
+                }
+                return "";
+            }
 
+            @Override
+            public KhachHang fromString(String s) {
+                return null;
+            }
+        });
+        customerCbbox.setItems(getAllKhachHang());
+
+        // setup creator text
+        creatorTxt.setText(UserSession.getInstance().getUserName());
+        creatorTxt.setDisable(true);
+
+        //
+
+    }
+    private void setUpProductTable(){
+        productTable.getColumns().clear();
+        TableColumn<DienThoai, String> idColumn = new TableColumn<>("Mã điện thoại");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+
+        TableColumn<DienThoai, String> nameColumn = new TableColumn<>("Tên điện thoại");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+
+        TableColumn<DienThoai, Double> exportPriceCol = new TableColumn<>("Giá xuất");
+        exportPriceCol.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
+
+        TableColumn<DienThoai, Integer> quantityColumn = new TableColumn<>("Số lượng trong kho");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        productTable.getColumns().addAll(idColumn, nameColumn, exportPriceCol,quantityColumn);
+        productTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                DienThoai selectedRow = (DienThoai) productTable.getSelectionModel().getSelectedItem();
+                if (selectedRow != null) {
+                    System.out.println("Đã chọn hàng: " + selectedRow.getClass() + " " + selectedRow.toString() );
+                }
+            }
+        });
+        productTable.setItems(getAllDienThoai());
+    }
+    private void setUpExportFormTable(){
+        exportFormTable.getColumns().clear();
+        TableColumn numberColumn = new TableColumn<>("#");
+        numberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String>, ObservableValue<String>>() {
+            @Override public ObservableValue<String> call(TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String> p) {
+                return new ReadOnlyObjectWrapper((exportFormTable.getItems().indexOf(p.getValue()) +1) + "");
+            }
+        });
+        numberColumn.setSortable(false);
+
+        TableColumn<SanPhamTrongDonHangDTO, String> idColumn = new TableColumn<>("Mã điện thoại");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+
+        TableColumn<SanPhamTrongDonHangDTO, String> nameColumn = new TableColumn<>("Tên điện thoại");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+
+        TableColumn<SanPhamTrongDonHangDTO, Double> exportPriceCol = new TableColumn<>("Giá xuất");
+        exportPriceCol.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
+
+        TableColumn<SanPhamTrongDonHangDTO, Integer> quantityColumn = new TableColumn<>("Số lượng xuất hàng");
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        exportFormTable.getColumns().addAll(idColumn, nameColumn, exportPriceCol,quantityColumn);
+        exportFormTable.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                SanPhamTrongDonHangDTO selectedRow = exportFormTable.getSelectionModel().getSelectedItem();
+                if (selectedRow != null) {
+                    System.out.println("Đã chọn hàng: " + selectedRow.getClass() + " " + selectedRow.toString() );
+                }
+            }
+        });
+        exportFormTable.setItems(exportList);
+        loadDataExport();
+    }
+    private void loadDataExport(){
+        exportFormTable.refresh();
+    }
+    private ObservableList<DienThoai> getAllDienThoai() {
+        ObservableList<DienThoai> data = FXCollections.observableArrayList();
+        List<DienThoai> dienThoaiList = dienThoaiDAO.findAll();
+        for (DienThoai dt : dienThoaiList) {
+            data.add(dt);
+        }
+        return data;
+    }
+    private ObservableList<KhachHang> getAllKhachHang() {
+        ObservableList<KhachHang> data = FXCollections.observableArrayList();
+        List<KhachHang> khachHangList = khachHangDAO.findAll();
+        System.out.println("get all kh");
+        for (KhachHang kh : khachHangList) {
+            System.out.println(kh.getTenKhachHang());
+            data.add(kh);
+        }
+        return data;
+    }
+    private void resetData(){
+        searchTxt.clear();
+        productTable.setItems(getAllDienThoai());
+    }
 
 }

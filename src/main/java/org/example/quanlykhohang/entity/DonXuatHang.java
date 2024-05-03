@@ -108,5 +108,18 @@ public class DonXuatHang {
     public void setPhieuXuat(PhieuXuat phieuXuat) {
         this.phieuXuat = phieuXuat;
     }
-    
+
+    @Override
+    public String toString() {
+        return "DonXuatHang{" +
+                "maDon='" + maDon + '\'' +
+                ", tongTien=" + tongTien +
+                ", thoiGianTao=" + thoiGianTao +
+                ", trangThai='" + trangThai + '\'' +
+                ", nhanVien=" + nhanVien +
+                ", khachHang=" + khachHang +
+                ", chiTietDonXuatHangList=" + chiTietDonXuatHangList +
+                ", phieuXuat=" + phieuXuat +
+                '}';
+    }
 }
