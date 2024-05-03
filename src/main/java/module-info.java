@@ -18,6 +18,8 @@ open module org.example.quanlykhohang {
     requires jbcrypt;
 	requires javafx.base;
 	requires javafx.graphics;
+    requires org.apache.poi.poi;
+    requires org.apache.poi.ooxml;
 //    opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;

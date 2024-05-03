@@ -64,23 +64,29 @@ public class SuaKhachHangController {
             alert.showAndWait();
             return;
         }
-        KhachHang khachHang = new KhachHang( id,ten, sdt, diaChi, email);
 
-        khachHangDAO.update(khachHang);
-        khachHangController.resetData();
+        try {
+            KhachHang khachHang = new KhachHang( id,ten, sdt, diaChi, email);
 
+            khachHangDAO.update(khachHang);
+            khachHangController.resetData();
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Sửa khách hàng thành công.");
+            alert.showAndWait();
 
-
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        alert.setContentText("Sửa khách hàng thành công.");
-        alert.showAndWait();
-
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) saveButton.getScene().getWindow();
+            stage.close();
+        } catch (IllegalArgumentException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return;
+        }
     }
     @FXML
     private void onCancelButtonClick(){

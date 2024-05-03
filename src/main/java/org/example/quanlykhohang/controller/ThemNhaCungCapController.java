@@ -77,23 +77,28 @@ public class ThemNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
-        NhaCungCap nhaCungCap = new NhaCungCap( ten, sdt, diaChi, email);
-        nhaCungCap.setPhieuNhapList(new ArrayList<PhieuNhap>());
-        nhaCungCapDAO.create(nhaCungCap);
-        nhaCungCapController.resetData();
 
+        try {
+            NhaCungCap nhaCungCap = new NhaCungCap( ten, sdt, diaChi, email);
+            nhaCungCapDAO.create(nhaCungCap);
+            nhaCungCapController.resetData();
 
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Tạo nhà cung cấp thành công.");
+            alert.showAndWait();
 
-
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        alert.setContentText("Tạo nhà cung cấp thành công.");
-        alert.showAndWait();
-
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
+            Stage stage = (Stage) saveButton.getScene().getWindow();
+            stage.close();
+        } catch (IllegalArgumentException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+            return;
+        }
     }
     @FXML
     private void onCancelButtonClick(){

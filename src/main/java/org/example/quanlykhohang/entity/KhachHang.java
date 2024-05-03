@@ -1,6 +1,7 @@
 package org.example.quanlykhohang.entity;
 
 import jakarta.persistence.*;
+import org.example.quanlykhohang.util.Validator;
 
 import java.util.List;
 
@@ -25,6 +26,8 @@ public class KhachHang {
     }
 
     public KhachHang(Integer maKhachHang, String tenKhachHang, String sdt, String diaChi, String email) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
         this.maKhachHang = maKhachHang;
         this.tenKhachHang = tenKhachHang;
         this.sdt = sdt;
@@ -32,10 +35,24 @@ public class KhachHang {
         this.email = email;
     }
     public KhachHang( String tenKhachHang, String sdt, String diaChi, String email) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
         this.tenKhachHang = tenKhachHang;
         this.sdt = sdt;
         this.diaChi = diaChi;
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "KhachHang{" +
+                "maKhachHang=" + maKhachHang +
+                ", tenKhachHang='" + tenKhachHang + '\'' +
+                ", sdt='" + sdt + '\'' +
+                ", diaChi='" + diaChi + '\'' +
+                ", email='" + email + '\'' +
+                ", donXuatHangList=" + donXuatHangList +
+                '}';
     }
 
     public Integer getMaKhachHang() {
@@ -59,6 +76,7 @@ public class KhachHang {
     }
 
     public void setSdt(String sdt) {
+        if(!Validator.validatePhoneNumber(sdt)) throw new IllegalArgumentException("Sai định dạng SĐT");
         this.sdt = sdt;
     }
 
@@ -75,6 +93,8 @@ public class KhachHang {
     }
 
     public void setEmail(String email) {
+        if(!Validator.validateEmail(email)) throw new IllegalArgumentException("Sai định dạng email");
+
         this.email = email;
     }
 }

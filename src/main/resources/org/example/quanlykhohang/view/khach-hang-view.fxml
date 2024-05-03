@@ -38,9 +38,9 @@
                                 <FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="40" />
                             </graphic>
                         </Button>
-                        <Button fx:id="exportExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="384.0" layoutY="16.0" mnemonicParsing="false" text="Xuất excel">
+                        <Button fx:id="exportExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="384.0" layoutY="16.0" mnemonicParsing="false" text="Xuất excel" onAction="#onExportExcelBtnClick">
                             <graphic>
-                                <FontIcon iconLiteral="mdi2f-file-export-outline" iconSize="40" onDragDetected="#onExportExcelBtnClick" />
+                                <FontIcon iconLiteral="mdi2f-file-export-outline" iconSize="40"  />
                             </graphic>
                             <font>
                                 <Font size="14.0" />

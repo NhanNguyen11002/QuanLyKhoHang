@@ -10,6 +10,7 @@ import javafx.stage.StageStyle;
 import org.example.quanlykhohang.Main;
 import org.example.quanlykhohang.dao.TaiKhoanDAO;
 import org.example.quanlykhohang.entity.Role;
+import org.example.quanlykhohang.entity.UserSession;
 import org.example.quanlykhohang.entity.TaiKhoan;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -40,10 +41,13 @@ public class DangNhapController {
                 showAlert("Tên đăng nhập hoặc mật khẩu không đúng!");
             } else {
                 if (taiKhoan.isDangHoatDong() == true) { // Kiểm tra tài khoản có bị khóa không
+                    UserSession.getInstance().setCurrentUser(taiKhoan.getId(), taiKhoan.getUsername());
                     Role role = taiKhoan.getVaiTro();
                     if (role.equals(Role.Admin)) {
                         showSuccess("Đăng nhập thành công!");
                         openAdminSidebar();
+                        System.out.println(UserSession.getInstance().getUserId());
+                        System.out.println(UserSession.getInstance().getUserName());
                     } else if (role.equals(Role.Staff)) {
                         showAlert("!!!!");
                     }

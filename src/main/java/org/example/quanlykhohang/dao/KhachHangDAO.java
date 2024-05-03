@@ -119,7 +119,6 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
     public boolean existsByEmail(String email) {
         EntityManager em = JpaUtils.getEntityManager();
         try{
-
             String jql = "SELECT COUNT(u.email) FROM KhachHang u WHERE u.email = :email";
             TypedQuery<Long> query = em.createQuery(jql, Long.class);
             query.setParameter("email", email);
