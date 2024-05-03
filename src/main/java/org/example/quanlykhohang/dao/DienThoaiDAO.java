@@ -87,8 +87,9 @@ public class DienThoaiDAO implements InterfaceDAO<DienThoai, String> {
         EntityManager em = JpaUtils.getEntityManager();
         String japl = "SELECT u FROM DienThoai u order by u.maDT";
         TypedQuery<DienThoai> query = em.createQuery(japl, DienThoai.class);
+        List<DienThoai> resultList = query.getResultList();
         em.close();
-        return query.getResultList();    
+        return resultList;    
     }
 
     @Override

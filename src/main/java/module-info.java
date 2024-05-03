@@ -16,6 +16,8 @@ open module org.example.quanlykhohang {
     requires java.base;
 //    requires org.apache.commons.codec;
     requires jbcrypt;
+	requires javafx.base;
+	requires javafx.graphics;
 //    opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;

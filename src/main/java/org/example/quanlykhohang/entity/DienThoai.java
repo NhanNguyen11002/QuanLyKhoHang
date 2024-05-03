@@ -19,6 +19,18 @@ public class DienThoai {
     }
 
     public DienThoai(String maDT, String tenDT, Double giaNhap, Double giaXuat, Integer soLuong) {
+        if (maDT == null || tenDT == null) {
+            throw new IllegalArgumentException("Mã hoặc tên điện thoại không được để trống");
+        }
+        if (giaNhap == null || giaNhap <= 0) {
+            throw new IllegalArgumentException("Giá nhập phải là số dương");
+        }
+        if (giaXuat == null || giaXuat <= 0) {
+            throw new IllegalArgumentException("Giá nhập phải là số dương");
+        }
+        if (soLuong == null || soLuong <= 0) {
+            throw new IllegalArgumentException("Số lượng phải là số nguyên dương");
+        }
         this.maDT = maDT;
         this.tenDT = tenDT;
         this.giaNhap = giaNhap;
@@ -31,6 +43,9 @@ public class DienThoai {
     }
 
     public void setMaDT(String maDT) {
+    	if (maDT == null) {
+            throw new IllegalArgumentException("Mã điện thoại không được để trống");
+        }
         this.maDT = maDT;
     }
 
@@ -39,6 +54,9 @@ public class DienThoai {
     }
 
     public void setTenDT(String tenDT) {
+    	if (tenDT == null) {
+            throw new IllegalArgumentException("Tên điện thoại không được để trống");
+        }
         this.tenDT = tenDT;
     }
 
@@ -47,6 +65,9 @@ public class DienThoai {
     }
 
     public void setGiaNhap(Double giaNhap) {
+    	if (giaNhap == null || giaNhap <= 0) {
+            throw new IllegalArgumentException("Giá nhập phải là số dương");
+        }
         this.giaNhap = giaNhap;
     }
 
@@ -55,6 +76,9 @@ public class DienThoai {
     }
 
     public void setGiaXuat(Double giaXuat) {
+    	if (giaXuat == null || giaXuat <= 0) {
+            throw new IllegalArgumentException("Giá xuất phải là số dương");
+        }
         this.giaXuat = giaXuat;
     }
 
@@ -63,6 +87,16 @@ public class DienThoai {
     }
 
     public void setSoLuong(Integer soLuong) {
+    	if (soLuong == null || soLuong <= 0) {
+            throw new IllegalArgumentException("Số lượng phải là số nguyên dương");
+        }
         this.soLuong = soLuong;
     }
+
+	@Override
+	public String toString() {
+		return "DienThoai [maDT=" + maDT + ", tenDT=" + tenDT + ", giaNhap=" + giaNhap + ", giaXuat=" + giaXuat
+				+ ", soLuong=" + soLuong + "]";
+	}
+    
 }
