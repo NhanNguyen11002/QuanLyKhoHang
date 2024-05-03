@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.example.quanlykhohang.entity.DonXuatHang;
+import org.example.quanlykhohang.entity.KhachHang;
 import org.example.quanlykhohang.util.JpaUtils;
 
 /**
@@ -84,10 +85,15 @@ public class DonXuatHangDAO implements InterfaceDAO<DonXuatHang, String> {
     @Override
     public List<DonXuatHang> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM DonXuatHang u order by u.maDon";
-        TypedQuery<DonXuatHang> query = em.createQuery(japl, DonXuatHang.class);
-        em.close();
-        return query.getResultList();    
+        try{
+            String japl = "SELECT u FROM DonXuatHang u order by u.maDon";
+            TypedQuery<DonXuatHang> query = em.createQuery(japl, DonXuatHang.class);
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override

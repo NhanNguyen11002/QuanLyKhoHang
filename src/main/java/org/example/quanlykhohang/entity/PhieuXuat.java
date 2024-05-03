@@ -11,7 +11,7 @@ public class PhieuXuat {
     @ManyToOne
     @JoinColumn(name = "nguoiTao", nullable = false)
     private NhanVien nguoiTao;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "maDon")
     private DonXuatHang donXuatHang;
     @Column(name="bienSoXe")

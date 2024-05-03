@@ -34,7 +34,7 @@
                 </Label>
                 <Pane prefHeight="100.0" prefWidth="590.0" styleClass="top-pane" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <children>
-                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" prefHeight="50.0" prefWidth="400.0" />
+                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" prefHeight="50.0" prefWidth="400.0" onAction="#onSearchTxtAction"/>
                         <Button fx:id="resetBtn" layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới">
                             <font>
                                 <Font size="14.0" />
