@@ -107,7 +107,6 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
             TypedQuery<Long> query = em.createQuery(jql, Long.class);
             query.setParameter("maKhachHang", maKhachHang);
             Long count = query.getSingleResult();
-            em.close();
             return count == 1;
         } catch (Exception e) {
             e.printStackTrace();

@@ -33,6 +33,13 @@ public class ChiTietDonXuatHang {
         this.donGia = donGia;
     }
 
+    public ChiTietDonXuatHang(DonXuatHang donXuatHang, DienThoai dienThoai, Integer soLuong, Double donGia) {
+        this.donXuatHang = donXuatHang;
+        this.dienThoai = dienThoai;
+        this.soLuong = soLuong;
+        this.donGia = donGia;
+    }
+
     public Integer getId() {
         return id;
     }

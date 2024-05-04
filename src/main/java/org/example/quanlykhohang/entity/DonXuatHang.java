@@ -45,6 +45,15 @@ public class DonXuatHang {
         this.phieuXuat = phieuXuat;
     }
 
+    public DonXuatHang(String maDon, Double tongTien, Timestamp thoiGianTao, String trangThai, NhanVien nhanVien, KhachHang khachHang) {
+        this.maDon = maDon;
+        this.tongTien = tongTien;
+        this.thoiGianTao = thoiGianTao;
+        this.trangThai = trangThai;
+        this.nhanVien = nhanVien;
+        this.khachHang = khachHang;
+    }
+
     public String getMaDon() {
         return maDon;
     }
