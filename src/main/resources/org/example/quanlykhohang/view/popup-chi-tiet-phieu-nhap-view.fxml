@@ -16,24 +16,26 @@
             <Label layoutX="45.0" layoutY="50.0" text="Nhà cung cấp: " />
             <Label layoutX="334.0" layoutY="14.0" text="Thời gian tạo:" />
             <Label layoutX="334.0" layoutY="50.0" text="Người tạo:" />
-            <Label fx:id="maPhieuLbl" layoutX="141.0" layoutY="14.0" text="Label" />
-            <Label fx:id="nhaCungCapLbl" layoutX="141.0" layoutY="50.0" text="Label" />
-            <Label fx:id="thoiGianTaoLbl" layoutX="453.0" layoutY="14.0" text="Label" />
-            <Label fx:id="nguoiTaoLbl" layoutX="453.0" layoutY="50.0" text="Label" />
+            <Label fx:id="maPhieuLbl" layoutX="141.0" layoutY="14.0" />
+            <Label fx:id="nhaCungCapLbl" layoutX="141.0" layoutY="50.0" />
+            <Label fx:id="thoiGianTaoLbl" layoutX="453.0" layoutY="14.0" />
+            <Label fx:id="nguoiTaoLbl" layoutX="453.0" layoutY="50.0" />
             <Label layoutX="41.0" layoutY="306.0" text="Tổng tiền:">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="tongTienLbl" layoutX="142.0" layoutY="306.0" text="...đ">
+            <Label fx:id="tongTienLbl" layoutX="142.0" layoutY="306.0" >
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
             <TableView fx:id="ctPhieuNhapTbl" layoutX="3.0" layoutY="72.0" prefHeight="229.0" prefWidth="600.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn text="Mã điện thoại" fx:id="idPhoneColumn" />
+                <TableColumn text="Tên điện thoại" fx:id="namePhoneColumn" />
+                  <TableColumn text="Giá nhập" fx:id="inputPriceColumn" />
+                  <TableColumn text="Số lượng nhập" fx:id="soLuongColumn" />
               </columns>
             </TableView>
             <Button layoutX="481.0" layoutY="303.0" mnemonicParsing="false" onAction="#onXuatPDFBtnClick" text="Xuất PDF" fx:id="xuatPDFBtn">

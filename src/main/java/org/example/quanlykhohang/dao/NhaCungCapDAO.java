@@ -164,6 +164,21 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
             em.close();
         }
     }
+    
+    public NhaCungCap findByName(String name) {
+    	EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String japl = "SELECT u FROM NhaCungCap u WHERE u.tenNhaCungCap LIKE :name ";
+            TypedQuery<NhaCungCap> query = em.createQuery(japl, NhaCungCap.class);
+            query.setParameter("name", "%" + name + "%");
+            return query.getSingleResult();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
     public List<NhaCungCap> findByKeyword(String keyword) {
         EntityManager em = JpaUtils.getEntityManager();
         try{
@@ -186,8 +201,6 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
         } finally {
             em.close();
         }
-
-
     }
     
 }
