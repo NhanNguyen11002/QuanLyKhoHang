@@ -307,6 +307,9 @@ public class TaoPhieuNhapController {
 			ChiTietPhieuNhapDAO ctpnDAO = new ChiTietPhieuNhapDAO();
 			DienThoaiDAO dtDAO = new DienThoaiDAO();
 			NhanVien nguoiTao = nvDAO.findById(UserSession.getInstance().getUserId());
+			if (importFormTable.getItems().size() == 0) {
+				throw new IOException("Vui lòng chọn sản phẩm");
+			}
 			String selectedProvider = providerCbbox.getValue();
 			if (selectedProvider == null) {
 				throw new IOException("Vui lòng chọn nhà cung cấp");

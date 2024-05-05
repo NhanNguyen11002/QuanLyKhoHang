@@ -30,6 +30,7 @@ import org.example.quanlykhohang.entity.NhanVien;
 import org.example.quanlykhohang.entity.PhieuNhap;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -205,12 +206,15 @@ public class ChiTietPhieuNhapController implements Initializable {
                 contentStream.showText("Nhà cung cấp: " + ncc);
                 contentStream.endText();
                 
+                // table chi tiết phiếu nhập
+                ObservableList<ChiTietPhieuNhap> dataList = ctPhieuNhapTbl.getItems();
                 float tableWidth = 500;
-                float tableHeight = 200;
+                float tableHeight = (dataList.size()+1)*40;
                 float startX = (pageWidth - tableWidth) / 2;
-                float startY = pageHeight - 100;
+                float startY = pageHeight - 200;
+                System.out.println("List size"+dataList.size());
                 // đường ngang của bảng
-                for (int i = 0; i <= 4; i++) {
+                for (int i = 0; i <= dataList.size()+1; i++) {
                     contentStream.moveTo(startX, startY - i * 40);
                     contentStream.lineTo(startX + tableWidth, startY - i * 40);
                     contentStream.stroke();
@@ -219,10 +223,82 @@ public class ChiTietPhieuNhapController implements Initializable {
                 contentStream.moveTo(startX, startY);
                 contentStream.lineTo(startX, startY - tableHeight);
                 contentStream.stroke();
+                contentStream.moveTo(startX+125, startY);
+                contentStream.lineTo(startX+125, startY - tableHeight);
+                contentStream.stroke();
+                contentStream.moveTo(startX+250, startY);
+                contentStream.lineTo(startX+250, startY - tableHeight);
+                contentStream.stroke();
+                contentStream.moveTo(startX+375, startY);
+                contentStream.lineTo(startX+375, startY - tableHeight);
+                contentStream.stroke();
+                contentStream.moveTo(startX+500, startY);
+                contentStream.lineTo(startX+500, startY - tableHeight);
+                contentStream.stroke();
+                
+                // Hiển thị dữ liệu trong bảng
+                float textY = startY - 22; // Độ lệch dọc cho dữ liệu
+                
+                // Header
+                contentStream.beginText();
+                contentStream.setFont(normalFont, 14);
+                String header1 = "Mã điện thoại";
+                System.out.println(caculateStartXCenter(normalFont, header1, 14, startX, startX+125));
+                contentStream.newLineAtOffset(caculateStartXCenter(normalFont, header1, 14, startX, startX+125), textY);
+                contentStream.showText(header1);
+                contentStream.endText();
+                contentStream.beginText();
+                String header2 = "Tên điện thoại";
+                System.out.println(caculateStartXCenter(normalFont, header2, 14, startX+125, startX+250));
+                contentStream.setFont(normalFont, 14);
+                contentStream.newLineAtOffset(caculateStartXCenter(normalFont, header2, 14, startX+125, startX+250), textY);
+                contentStream.showText(header2);
+                contentStream.endText();
+                contentStream.beginText();
+                String header3 = "Giá nhập";
+                System.out.println(caculateStartXCenter(normalFont, header3, 14, startX+250, startX+375));
+                contentStream.setFont(normalFont, 14);
+                contentStream.newLineAtOffset(caculateStartXCenter(normalFont, header3, 14, startX+250, startX+375), textY);
+                contentStream.showText(header3);
+                contentStream.endText();
+                contentStream.beginText();
+                String header4 = "Số lượng nhập";
+                contentStream.setFont(normalFont, 14);
+                System.out.println(caculateStartXCenter(normalFont, header4, 14, startX+375, startX+500));
+                contentStream.newLineAtOffset(caculateStartXCenter(normalFont, header4, 14, startX+375, startX+500), textY);
+                contentStream.showText(header4);
+                contentStream.endText();
+                // Content
+                for (int i = 0; i < dataList.size(); i++) {
+                	contentStream.beginText();
+                	String content1 = dataList.get(i).getDienThoai().getMaDT();
+                    contentStream.setFont(normalFont, 10);
+                    contentStream.newLineAtOffset(caculateStartXCenter(normalFont, content1, 10, startX, startX+125), textY - (i+1)*40);
+                    contentStream.showText(content1);
+                    contentStream.endText();
+                    contentStream.beginText();
+                    String content2 = dataList.get(i).getDienThoai().getTenDT();
+                    contentStream.setFont(normalFont, 11);
+                    contentStream.newLineAtOffset(caculateStartXCenter(normalFont, content2, 11, startX+125, startX+250), textY - (i+1)*40);
+                    contentStream.showText(content2);
+                    contentStream.endText();
+                    contentStream.beginText();
+                    String content3 = format.format(dataList.get(i).getDonGia());
+                    contentStream.setFont(normalFont, 11);
+                    contentStream.newLineAtOffset(caculateStartXCenter(normalFont, content3, 11, startX+250, startX+375), textY - (i+1)*40);
+                    contentStream.showText(content3);
+                    contentStream.endText();
+                    contentStream.beginText();
+                    String content4 = dataList.get(i).getSoLuong().toString();
+                    contentStream.setFont(normalFont, 11);
+                    contentStream.newLineAtOffset(caculateStartXCenter(normalFont, content4, 11, startX+375, startX+500), textY - (i+1)*40);
+                    contentStream.showText(content4);
+                    contentStream.endText();
+                }
                 
                 contentStream.beginText();
                 contentStream.setFont(boldFont, 16);
-                contentStream.newLineAtOffset(pageWidth/6, pageHeight - 500);
+                contentStream.newLineAtOffset(pageWidth/6, startY - (dataList.size()+1)*40 -50);
                 contentStream.showText("Tổng tiền: " + tongTien);
                 contentStream.endText();
             }
@@ -234,6 +310,27 @@ public class ChiTietPhieuNhapController implements Initializable {
 		}
     }
     
+    public float caculateTextWidth (PDType0Font font, String text, float fontSize) {
+    	float textWidth = 0;
+		try {
+			textWidth = font.getStringWidth(text) / 1000 * fontSize;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return textWidth;
+    }
+    
+    public float caculateStartXCenter (PDType0Font font, String text, float fontSize,
+    		float columnStart, float columnEnd) {
+    	float startX = 0;
+		try {
+			float textWidth = caculateTextWidth(font, text, fontSize);
+			startX = columnStart + ((columnEnd-columnStart) - textWidth) / 2;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	return startX;
+    }   
     
     /**
      * Initializes the controller class.
