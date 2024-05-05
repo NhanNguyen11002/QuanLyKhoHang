@@ -111,7 +111,7 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         EntityManager em = JpaUtils.getEntityManager();
         String japl = "select count( u) from TaiKhoan u";
         Query query = em.createQuery(japl);
-        em.close();
+//        em.close();
         return ((Long) query.getSingleResult()).intValue();
     }
 

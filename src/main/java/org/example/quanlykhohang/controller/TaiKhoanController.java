@@ -95,6 +95,8 @@ public class TaiKhoanController {
 
                 // Get the controller of the loaded FXML file
                 SuaTaiKhoanController controller = fxmlLoader.getController();
+                controller.setTaiKhoanController(this); // Truyền đối tượng TaiKhoanController vào ThemTaiKhoanController
+
                 // Truyền dữ liệu từ hàng được chọn vào form chi tiết
                 controller.initData(selectedRow);
 
