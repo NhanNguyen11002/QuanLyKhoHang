@@ -8,6 +8,7 @@ public class SanPhamTrongDonHangDTO {
     private Double giaXuat;
     private Integer soLuong;
     private Integer soLuongTon;
+    private DienThoai dienThoai;
 
     public SanPhamTrongDonHangDTO(String maDT, String tenDT, Double giaXuat, Integer soLuong, Integer soLuongTon) {
         this.maDT = maDT;
@@ -15,6 +16,26 @@ public class SanPhamTrongDonHangDTO {
         this.giaXuat = giaXuat;
         this.soLuong = soLuong;
         this.soLuongTon = soLuongTon;
+    }
+
+    public SanPhamTrongDonHangDTO(String maDT, String tenDT, Double giaXuat, Integer soLuong, Integer soLuongTon, DienThoai dienThoai) {
+        this.maDT = maDT;
+        this.tenDT = tenDT;
+        this.giaXuat = giaXuat;
+        this.soLuong = soLuong;
+        this.soLuongTon = soLuongTon;
+        this.dienThoai = dienThoai;
+    }
+
+    public DienThoai getDienThoai() {
+        return dienThoai;
+    }
+
+    public void setDienThoai(DienThoai dienThoai) {
+        this.dienThoai = dienThoai;
+    }
+
+    public SanPhamTrongDonHangDTO() {
     }
 
     public String getMaDT() {

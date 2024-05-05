@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 
 import jakarta.persistence.EntityManager;
 import java.util.List;
+
+import org.example.quanlykhohang.entity.DonXuatHang;
 import org.example.quanlykhohang.util.JpaUtils;
 import org.example.quanlykhohang.entity.ChiTietDonXuatHang;
 
@@ -63,6 +65,22 @@ public class ChiTietDonXuatHangDAO implements InterfaceDAO<ChiTietDonXuatHang, I
             em.close();
         }    
     }
+    public void deleteByMaDon(String maDon){
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            em.getTransaction().begin();
+            String jqpl = "Delete FROM ChiTietDonXuatHang u where u.donXuatHang.maDon = :maDon";
+            Query query = em.createQuery(jqpl);
+            query.setParameter("maDon",maDon);
+            query.executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e){
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 
     @Override
     public ChiTietDonXuatHang findById(Integer id) {
@@ -75,7 +93,7 @@ public class ChiTietDonXuatHangDAO implements InterfaceDAO<ChiTietDonXuatHang, I
     @Override
     public long count() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "select count(u) from ChiTietDonXuat u";
+        String japl = "select count(u) from ChiTietDonXuatHang u";
         Query query = em.createQuery(japl);
         em.close();
         return ((Long) query.getSingleResult()).intValue();    
@@ -84,7 +102,7 @@ public class ChiTietDonXuatHangDAO implements InterfaceDAO<ChiTietDonXuatHang, I
     @Override
     public List<ChiTietDonXuatHang> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM ChiTietDonXuat u order by u.id";
+        String japl = "SELECT u FROM ChiTietDonXuatHang u order by u.id";
         TypedQuery<ChiTietDonXuatHang> query = em.createQuery(japl, ChiTietDonXuatHang.class);
         em.close();
         return query.getResultList();    
@@ -93,7 +111,7 @@ public class ChiTietDonXuatHangDAO implements InterfaceDAO<ChiTietDonXuatHang, I
     @Override
     public boolean existsById(Integer id) {
         EntityManager em = JpaUtils.getEntityManager();
-        String jql = "SELECT COUNT(u.id) FROM ChiTietDonXuat u WHERE u.id = :id";
+        String jql = "SELECT COUNT(u.id) FROM ChiTietDonXuatHang u WHERE u.id = :id";
         TypedQuery<Long> query = em.createQuery(jql, Long.class);
         query.setParameter("id", id);
         Long count = query.getSingleResult();

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<GridPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.TaoDonXuatController">
+<GridPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.SuaDonXuatController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" maxWidth="610.0" minWidth="10.0" prefWidth="610.0" />
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -43,7 +43,7 @@
                                 <FontIcon iconLiteral="mdi2r-reload" iconSize="40" wrappingWidth="43.410980224609375" />
                             </graphic>
                         </Button>
-                  <Label layoutX="32.0" layoutY="6.0" text="Tìm sản  phẩm" />
+                  <Label layoutX="32.0" layoutY="6.0" text="Tìm sản phẩm" />
                     </children>
                 </Pane>
                 <TableView fx:id="productTable" layoutX="78.0" layoutY="254.0" prefHeight="580.0" prefWidth="590.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -72,13 +72,13 @@
         </AnchorPane>
         <AnchorPane maxWidth="610.0" prefHeight="200.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
             <children>
-                <ComboBox fx:id="customerCbbox" layoutX="159.0" layoutY="88.0" onAction="#onCustomerCbboxAction" prefHeight="40.0" prefWidth="400.0" />
-                <Label layoutX="29.0" layoutY="39.0" text="Người tạo đơn">
+                <ComboBox fx:id="customerCbbox" layoutX="170.0" layoutY="81.0" onAction="#onCustomerCbboxAction" prefHeight="40.0" prefWidth="400.0" />
+                <Label layoutX="40.0" layoutY="32.0" text="Người tạo đơn">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="creatorTxt" disable="true" layoutX="159.0" layoutY="31.0" prefHeight="40.0" prefWidth="400.0" />
+                <TextField fx:id="creatorTxt" disable="true" layoutX="170.0" layoutY="24.0" prefHeight="40.0" prefWidth="400.0" />
                 <TableView fx:id="exportFormTable" layoutX="79.0" layoutY="481.0" prefHeight="500.0" prefWidth="590.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                     <columns>
                         <TableColumn prefWidth="67.0" text="STT" />
@@ -88,7 +88,7 @@
                         <TableColumn minWidth="0.0" prefWidth="121.0" text="Số lượng xuất" />
                     </columns>
                 </TableView>
-                <Label layoutX="29.0" layoutY="96.0" text="Khách hàng">
+                <Label layoutX="40.0" layoutY="89.0" text="Khách hàng">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -113,7 +113,7 @@
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="exportBtn" layoutX="457.0" layoutY="741.0" mnemonicParsing="false" onAction="#onExportBtnClick" text="Xuất">
+                <Button fx:id="exportBtn" layoutX="457.0" layoutY="741.0" mnemonicParsing="false" onAction="#onExportBtnClick" text="Lưu">
                     <font>
                         <Font size="14.0" />
                     </font>

@@ -14,13 +14,15 @@ import javafx.stage.Stage;
 public class EditQuantityDialog {
     public static Integer quantity;
 
-    public static Integer display(Integer soLuongTon){
+    public static Integer display(Integer soLuongTon, Integer soLuongBanDau){
+        quantity = soLuongBanDau;
         Stage popupStage = new Stage();
         popupStage.initModality(Modality.APPLICATION_MODAL);
         popupStage.setTitle("Sửa số lượng");
 
         // Tạo một TextField và một nút "Submit" trong popup
         TextField textField = new TextField();
+        textField.setText(soLuongBanDau.toString());
         Label label = new Label();
         label.setText("Nhập số lượng mong muốn");
         Button submitButton = new Button("Lưu");
@@ -54,7 +56,6 @@ public class EditQuantityDialog {
                 alert1.setHeaderText(null);
                 alert1.setContentText("Số lượng xuất phải là số nguyên");
                 alert1.showAndWait();
-                return;
             }
         });
 
@@ -67,6 +68,7 @@ public class EditQuantityDialog {
 
         // Tạo scene cho popup và hiển thị nó trên popupStage
         Scene popupScene = new Scene(popupLayout, 300, 100);
+        popupStage.setResizable(false);
         popupStage.setScene(popupScene);
         popupStage.showAndWait();
         return quantity;
