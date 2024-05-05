@@ -5,8 +5,9 @@
 package org.example.quanlykhohang.dao;
 import jakarta.persistence.*;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
+
+import org.example.quanlykhohang.entity.DienThoai;
 import org.example.quanlykhohang.entity.PhieuNhap;
 import org.example.quanlykhohang.util.JpaUtils;
 
@@ -86,8 +87,39 @@ public class PhieuNhapDAO implements InterfaceDAO<PhieuNhap, String> {
         EntityManager em = JpaUtils.getEntityManager();
         String japl = "SELECT u FROM PhieuNhap u order by u.maPhieu";
         TypedQuery<PhieuNhap> query = em.createQuery(japl, PhieuNhap.class);
+        List<PhieuNhap> resultList = query.getResultList();
         em.close();
-        return query.getResultList();    
+        return resultList;    
+    }
+    
+    public List<PhieuNhap> findByKeyword(String keyword) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String japl = "SELECT u FROM PhieuNhap u " +
+            		"JOIN u.nhaCungCap m " +
+                    "WHERE u.maPhieu LIKE :keyword " +
+                    "OR m.tenNhaCungCap LIKE :keyword " +
+                    "OR u.tongTien = :tongTien " +
+                    "ORDER BY CASE " +
+                    "WHEN u.maPhieu LIKE :keyword THEN 1 " +
+                    "WHEN m.tenNhaCungCap LIKE :keyword THEN 2 " +
+                    "WHEN u.tongTien = :tongTien THEN 3 " +
+                    "ELSE 4 " +
+                    "END";
+            TypedQuery<PhieuNhap> query = em.createQuery(japl, PhieuNhap.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            try {
+                double doubleValue = Double.parseDouble(keyword);
+                query.setParameter("tongTien", doubleValue); 
+            } catch (NumberFormatException e) {
+                query.setParameter("tongTien", null);
+            }
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override

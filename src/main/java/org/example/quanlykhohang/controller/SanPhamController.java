@@ -2,17 +2,22 @@ package org.example.quanlykhohang.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javafx.scene.Scene;
@@ -54,11 +59,11 @@ public class SanPhamController {
 	private TableColumn<DienThoai, Double> outputPriceColumn;
 
 	private ObservableList<DienThoai> phoneList = FXCollections.observableArrayList();
-	
+
 	public TableView<DienThoai> getProductTable() {
 		return this.productTable;
 	}
-	
+
 	public void reloadPhoneList() {
 		DienThoaiDAO phoneDAO = new DienThoaiDAO();
 		phoneList.clear();
@@ -66,14 +71,45 @@ public class SanPhamController {
 		productTable.getItems().clear();
 		productTable.getItems().addAll(phoneList);
 		productTable.refresh();
-    }
-	
+	}
+
 	@FXML
 	private void initialize() {
 		idPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+		idPhoneColumn.setStyle("-fx-alignment: CENTER;");
 		namePhoneColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+		namePhoneColumn.setStyle("-fx-alignment: CENTER;");
 		inputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaNhap"));
+		inputPriceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+		inputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+			private final DecimalFormat format = new DecimalFormat("#,###.0");
+			
+		    @Override
+		    protected void updateItem(Double item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty || item == null) {
+		            setText(null);
+		        } else {
+		            setText(format.format(item));
+		        }
+		    }
+		});
 		outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
+		outputPriceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+		outputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+			private final DecimalFormat format = new DecimalFormat("#,###.0");
+			
+		    @Override
+		    protected void updateItem(Double item, boolean empty) {
+		        super.updateItem(item, empty);
+		        if (empty || item == null) {
+		            setText(null);
+		        } else {
+		            setText(format.format(item));
+		        }
+		    }
+		});
+		productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 		DienThoaiDAO phoneDAO = new DienThoaiDAO();
 		phoneList.clear();
 		phoneList.addAll(phoneDAO.findAll());
@@ -165,6 +201,19 @@ public class SanPhamController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@FXML
+	public void handleSearchTextFieldKeyPress(ActionEvent event) {
+		filterTable(searchTxt.getText());
+	}
+
+	private void filterTable(String keyword) {
+		DienThoaiDAO dtDAO = new DienThoaiDAO();
+		ObservableList<DienThoai> filteredList = FXCollections.observableArrayList(dtDAO.findByKeyword(keyword));
+		productTable.getItems().clear();
+		productTable.getItems().addAll(filteredList);
+		productTable.refresh();
 	}
 
 	@FXML

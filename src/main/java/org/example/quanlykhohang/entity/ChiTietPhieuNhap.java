@@ -26,8 +26,7 @@ public class ChiTietPhieuNhap {
     public ChiTietPhieuNhap() {
     }
 
-    public ChiTietPhieuNhap(Integer id, PhieuNhap phieuNhap, DienThoai dienThoai, Integer soLuong, Double donGia) {
-        this.id = id;
+    public ChiTietPhieuNhap(PhieuNhap phieuNhap, DienThoai dienThoai, Integer soLuong, Double donGia) {
         this.phieuNhap = phieuNhap;
         this.dienThoai = dienThoai;
         this.soLuong = soLuong;

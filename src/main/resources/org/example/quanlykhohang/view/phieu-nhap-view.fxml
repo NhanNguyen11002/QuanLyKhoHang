@@ -17,11 +17,11 @@
             <children>
                 <TableView fx:id="importTicketTable" layoutX="123.0" layoutY="34.0" prefHeight="660.0" prefWidth="1200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                     <columns>
-                        <TableColumn prefWidth="110.97826766967773" text="Mã phiếu nhập" />
-                        <TableColumn prefWidth="235.34886169433594" text="Người tạo phiếu" />
-                        <TableColumn prefWidth="110.0" text="Nhà cung cấp" />
-                  <TableColumn prefWidth="122.0" text="Thời gian tạo" />
-                        <TableColumn prefWidth="76.0" text="Tổng tiền" />
+                        <TableColumn text="Mã phiếu nhập" fx:id="maPhieuColumn"/>
+                        <TableColumn text="Người tạo phiếu" fx:id="nguoiTaoColumn" />
+                        <TableColumn text="Nhà cung cấp" fx:id="nhaCungCapColumn" />
+                  		<TableColumn text="Thời gian tạo" fx:id="thoiGianTaoColumn" />
+                        <TableColumn text="Tổng tiền" fx:id="tongTienColumn" />
                     </columns>
                 </TableView>
             </children></AnchorPane>
@@ -83,7 +83,7 @@
                 </Pane>
                 <Pane layoutX="501.0" prefHeight="100.0" prefWidth="720.0" styleClass="top-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <TextField fx:id="searchTxt" layoutX="170.0" layoutY="29.0" prefHeight="40.0" prefWidth="400.0" />
+                        <TextField fx:id="searchTxt" onAction="#handleSearchTextFieldKeyPress" layoutX="170.0" layoutY="29.0" prefHeight="40.0" prefWidth="400.0" promptText="Nhập từ khóa tìm kiếm" />
                         <Button fx:id="resetBtn" layoutX="579.0" layoutY="29.0" mnemonicParsing="false" onAction="#onResetBtnClick" prefHeight="40.0" prefWidth="120.0" text="Làm mới">
                             <graphic>
                                 <FontIcon iconLiteral="mdi2r-reload" iconSize="30" />
