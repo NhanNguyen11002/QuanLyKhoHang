@@ -88,6 +88,16 @@ public class ChiTietPhieuNhapDAO implements InterfaceDAO<ChiTietPhieuNhap, Integ
         em.close();
         return query.getResultList();    
     }
+    
+    public List<ChiTietPhieuNhap> findByMaPhieu(String maPhieu) {
+        EntityManager em = JpaUtils.getEntityManager();
+        String japl = "SELECT c FROM ChiTietPhieuNhap c WHERE c.phieuNhap.maPhieu = :maPhieu";
+        TypedQuery<ChiTietPhieuNhap> query = em.createQuery(japl, ChiTietPhieuNhap.class);
+        query.setParameter("maPhieu", maPhieu);
+        List<ChiTietPhieuNhap> resultList = query.getResultList();
+        em.close();
+        return resultList;    
+    }
 
     @Override
     public boolean existsById(Integer id) {

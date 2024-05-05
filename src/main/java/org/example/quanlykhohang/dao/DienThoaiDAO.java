@@ -6,9 +6,9 @@ package org.example.quanlykhohang.dao;
 
 import jakarta.persistence.*;
 
-import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.example.quanlykhohang.entity.DienThoai;
+import org.example.quanlykhohang.entity.NhaCungCap;
 import org.example.quanlykhohang.util.JpaUtils;
 
 /**
@@ -103,4 +103,35 @@ public class DienThoaiDAO implements InterfaceDAO<DienThoai, String> {
         return count == 1;    
     }
     
+    public List<DienThoai> findByKeyword(String keyword) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String japl = "SELECT u FROM DienThoai u WHERE " +
+                    "u.maDT LIKE :keyword " +
+                    "OR u.tenDT LIKE :keyword " +
+                    "OR u.giaNhap = :giaNhap " +
+                    "OR u.giaXuat = :giaXuat " +
+                    "ORDER BY CASE " +
+                    "WHEN u.maDT LIKE :keyword THEN 1 " +
+                    "WHEN u.tenDT LIKE :keyword THEN 2 " +
+                    "WHEN u.giaNhap = :giaNhap THEN 3 " +
+                    "ELSE 4 " +
+                    "END";
+            TypedQuery<DienThoai> query = em.createQuery(japl, DienThoai.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            try {
+                double doubleValue = Double.parseDouble(keyword);
+                query.setParameter("giaNhap", doubleValue); 
+                query.setParameter("giaXuat", doubleValue);
+            } catch (NumberFormatException e) {
+                query.setParameter("giaNhap", null);
+                query.setParameter("giaXuat", null);
+            }
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

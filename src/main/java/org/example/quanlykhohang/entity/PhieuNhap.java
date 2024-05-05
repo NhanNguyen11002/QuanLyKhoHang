@@ -21,16 +21,28 @@ public class PhieuNhap {
     private NhaCungCap nhaCungCap;
     @Column(name="tongTien")
     private Double tongTien;
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private PhieuStatus status;
 
     public PhieuNhap() {
+    	this.maPhieu = generateMaPhieu();
+    	this.status = PhieuStatus.Done;
     }
 
-    public PhieuNhap(String maPhieu, Timestamp thoiGianTao, NhanVien nguoiTao, NhaCungCap nhaCungCap, Double tongTien) {
-        this.maPhieu = maPhieu;
+    public PhieuNhap(Timestamp thoiGianTao, NhanVien nguoiTao, NhaCungCap nhaCungCap, Double tongTien, PhieuStatus status) {
+        this.maPhieu = generateMaPhieu();
         this.thoiGianTao = thoiGianTao;
         this.nguoiTao = nguoiTao;
         this.nhaCungCap = nhaCungCap;
         this.tongTien = tongTien;
+        this.status = status;
+    }
+    
+    private String generateMaPhieu() {
+        String prefix = "PN_";
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        return prefix + timestamp;
     }
 
     public String getMaPhieu() {

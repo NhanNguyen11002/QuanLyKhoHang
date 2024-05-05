@@ -86,7 +86,7 @@ public class DonXuatHangDAO implements InterfaceDAO<DonXuatHang, String> {
     public List<DonXuatHang> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
         try{
-            String japl = "SELECT u FROM DonXuatHang u order by u.maDon";
+            String japl = "SELECT u FROM DonXuatHang u join fetch u.chiTietDonXuatHangList order by u.maDon";
             TypedQuery<DonXuatHang> query = em.createQuery(japl, DonXuatHang.class);
             return query.getResultList();
         } catch (Exception e){
@@ -106,5 +106,33 @@ public class DonXuatHangDAO implements InterfaceDAO<DonXuatHang, String> {
         em.close();
         return count == 1;    
     }
-    
+
+    public List<DonXuatHang> searchByKeyword(String keyword, String status){
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String jpql = "SELECT u FROM DonXuatHang u WHERE " +
+                    "(u.khachHang.tenKhachHang LIKE :keyword " +
+                    "OR u.maDon LIKE :keyword " +
+                    "OR u.nhanVien.ten LIKE :keyword " +
+                    "OR u.nhanVien.ho LIKE :keyword) " +
+                    "AND (:status = '0' OR u.trangThai = :status) " +
+                    "ORDER BY CASE " +
+                    "WHEN u.maDon LIKE :keyword THEN 1 " +
+                    "WHEN u.khachHang.tenKhachHang LIKE :keyword THEN 2 " +
+                    "WHEN u.nhanVien.ten LIKE :keyword THEN 3 " +
+                    "WHEN u.nhanVien.ho LIKE :keyword THEN 4 " +
+                    "ELSE 4 " +
+                    "END";
+            TypedQuery<DonXuatHang> query = em.createQuery(jpql, DonXuatHang.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            String cvt = status.equals("all")?"0":status;
+            System.out.println("stt "+ cvt );
+            query.setParameter("status",status.equals("all")?"0":status);
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

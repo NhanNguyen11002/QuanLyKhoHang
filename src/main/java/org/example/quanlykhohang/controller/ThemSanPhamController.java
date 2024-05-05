@@ -55,8 +55,11 @@ public class ThemSanPhamController implements Initializable {
 			DienThoaiDAO phoneDAO = new DienThoaiDAO();
 			String id = idPhoneTxt.getText();
 			String name = namePhoneTxt.getText();
-			double inputPrice = Double.parseDouble(inputPriceTxt.getText());
-			double outputPrice = Double.parseDouble(outputPriceTxt.getText());
+			String inputPrice = inputPriceTxt.getText();
+			String outputPrice = outputPriceTxt.getText();
+			if (id.isEmpty() || name.isEmpty() || inputPrice.isEmpty() || outputPrice.isEmpty()) {
+				throw new IllegalArgumentException("Vui lòng điền đủ thông tin");
+			}
 			// check exist
 			boolean exist = phoneDAO.existsById(id);
 			if (exist == true) {
@@ -65,8 +68,9 @@ public class ThemSanPhamController implements Initializable {
 			DienThoai dt = new DienThoai();
 			dt.setMaDT(id);
 			dt.setTenDT(name);
-			dt.setGiaNhap(inputPrice);
-			dt.setGiaXuat(outputPrice);
+			dt.setGiaNhap(Double.parseDouble(inputPrice));
+			dt.setGiaXuat(Double.parseDouble(outputPrice));
+			dt.setSoLuong(0);
 			phoneDAO.create(dt);
 			// Đóng cửa sổ
 			Stage stage = (Stage) saveButton.getScene().getWindow();

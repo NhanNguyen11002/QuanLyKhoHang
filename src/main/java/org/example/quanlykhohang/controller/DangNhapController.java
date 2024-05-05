@@ -49,7 +49,10 @@ public class DangNhapController {
                         System.out.println(UserSession.getInstance().getUserId());
                         System.out.println(UserSession.getInstance().getUserName());
                     } else if (role.equals(Role.Staff)) {
-                        showAlert("!!!!");
+                        showSuccess("Đăng nhập thành công!");
+                        openStaffSidebar();
+                        System.out.println(UserSession.getInstance().getUserId());
+                        System.out.println(UserSession.getInstance().getUserName());
                     }
                     Stage currentStage = (Stage) usernameTxt.getScene().getWindow();
                     currentStage.close();
@@ -86,6 +89,21 @@ public class DangNhapController {
             adminStage.show();
         } catch (IOException e) {
             System.out.println("Error loading admin-sidebar.fxml: " + e.getMessage()); // In ra thông báo lỗi
+            e.printStackTrace();
+            // Xử lý ngoại lệ, ví dụ: hiển thị thông báo lỗi
+        }
+    }
+    private void openStaffSidebar() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/staff-sidebar.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage adminStage = new Stage();
+            adminStage.setTitle("Quản lý kho hàng");
+            adminStage.setScene(new Scene(root));
+            adminStage.setResizable(false);
+            adminStage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading staff-sidebar.fxml: " + e.getMessage()); // In ra thông báo lỗi
             e.printStackTrace();
             // Xử lý ngoại lệ, ví dụ: hiển thị thông báo lỗi
         }

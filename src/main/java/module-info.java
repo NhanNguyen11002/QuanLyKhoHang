@@ -21,7 +21,7 @@ open module org.example.quanlykhohang {
     requires org.apache.poi.poi;
     requires org.apache.poi.ooxml;
     requires jakarta.mail; // Thêm module javax.mail
-
+    requires org.apache.pdfbox;
 //    opens org.example.quanlykhohang to javafx.fxml;
     exports org.example.quanlykhohang;
     exports org.example.quanlykhohang.controller;

@@ -1,5 +1,6 @@
 package org.example.quanlykhohang.controller;
 
+import jakarta.persistence.Transient;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -19,10 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 import org.example.quanlykhohang.Main;
-import org.example.quanlykhohang.dao.DienThoaiDAO;
-import org.example.quanlykhohang.dao.DonXuatHangDAO;
-import org.example.quanlykhohang.dao.KhachHangDAO;
-import org.example.quanlykhohang.dao.NhanVienDAO;
+import org.example.quanlykhohang.dao.*;
 import org.example.quanlykhohang.entity.*;
 import org.example.quanlykhohang.util.EditQuantityDialog;
 
@@ -32,11 +30,13 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaoDonXuatController {
+public class SuaDonXuatController {
+    private DonXuatHang donXuatHang;
     private DienThoaiDAO dienThoaiDAO = new DienThoaiDAO();
     private KhachHangDAO khachHangDAO = new KhachHangDAO();
     private DonXuatHangDAO donXuatHangDAO = new DonXuatHangDAO();
     private NhanVienDAO nhanVienDAO = new NhanVienDAO();
+    private ChiTietDonXuatHangDAO chiTietDonXuatHangDAO = new ChiTietDonXuatHangDAO();
     @FXML
     private Button addBtn;
     @FXML
@@ -190,7 +190,7 @@ public class TaoDonXuatController {
                 Alert alert1 = new Alert(Alert.AlertType.WARNING);
                 alert1.setTitle("Lỗi");
                 alert1.setHeaderText(null);
-                alert1.setContentText("Thêm sản phẩm vào đơn trước khi tạo");
+                alert1.setContentText("Thêm sản phẩm vào đơn trước khi lưu");
                 alert1.showAndWait();
                 return;
             }
@@ -199,7 +199,7 @@ public class TaoDonXuatController {
                 Alert alert1 = new Alert(Alert.AlertType.WARNING);
                 alert1.setTitle("Lỗi");
                 alert1.setHeaderText(null);
-                alert1.setContentText("Chọn khách hàng trước khi tạo");
+                alert1.setContentText("Chọn khách hàng trước khi lưu");
                 alert1.showAndWait();
                 return;
 
@@ -207,15 +207,21 @@ public class TaoDonXuatController {
             NhanVien nv = nhanVienDAO.findById(UserSession.getInstance().getUserId());
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             String id = "PN_"+timestamp.getTime();
-            DonXuatHang donXuatHang = new DonXuatHang(id,getTongTien(),timestamp,"pending",nv,kh);
+
+            //DonXuatHang donXuatHang = new DonXuatHang(this.donXuatHang.getMaDon(),getTongTien(),timestamp,"pending",nv,kh);
+            DonXuatHang donXuatHang = this.donXuatHang;
+            donXuatHang.setTongTien(getTongTien());
+
             List<ChiTietDonXuatHang> chiTietDonXuatHangList = new ArrayList<ChiTietDonXuatHang>();
             for(SanPhamTrongDonHangDTO sp : exportList){
                 ChiTietDonXuatHang chiTietDonXuatHang = new ChiTietDonXuatHang(donXuatHang,sp.getDienThoai(),sp.getSoLuong(),sp.getGiaXuat());
                 chiTietDonXuatHangList.add(chiTietDonXuatHang);
             }
+            donXuatHang.getChiTietDonXuatHangList().clear();
+            chiTietDonXuatHangDAO.deleteByMaDon(donXuatHang.getMaDon());
             donXuatHang.setChiTietDonXuatHangList(chiTietDonXuatHangList);
 
-            donXuatHangDAO.create(donXuatHang);
+            donXuatHangDAO.update(donXuatHang);
             for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
                 DienThoai dt = ct.getDienThoai();
                 dt.setSoLuong(dt.getSoLuong()-ct.getSoLuong());
@@ -225,7 +231,7 @@ public class TaoDonXuatController {
             Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
             alert1.setTitle("Thành công");
             alert1.setHeaderText(null);
-            alert1.setContentText("Tạo đơn hàng thành công");
+            alert1.setContentText("Sửa đơn hàng thành công");
             alert1.showAndWait();
 
             back();
@@ -234,7 +240,7 @@ public class TaoDonXuatController {
             Alert alert1 = new Alert(Alert.AlertType.ERROR);
             alert1.setTitle("Lỗi");
             alert1.setHeaderText(null);
-            alert1.setContentText("Có lỗi xảy ra trong quá trình tạo đơn");
+            alert1.setContentText("Có lỗi xảy ra trong quá trình sửa đơn");
             alert1.showAndWait();
             return;
         }
@@ -256,10 +262,9 @@ public class TaoDonXuatController {
             e.printStackTrace();
         }
     }
-    @FXML
+
     private void initialize(){
-        setUpProductTable();
-        setUpExportFormTable();
+
         // setup cbbox
         customerCbbox.setConverter(new StringConverter<KhachHang>() {
             @Override
@@ -276,6 +281,10 @@ public class TaoDonXuatController {
             }
         });
         customerCbbox.setItems(getAllKhachHang());
+        customerCbbox.getSelectionModel().select(this.donXuatHang.getKhachHang());
+
+        setUpProductTable();
+        setUpExportFormTable();
 
         // setup creator text
         creatorTxt.setText(UserSession.getInstance().getUserName());
@@ -361,6 +370,12 @@ public class TaoDonXuatController {
         ObservableList<DienThoai> data = FXCollections.observableArrayList();
         List<DienThoai> dienThoaiList = dienThoaiDAO.findAll();
         for (DienThoai dt : dienThoaiList) {
+            SanPhamTrongDonHangDTO sp = new SanPhamTrongDonHangDTO();
+            sp.setMaDT(dt.getMaDT());
+            int index = exportList.indexOf(sp);
+            if(index != -1){
+                dt.setSoLuong(exportList.get(index).getSoLuongTon());
+            }
             data.add(dt);
         }
         return data;
@@ -391,4 +406,25 @@ public class TaoDonXuatController {
         String formattedNumber = decimalFormat.format(getTongTien()) +" VND";
         totalMoneyLabel.setText(formattedNumber);
     }
+
+    public void setDonXuatHang(DonXuatHang donXuatHang){
+        System.out.println("truyền vào: "+donXuatHang.getMaDon());
+        this.donXuatHang = donXuatHang;
+        System.out.println("trong controller: "+this.donXuatHang.getMaDon());
+        List<ChiTietDonXuatHang>  chiTietDonXuatHangList = donXuatHang.getChiTietDonXuatHangList();
+        for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
+            DienThoai dt = ct.getDienThoai();
+            String tenDt = dt.getTenDT();
+            String maDt = dt.getMaDT();
+            Double donGia = dt.getGiaXuat();
+            Integer soLuong = ct.getSoLuong();
+            Integer soLuongTon = dt.getSoLuong() + soLuong;
+            dt.setSoLuong(soLuongTon);
+            SanPhamTrongDonHangDTO sp = new SanPhamTrongDonHangDTO(maDt,tenDt,donGia,soLuong,soLuongTon,dt);
+            exportList.add(sp);
+        }
+        initialize();
+        loadDataExport();
+    }
+
 }

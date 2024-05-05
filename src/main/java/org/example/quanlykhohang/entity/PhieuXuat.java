@@ -18,16 +18,28 @@ public class PhieuXuat {
     private String bienSoXe;
     @Column(name="thoiGianTao")
     private Timestamp thoiGianTao;
+    @Column(name="status")
+    @Enumerated(EnumType.STRING)
+    private PhieuStatus status;
 
     public PhieuXuat() {
+    	this.maPhieu = generateMaPhieu();
+    	this.status = PhieuStatus.Done;
     }
 
-    public PhieuXuat(String maPhieu, NhanVien nguoiTao, DonXuatHang donXuatHang, String bienSoXe, Timestamp thoiGianTao) {
-        this.maPhieu = maPhieu;
+    public PhieuXuat(NhanVien nguoiTao, DonXuatHang donXuatHang, String bienSoXe, Timestamp thoiGianTao, PhieuStatus status) {
+        this.maPhieu = generateMaPhieu();
         this.nguoiTao = nguoiTao;
         this.donXuatHang = donXuatHang;
         this.bienSoXe = bienSoXe;
         this.thoiGianTao = thoiGianTao;
+        this.status = status;
+    }
+    
+    private String generateMaPhieu() {
+        String prefix = "PX_";
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        return prefix + timestamp;
     }
 
     public String getMaPhieu() {

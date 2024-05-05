@@ -28,8 +28,8 @@ public class DienThoai {
         if (giaXuat == null || giaXuat <= 0) {
             throw new IllegalArgumentException("Giá nhập phải là số dương");
         }
-        if (soLuong == null || soLuong <= 0) {
-            throw new IllegalArgumentException("Số lượng phải là số nguyên dương");
+        if (soLuong == null || soLuong < 0) {
+            throw new IllegalArgumentException("Số lượng không hợp lệ");
         }
         this.maDT = maDT;
         this.tenDT = tenDT;
@@ -87,8 +87,8 @@ public class DienThoai {
     }
 
     public void setSoLuong(Integer soLuong) {
-    	if (soLuong == null || soLuong <= 0) {
-            throw new IllegalArgumentException("Số lượng phải là số nguyên dương");
+    	if (soLuong == null || soLuong < 0) {
+            throw new IllegalArgumentException("Số lượng không hợp lệ");
         }
         this.soLuong = soLuong;
     }

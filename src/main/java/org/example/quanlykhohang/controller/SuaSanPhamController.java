@@ -56,8 +56,8 @@ public class SuaSanPhamController implements Initializable {
 				idPhoneTxt.setText(idPhone);
 				idPhoneTxt.setEditable(false);
 				namePhoneTxt.setText(namePhone);
-				inputPriceTxt.setText(String.valueOf(inputPrice));
-				outputPriceTxt.setText(String.valueOf(outputPrice));
+				inputPriceTxt.setText(String.valueOf((int)inputPrice));
+				outputPriceTxt.setText(String.valueOf((int)outputPrice));
 			} else {
 				throw new IOException("Không có sản phẩm nào được chọn");
 			}
