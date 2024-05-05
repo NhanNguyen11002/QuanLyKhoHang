@@ -1,7 +1,9 @@
 package org.example.quanlykhohang.dao;
 
 import jakarta.persistence.*;
+import org.example.quanlykhohang.entity.Role;
 import org.example.quanlykhohang.entity.TaiKhoan;
+import org.example.quanlykhohang.entity.UserSession;
 import org.example.quanlykhohang.util.JpaUtils;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -56,6 +58,29 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         }
     }
 
+    public void updatePassword(TaiKhoan taiKhoan) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            TaiKhoan existingTaiKhoan = em.createQuery("SELECT t FROM TaiKhoan t WHERE t.id = :id", TaiKhoan.class)
+                    .setParameter("id", taiKhoan.getId())
+                    .getSingleResult();
+            if (existingTaiKhoan != null) {
+                existingTaiKhoan.setPassword(taiKhoan.getPassword());
+                // Merge đối tượng cập nhật vào persistence context
+                em.merge(existingTaiKhoan);
+            } else {
+                throw new EntityNotFoundException("TaiKhoan with id " + taiKhoan.getId() + " not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
     @Override
     public void delete(Integer id) {
         EntityManager em = JpaUtils.getEntityManager();
@@ -93,10 +118,39 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
     @Override
     public List<TaiKhoan> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-//        String japl = "SELECT * FROM TaiKhoan order by id";
-	TypedQuery<TaiKhoan> query = em.createNamedQuery("TaiKhoan.findAll", TaiKhoan.class);
+	    TypedQuery<TaiKhoan> query = em.createNamedQuery("TaiKhoan.findAll", TaiKhoan.class);
 //        em.close();
         return query.getResultList();
+    }
+    public TaiKhoan findByMaNhanVien1(int id) {
+        EntityManager em = JpaUtils.getEntityManager();
+        TypedQuery<TaiKhoan> query = em.createQuery("SELECT t FROM TaiKhoan t join NhanVien u on t.nhanVien.maNhanVien = u.maNhanVien WHERE u.maNhanVien = :id", TaiKhoan.class);
+        query.setParameter("id", id);
+
+        TaiKhoan taiKhoan = null;
+        try {
+            taiKhoan = query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close(); // Đóng EntityManager sau khi sử dụng
+        }
+        return taiKhoan;
+    }
+    public List<TaiKhoan> findByRole(Role vaiTro) {
+        EntityManager em = JpaUtils.getEntityManager();
+        TypedQuery<TaiKhoan> query = em.createQuery("SELECT t FROM TaiKhoan t join NhanVien u on t.nhanVien.maNhanVien = u.maNhanVien WHERE t.vaiTro = :vaiTro", TaiKhoan.class);
+        query.setParameter("vaiTro", vaiTro);
+
+        List<TaiKhoan> taiKhoans = null;
+        try {
+            taiKhoans = query.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } finally {
+            em.close(); // Đóng EntityManager sau khi sử dụng
+        }
+        return taiKhoans;
     }
 
     @Override
@@ -109,6 +163,7 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         em.close();
         return count == 1;
     }
+
     public TaiKhoan checkLogin(String username, String password) {
         EntityManager em = JpaUtils.getEntityManager();
         String jql = "SELECT u FROM TaiKhoan u WHERE u.username = :username";
@@ -146,6 +201,25 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
             em.close();
         }
     }
+    public TaiKhoan findByEmail(String email) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            // Query to find TaiKhoan based on email
+            TaiKhoan taiKhoan = em.createQuery(
+                            "SELECT t FROM TaiKhoan t JOIN FETCH t.nhanVien n WHERE n.email = :email",
+                            TaiKhoan.class)
+                    .setParameter("email", email)
+                    .getSingleResult();
+            return taiKhoan;
+        } catch (NoResultException e) {
+            // Handle case where no TaiKhoan is found with the given email
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
+
     public void testDao(){
         EntityManager em = JpaUtils.getEntityManager();
         System.out.println("chạy tới đây là kết nối hibernate ok");

@@ -66,6 +66,21 @@ public class NhanVien {
         this.email = email;
     }
 
+    public NhanVien(Integer maNhanVien, String ten, String ho, LocalDate ngaySinh, Gender gioiTinh, String sdt, String diaChi, String email) {
+        this.maNhanVien = maNhanVien;
+        this.ten = ten;
+        this.ho = ho;
+        this.ngaySinh = ngaySinh;
+        this.gioiTinh = gioiTinh;
+        this.sdt = sdt;
+        this.diaChi = diaChi;
+        this.email = email;
+    }
+
+    public NhanVien(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "NhanVien{" + "maNhanVien=" + maNhanVien + ", ten=" + ten + ", ho=" + ho + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", ngayBatDau=" + ngayBatDau + ", ngayKetThuc=" + ngayKetThuc + ", sdt=" + sdt + ", diaChi=" + diaChi + ", email=" + email + '}';

@@ -41,7 +41,7 @@ public class DangNhapController {
                 showAlert("Tên đăng nhập hoặc mật khẩu không đúng!");
             } else {
                 if (taiKhoan.isDangHoatDong() == true) { // Kiểm tra tài khoản có bị khóa không
-                    UserSession.getInstance().setCurrentUser(taiKhoan.getId(), taiKhoan.getUsername());
+                    UserSession.getInstance().setCurrentUser(taiKhoan.getId(), taiKhoan.getUsername(), taiKhoan.getNhanVien().getMaNhanVien());
                     Role role = taiKhoan.getVaiTro();
                     if (role.equals(Role.Admin)) {
                         showSuccess("Đăng nhập thành công!");
@@ -91,5 +91,21 @@ public class DangNhapController {
         }
     }
     @FXML
-    private void onForgotLabelClick(){}
+    private void onForgotLabelClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-khoi-phuc-mat-khau-view.fxml"));
+            Pane item = fxmlLoader.load();
+//            KhoiPhucMatKhauController controller = fxmlLoader.getController();
+            // Create a new scene with the loaded pane
+            Scene scene = new Scene(item);
+
+            // Create a new stage and set the scene
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show(); // Show the stage
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

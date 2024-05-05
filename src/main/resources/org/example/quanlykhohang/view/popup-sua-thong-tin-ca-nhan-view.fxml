@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.SuaThongTinCaNhanController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.SuaThongTinCaNhanController">
    <children>
       <TabPane layoutX="-2.0" layoutY="62.0" prefHeight="275.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -51,10 +44,13 @@
                               <Label layoutX="49.0" layoutY="41.0" text="Mật khẩu hiện tại:" />
                               <Label layoutX="49.0" layoutY="94.0" text="Mật khẩu mới:" />
                               <Label layoutX="49.0" layoutY="143.0" text="Nhập lại mật khẩu mới:" />
-                              <TextField fx:id="currentPassTxt" layoutX="184.0" layoutY="37.0" prefHeight="25.0" prefWidth="243.0" />
-                              <TextField fx:id="newPassTxt" layoutX="184.0" layoutY="90.0" prefHeight="25.0" prefWidth="242.0" />
-                              <TextField fx:id="againNewPassTxt" layoutX="184.0" layoutY="139.0" prefHeight="25.0" prefWidth="242.0" />
                               <Button fx:id="saveButton2" layoutX="247.0" layoutY="198.0" mnemonicParsing="false" onAction="#onSaveButton2Click" prefHeight="25.0" prefWidth="106.0" text="Lưu" />
+                              <Label fx:id="passCurEr" layoutX="184.0" layoutY="62.0" prefHeight="17.0" prefWidth="241.0" />
+                              <Label fx:id="passAftEr" layoutX="184.0" layoutY="118.0" prefHeight="17.0" prefWidth="240.0" />
+                              <Label fx:id="passAgainEr" layoutX="184.0" layoutY="164.0" prefHeight="17.0" prefWidth="244.0" />
+                              <PasswordField fx:id="currentPassTxt" layoutX="184.0" layoutY="37.0" prefHeight="25.0" prefWidth="244.0" />
+                              <PasswordField fx:id="newPassTxt" layoutX="184.0" layoutY="90.0" prefHeight="25.0" prefWidth="244.0" />
+                              <PasswordField fx:id="againNewPassTxt" layoutX="183.0" layoutY="139.0" prefHeight="25.0" prefWidth="244.0" />
                            </children>
                         </Pane>
                      </children>
