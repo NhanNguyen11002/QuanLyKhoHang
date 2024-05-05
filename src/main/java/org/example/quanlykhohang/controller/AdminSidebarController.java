@@ -101,7 +101,7 @@ public class AdminSidebarController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-xuat-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
-            applyStyle(storagePane);
+            applyStyle(exportTicketPane);
         } catch (IOException e){
             e.printStackTrace();
         }

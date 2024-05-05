@@ -206,7 +206,7 @@ public class TaoDonXuatController {
             }
             NhanVien nv = nhanVienDAO.findById(UserSession.getInstance().getUserId());
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            String id = "PN_"+timestamp.getTime();
+            String id = "DH_"+timestamp.getTime();
             DonXuatHang donXuatHang = new DonXuatHang(id,getTongTien(),timestamp,"pending",nv,kh);
             List<ChiTietDonXuatHang> chiTietDonXuatHangList = new ArrayList<ChiTietDonXuatHang>();
             for(SanPhamTrongDonHangDTO sp : exportList){
@@ -227,7 +227,6 @@ public class TaoDonXuatController {
             alert1.setHeaderText(null);
             alert1.setContentText("Tạo đơn hàng thành công");
             alert1.showAndWait();
-
             back();
         } catch (Exception e){
             e.printStackTrace();
@@ -338,7 +337,6 @@ public class TaoDonXuatController {
             String formattedNumber = decimalFormat.format(value);
             return new SimpleStringProperty(formattedNumber);
         });
-
 
         TableColumn<SanPhamTrongDonHangDTO, Integer> quantityColumn = new TableColumn<>("Số lượng xuất hàng");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));

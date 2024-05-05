@@ -152,6 +152,14 @@ public class DonXuatController {
     private void onDetailBtnClick(){
         System.out.println("xem chi tiết");
         DonXuatHang donXuatHang = exportFormTable.getSelectionModel().getSelectedItem();
+        if(donXuatHang == null){
+            Alert alert1 = new Alert(Alert.AlertType.WARNING);
+            alert1.setTitle("Lỗi");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Vui lòng chọn đơn xuất hàng để xem chi tiết");
+            alert1.showAndWait();
+            return;
+        }
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-chi-tiet-don-xuat-view.fxml"));
             // Load the root pane
@@ -174,7 +182,7 @@ public class DonXuatController {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Cảnh báo");
             alert.setHeaderText(null);
-            alert.setContentText("Vui lòng chọn một đơn hàng để xem chi tiết");
+            alert.setContentText("Có lỗi xảy ra khi xem chi tiết đơn xuất hàng");
             alert.showAndWait();
         }
     }

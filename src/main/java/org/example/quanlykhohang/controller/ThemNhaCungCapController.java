@@ -77,6 +77,15 @@ public class ThemNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
+        boolean isExistByName = nhaCungCapDAO.existByTen(ten);
+        if(isExistByName){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có nhà cung cấp với tên được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
 
         try {
             NhaCungCap nhaCungCap = new NhaCungCap( ten, sdt, diaChi, email);

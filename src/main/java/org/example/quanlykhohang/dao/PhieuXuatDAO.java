@@ -4,6 +4,7 @@
  */
 package org.example.quanlykhohang.dao;
 
+import org.example.quanlykhohang.entity.DonXuatHang;
 import org.example.quanlykhohang.entity.PhieuXuat;
 import jakarta.persistence.*;
 
@@ -100,5 +101,38 @@ public class PhieuXuatDAO implements InterfaceDAO<PhieuXuat, String> {
         em.close();
         return count == 1;    
     }
+//    public List<PhieuXuat> searchByKeyword(String keyword, String status){
+//        EntityManager em = JpaUtils.getEntityManager();
+//        try{
+//            String jpql = "SELECT px FROM PhieuXuat px " +
+//                    "JOIN FETCH px.donXuatHang don " +
+//                    "JOIN FETCH don.chiTietDonXuatHangList chiTiet " +
+//                    "WHERE (don.khachHang.tenKhachHang LIKE :keyword " +
+//                    "OR px.maPhieu LIKE :keyword " +
+//                    "OR don.maDon LIKE :keyword " +
+//                    "OR px.bienSoXe LIKE :keyword " +
+//                    "OR px.nguoiTao.ten LIKE :keyword " +
+//                    "OR px.nguoiTao.ho LIKE :keyword) " +
+//                    "AND (:status = '0' OR px.trangThai = :status) " +
+//                    "ORDER BY CASE " +
+//                    "WHEN px.maPhieu LIKE :keyword THEN 1 " +
+//                    "WHEN px.bienSoXe LIKE :keyword THEN 2 " +
+//                    "WHEN don.khachHang.tenKhachHang LIKE :keyword THEN 3 " +
+//                    "WHEN px.nguoiTao.ten LIKE :keyword THEN 4 " +
+//                    "WHEN px.nguoiTao.ho LIKE :keyword THEN 5 " +
+//                    "ELSE 6 " +
+//                    "END";
+//            TypedQuery<PhieuXuat> query = em.createQuery(jpql, PhieuXuat.class);
+//            query.setParameter("keyword", "%" + keyword + "%");
+//            String cvt = status.equals("all")?"0":status;
+//            System.out.println("stt "+ cvt );
+//            query.setParameter("status",status.equals("all")?"0":status);
+//            return query.getResultList();
+//        } catch (Exception e){
+//            throw e;
+//        } finally {
+//            em.close();
+//        }
+//    }
     
 }

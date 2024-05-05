@@ -80,6 +80,15 @@ public class SuaNhaCungCapController implements Initializable {
             alert.showAndWait();
             return;
         }
+        boolean isExistByName = nhaCungCapDAO.existByTen(ten);
+        if(!ten.equals(oldNcc.getTenNhaCungCap())&&isExistByName){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Lỗi");
+            alert.setHeaderText(null);
+            alert.setContentText("Đã có nhà cung cấp với tên được nhập tồn tại trong hệ thống");
+            alert.showAndWait();
+            return;
+        }
 
 
         try {

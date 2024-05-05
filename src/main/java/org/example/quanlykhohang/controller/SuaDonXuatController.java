@@ -205,12 +205,11 @@ public class SuaDonXuatController {
 
             }
             NhanVien nv = nhanVienDAO.findById(UserSession.getInstance().getUserId());
-            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-            String id = "PN_"+timestamp.getTime();
 
             //DonXuatHang donXuatHang = new DonXuatHang(this.donXuatHang.getMaDon(),getTongTien(),timestamp,"pending",nv,kh);
             DonXuatHang donXuatHang = this.donXuatHang;
             donXuatHang.setTongTien(getTongTien());
+            donXuatHang.setNhanVien(nv);
 
             List<ChiTietDonXuatHang> chiTietDonXuatHangList = new ArrayList<ChiTietDonXuatHang>();
             for(SanPhamTrongDonHangDTO sp : exportList){
