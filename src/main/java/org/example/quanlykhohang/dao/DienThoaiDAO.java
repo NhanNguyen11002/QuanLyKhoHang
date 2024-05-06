@@ -76,10 +76,16 @@ public class DienThoaiDAO implements InterfaceDAO<DienThoai, String> {
     @Override
     public long count() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "select count(u) from DienThoai u";
-        Query query = em.createQuery(japl);
-        em.close();
-        return ((Long) query.getSingleResult()).intValue();    
+        try{
+            String japl = "select count(u) from DienThoai u";
+            Query query = em.createQuery(japl);
+            return ((Long) query.getSingleResult()).intValue();
+        }  catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override

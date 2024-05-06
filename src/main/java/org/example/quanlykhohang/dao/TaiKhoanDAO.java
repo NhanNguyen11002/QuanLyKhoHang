@@ -109,10 +109,16 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
     @Override
     public long count() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "select count( u) from TaiKhoan u";
-        Query query = em.createQuery(japl);
-//        em.close();
-        return ((Long) query.getSingleResult()).intValue();
+        try{
+            String japl = "select count(u) from TaiKhoan u where u.dangHoatDong = true";
+            Query query = em.createQuery(japl);
+            return ((Long) query.getSingleResult()).intValue();
+        }  catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
