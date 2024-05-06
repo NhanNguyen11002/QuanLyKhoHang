@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableCell;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import org.example.quanlykhohang.Main;
+import org.example.quanlykhohang.dao.ChiTietPhieuNhapDAO;
 import org.example.quanlykhohang.dao.DienThoaiDAO;
 import org.example.quanlykhohang.dao.NhaCungCapDAO;
 import org.example.quanlykhohang.dao.PhieuNhapDAO;
@@ -30,6 +32,7 @@ import org.example.quanlykhohang.entity.DienThoai;
 import org.example.quanlykhohang.entity.NhaCungCap;
 import org.example.quanlykhohang.entity.NhanVien;
 import org.example.quanlykhohang.entity.PhieuNhap;
+import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.UserSession;
 
 import java.io.IOException;
@@ -41,6 +44,10 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 public class PhieuNhapController {
+	PhieuNhapDAO pnDAO = new PhieuNhapDAO();
+	ChiTietPhieuNhapDAO ctpnDAO = new ChiTietPhieuNhapDAO();
+	DienThoaiDAO dtDAO = new DienThoaiDAO();
+	
     @FXML
     private Button addBtn;
     @FXML
@@ -74,6 +81,8 @@ public class PhieuNhapController {
 	private TableColumn<PhieuNhap, String> thoiGianTaoColumn;
 	@FXML
 	private TableColumn<PhieuNhap, Double> tongTienColumn;
+	@FXML
+	private TableColumn<PhieuNhap, String> trangThaiColumn;
 	
 	private ObservableList<PhieuNhap> pnList = FXCollections.observableArrayList();
 	private final DecimalFormat format = new DecimalFormat("#,###.0");
@@ -84,7 +93,6 @@ public class PhieuNhapController {
     
     @FXML
 	private void initialize() {
-    	PhieuNhapDAO pnDAO = new PhieuNhapDAO();
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     	sdf.setTimeZone(TimeZone.getTimeZone("GMT+7")); // UTC+7
     	
@@ -134,7 +142,13 @@ public class PhieuNhapController {
 				}
 			}
 		});
-    	
+    	trangThaiColumn.setCellValueFactory(cellData->{
+            PhieuStatus value = cellData.getValue().getStatus();
+            String formatTrangThai = value.toString().equals("Done")?"Hoàn thành":"Đã xóa";
+            return new SimpleStringProperty(formatTrangThai);
+        });
+    	trangThaiColumn.setStyle("-fx-alignment: CENTER;");
+    	filterCbbox.setItems(FXCollections.observableArrayList("Hoàn thành", "Đã xóa"));
     	// add Data
     	pnList.addAll(pnDAO.findAll());
     	importTicketTable.getItems().addAll(pnList);
@@ -148,7 +162,6 @@ public class PhieuNhapController {
 	}
 
 	private void filterTable(String keyword) {
-		PhieuNhapDAO pnDAO = new PhieuNhapDAO();
 		ObservableList<PhieuNhap> filteredList = FXCollections.observableArrayList(pnDAO.findByKeyword(keyword));
 		importTicketTable.getItems().clear();
 		importTicketTable.getItems().addAll(filteredList);
@@ -171,7 +184,34 @@ public class PhieuNhapController {
     private void onEditBtnClick(){}
     @FXML
     private void onDeleteBtnClick(){
-    	
+    	try {
+			PhieuNhap selectedPN = importTicketTable.getSelectionModel().getSelectedItem();
+			if (selectedPN != null) {
+				String maPhieu = selectedPN.getMaPhieu();
+				// Đổi status thành Deleted
+				selectedPN.setStatus(PhieuStatus.Deleted);
+				pnDAO.update(selectedPN);
+				// update số lượng sản phẩm
+				List<ChiTietPhieuNhap> list = ctpnDAO.findByMaPhieu(maPhieu);
+				for (ChiTietPhieuNhap item :list) {
+					DienThoai dt = item.getDienThoai();
+					dt.setSoLuong(dt.getSoLuong()-item.getSoLuong());
+					dtDAO.update(dt);
+				}
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("Thông báo");
+				alert.setHeaderText("Xóa phiếu nhập thành công");
+				alert.showAndWait();
+				reloadPNList();
+			} else {
+				throw new IOException("Không có phiếu nhập nào được chọn");
+			}
+		} catch (IOException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Lỗi");
+			alert.setHeaderText(e.getMessage());
+			alert.showAndWait();
+		}
     }
     @FXML
     private void onDetailBtnClick(){
@@ -194,7 +234,6 @@ public class PhieuNhapController {
     private void onExportExcelBtnClick(){}
     
     public void reloadPNList() {
-		PhieuNhapDAO pnDAO = new PhieuNhapDAO();
 		pnList.clear();
 		pnList.addAll(pnDAO.findAll());
 		importTicketTable.getItems().clear();
@@ -207,6 +246,13 @@ public class PhieuNhapController {
     	reloadPNList();
     }
     @FXML
-    private void onFilterCbboxAction(){}
+    private void onFilterCbboxAction(){
+    	String status = filterCbbox.getValue();
+    	pnList.clear();
+		pnList.addAll(pnDAO.findByStatus(status));
+		importTicketTable.getItems().clear();
+		importTicketTable.getItems().addAll(pnList);
+		importTicketTable.refresh();
+    }
 }
 
