@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import org.example.quanlykhohang.entity.NhanVien;
+import org.example.quanlykhohang.entity.TaiKhoan;
+import org.example.quanlykhohang.entity.UserSession;
 import org.example.quanlykhohang.util.JpaUtils;
 
 /**
@@ -99,6 +101,50 @@ public class NhanVienDAO implements InterfaceDAO<NhanVien, Integer> {
         Long count = query.getSingleResult();
         em.close();
         return count == 1;    
+    }
+    public boolean existsByEmail(NhanVien nhanVien) {
+        EntityManager em = JpaUtils.getEntityManager();
+        String jql = "SELECT u FROM NhanVien u WHERE u.email = :email";
+        TypedQuery<NhanVien> query = em.createQuery(jql, NhanVien.class);
+        query.setParameter("email", nhanVien.getEmail());
+        List<NhanVien> resultList = query.getResultList();
+        em.close();
+        return !resultList.isEmpty();
+    }
+
+    public void updatePrivateAccount(NhanVien nhanVien) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            // Tìm đối tượng TaiKhoan dựa trên maNhanVien
+//            Integer maNhanVien = UserSession.getInstance().getMaNhanVien();
+
+            NhanVien existingNhanVien = em.createQuery("SELECT t FROM NhanVien t WHERE t.maNhanVien = :maNhanVien", NhanVien.class)
+                    .setParameter("maNhanVien", nhanVien.getMaNhanVien())
+                    .getSingleResult();
+            if (existingNhanVien != null) {
+                existingNhanVien.setHo(nhanVien.getHo());
+                existingNhanVien.setTen(nhanVien.getTen());
+                existingNhanVien.setGioiTinh(nhanVien.getGioiTinh());
+                existingNhanVien.setNgaySinh(nhanVien.getNgaySinh());
+                existingNhanVien.setSdt(nhanVien.getSdt());
+                existingNhanVien.setDiaChi(nhanVien.getDiaChi());
+                existingNhanVien.setEmail(nhanVien.getEmail());
+
+
+                // Merge đối tượng cập nhật vào persistence context
+                em.merge(existingNhanVien);
+            } else {
+                throw new EntityNotFoundException("Nhan viên with maNhanVien " + nhanVien.getMaNhanVien() + " not found");
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            em.getTransaction().rollback();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
     
 }

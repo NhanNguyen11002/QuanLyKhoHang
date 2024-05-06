@@ -31,6 +31,8 @@ import org.example.quanlykhohang.entity.Role;
 import org.example.quanlykhohang.entity.TaiKhoan;
 import org.example.quanlykhohang.entity.TaiKhoanNhanVienDTO;
 import org.example.quanlykhohang.util.JpaUtils;
+import javafx.scene.input.KeyCode;
+
 
 public class TaiKhoanController {
     @FXML
@@ -49,10 +51,11 @@ public class TaiKhoanController {
     private Button detailBtn;
 
     @FXML
-    private ComboBox<String> filterCbbox;
+    private ComboBox filterCbbox;
 
     @FXML
     private TextField searchTxt;
+
 
     @FXML
     private TableView<TaiKhoanNhanVienDTO> accountTable;
@@ -92,6 +95,8 @@ public class TaiKhoanController {
 
                 // Get the controller of the loaded FXML file
                 SuaTaiKhoanController controller = fxmlLoader.getController();
+                controller.setTaiKhoanController(this); // Truyền đối tượng TaiKhoanController vào ThemTaiKhoanController
+
                 // Truyền dữ liệu từ hàng được chọn vào form chi tiết
                 controller.initData(selectedRow);
 
@@ -187,6 +192,41 @@ public class TaiKhoanController {
     @FXML
     public void onResetBtnClick(){
         accountTable.setItems(getAllTaiKhoanNhanVien());
+        searchTxt.setText("");
+    }
+    @FXML
+    private void onSearchEnterClick() {
+        if (searchTxt.getText().isEmpty()) {
+            showAlert("Hãy nhập mã nhân viên cần tìm kiếm");
+
+        }
+        else {
+            ObservableList<TaiKhoanNhanVienDTO> data = FXCollections.observableArrayList();
+
+            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+            TaiKhoan taiKhoan = taiKhoanDAO.findByMaNhanVien1(Integer.parseInt(searchTxt.getText()));
+            if (taiKhoan == null)
+                showAlert("Không tìm thấy tài khoản có mã nhân viên này");
+            else {
+                TaiKhoanNhanVienDTO dto = new TaiKhoanNhanVienDTO();
+                dto.setMaNhanVien(taiKhoan.getNhanVien().getMaNhanVien());
+                dto.setHo(taiKhoan.getNhanVien().getHo());
+                dto.setTen(taiKhoan.getNhanVien().getTen());
+                dto.setNgaySinh(taiKhoan.getNhanVien().getNgaySinh());
+                dto.setGioiTinh(taiKhoan.getNhanVien().getGioiTinh());
+                dto.setSdt(taiKhoan.getNhanVien().getSdt());
+                dto.setDiaChi(taiKhoan.getNhanVien().getDiaChi());
+                dto.setTenDangNhap(taiKhoan.getUsername());
+                dto.setEmail(taiKhoan.getNhanVien().getEmail());
+                dto.setVaiTro(taiKhoan.getVaiTro());
+                dto.setTrangThai(taiKhoan.isDangHoatDong());
+                dto.setNgayBatDau(taiKhoan.getNhanVien().getNgayBatDau());
+                dto.setNgayKetThuc(taiKhoan.getNhanVien().getNgayKetThuc());
+                data.add(dto);
+                accountTable.setItems(data);
+            }
+        }
+
     }
     public void updateTable(){
         accountTable.setItems(getAllTaiKhoanNhanVien());
@@ -196,9 +236,37 @@ public class TaiKhoanController {
         accountTable.setItems(data);
     }
     @FXML
-    private void onFilterCbboxAction(){}
+    private void onFilterCbboxAction(){
+        if (filterCbbox.getValue()== Role.Admin){
+            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+            List<TaiKhoan> taiKhoans = taiKhoanDAO.findByRole(Role.Admin);
+            if (taiKhoans == null)
+                showAlert("Không tìm thấy tài khoản");
+            else {
+                filterData(taiKhoans);
+            }
+        }
+        else if (filterCbbox.getValue()==Role.Staff) {
+            TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+            List<TaiKhoan> taiKhoans = taiKhoanDAO.findByRole(Role.Staff);
+            if (taiKhoans == null)
+                showAlert("Không tìm thấy tài khoản");
+            else {
+                filterData(taiKhoans);
+            }
+        }
+        else {
+            accountTable.setItems(getAllTaiKhoanNhanVien());
+        }
+    }
     @FXML
     private void initialize() {
+        searchTxt.setOnAction(event -> {
+            // Thực hiện xử lý tại đây
+            onSearchEnterClick();
+        });
+        filterCbbox.getItems().addAll("Tất cả", Role.Admin, Role.Staff);
+
         TableColumn<TaiKhoanNhanVienDTO, String> sttColumn = new TableColumn<>("Mã nhân viên");
         sttColumn.setCellValueFactory(new PropertyValueFactory<>("maNhanVien"));
 
@@ -290,5 +358,41 @@ public class TaiKhoanController {
         }
 
         return data;
+    }
+    private void filterData(List<TaiKhoan> taiKhoans) {
+        ObservableList<TaiKhoanNhanVienDTO> data = FXCollections.observableArrayList();
+        for (TaiKhoan taiKhoan : taiKhoans) {
+            TaiKhoanNhanVienDTO dto = new TaiKhoanNhanVienDTO();
+            dto.setMaNhanVien(taiKhoan.getNhanVien().getMaNhanVien());
+            dto.setHo(taiKhoan.getNhanVien().getHo());
+            dto.setTen(taiKhoan.getNhanVien().getTen());
+            dto.setNgaySinh(taiKhoan.getNhanVien().getNgaySinh());
+            dto.setGioiTinh(taiKhoan.getNhanVien().getGioiTinh());
+            dto.setSdt(taiKhoan.getNhanVien().getSdt());
+            dto.setDiaChi(taiKhoan.getNhanVien().getDiaChi());
+            dto.setTenDangNhap(taiKhoan.getUsername());
+            dto.setEmail(taiKhoan.getNhanVien().getEmail());
+            dto.setVaiTro(taiKhoan.getVaiTro());
+            dto.setTrangThai(taiKhoan.isDangHoatDong());
+            dto.setNgayBatDau(taiKhoan.getNhanVien().getNgayBatDau());
+            dto.setNgayKetThuc(taiKhoan.getNhanVien().getNgayKetThuc());
+            data.add(dto);
+        }
+        accountTable.setItems(data);
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thành công");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

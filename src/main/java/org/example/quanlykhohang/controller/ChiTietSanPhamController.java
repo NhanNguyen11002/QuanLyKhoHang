@@ -6,6 +6,7 @@ package org.example.quanlykhohang.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ResourceBundle;
 
 import org.example.quanlykhohang.entity.DienThoai;
@@ -34,6 +35,8 @@ public class ChiTietSanPhamController implements Initializable {
 	private TextField outputPriceTxt;
 	@FXML
 	private AnchorPane anchorPane;
+	
+	private final DecimalFormat format = new DecimalFormat("#,###.0");
 
 	private SanPhamController sanPhamController;
 
@@ -51,9 +54,9 @@ public class ChiTietSanPhamController implements Initializable {
 				idPhoneTxt.setEditable(false);
 				namePhoneTxt.setText(namePhone);
 				namePhoneTxt.setEditable(false);
-				inputPriceTxt.setText(String.valueOf(inputPrice));
+				inputPriceTxt.setText(format.format(inputPrice));
 				inputPriceTxt.setEditable(false);
-				outputPriceTxt.setText(String.valueOf(outputPrice));
+				outputPriceTxt.setText(format.format(outputPrice));
 				outputPriceTxt.setEditable(false);
 			} else {
 				throw new IOException("Không có sản phẩm nào được chọn");
