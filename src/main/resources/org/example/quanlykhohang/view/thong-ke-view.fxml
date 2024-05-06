@@ -117,11 +117,11 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Phiếu">
+          <Tab onSelectionChanged="#onTicketTabChange" text="Phiếu">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1200.0">
                      <children>
-                        <TextField fx:id="searchTicketTxt" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" prefHeight="40.0" prefWidth="450.0" />
+                        <TextField fx:id="searchTicketTxt" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" onAction="#onSearchTicketTxtAction" prefHeight="40.0" prefWidth="450.0" />
                         <Label layoutX="69.0" layoutY="11.0" text="Tìm kiếm" />
                         <Label layoutX="575.0" layoutY="11.0" prefHeight="17.0" prefWidth="81.0" text="Lọc theo ngày" />
                         <DatePicker fx:id="ticketFromDatePicker" layoutX="600.0" layoutY="36.0" onAction="#onTicketFromDatePickerAction" prefHeight="30.0" prefWidth="175.0" />
@@ -164,8 +164,8 @@
                               <Font size="12.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="toTotalTxt" layoutX="853.0" layoutY="99.0" prefHeight="30.0" prefWidth="175.0" />
-                        <TextField fx:id="fromTotalTxt" layoutX="599.0" layoutY="99.0" prefHeight="30.0" prefWidth="175.0" />
+                        <TextField fx:id="toTotalTxt" layoutX="853.0" layoutY="99.0" onAction="#onToTotalTxtAction" prefHeight="30.0" prefWidth="175.0" />
+                        <TextField fx:id="fromTotalTxt" layoutX="599.0" layoutY="99.0" onAction="#onFromTotalTxtAction" prefHeight="30.0" prefWidth="175.0" />
                         <Label layoutX="67.0" layoutY="79.0" text="Chức năng" />
                         <Button fx:id="detailBtn" contentDisplay="TOP" layoutX="141.0" layoutY="76.0" mnemonicParsing="false" onAction="#onDetailBtnClick" text="Xem chi tiết">
                            <graphic>
