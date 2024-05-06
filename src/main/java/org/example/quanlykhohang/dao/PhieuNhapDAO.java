@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.example.quanlykhohang.entity.DienThoai;
 import org.example.quanlykhohang.entity.PhieuNhap;
+import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.util.JpaUtils;
 
 /**
@@ -114,6 +115,21 @@ public class PhieuNhapDAO implements InterfaceDAO<PhieuNhap, String> {
             } catch (NumberFormatException e) {
                 query.setParameter("tongTien", null);
             }
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<PhieuNhap> findByStatus(String status) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String japl = "SELECT u FROM PhieuNhap u WHERE u.status = :status ";              
+            TypedQuery<PhieuNhap> query = em.createQuery(japl, PhieuNhap.class);
+            PhieuStatus ps = status.equals("Hoàn thành") ? PhieuStatus.valueOf("Done") : PhieuStatus.valueOf("Deleted");
+            query.setParameter("status", ps);
             return query.getResultList();
         } catch (Exception e){
             throw e;

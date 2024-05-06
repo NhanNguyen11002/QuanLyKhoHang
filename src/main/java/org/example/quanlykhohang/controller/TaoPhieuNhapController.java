@@ -163,11 +163,12 @@ public class TaoPhieuNhapController {
 
 	@FXML
 	private void onResetBtnClick() {
-		providerCbbox.getSelectionModel().clearSelection();
-		quantityTxt.clear();
-		importFormTable.getItems().clear();
-		totalMoney = 0.0;
-		totalMoneyLabel.setText(format.format(totalMoney)+" đ");
+		DienThoaiDAO phoneDAO = new DienThoaiDAO();
+		phoneList.clear();
+		phoneList.addAll(phoneDAO.findAll());
+		productTable.getItems().clear();
+		productTable.getItems().addAll(phoneList);
+		productTable.refresh();
 	}
 
 	@FXML
