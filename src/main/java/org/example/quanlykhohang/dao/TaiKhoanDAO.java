@@ -225,7 +225,40 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         }
     }
 
-
+    public TaiKhoan findByPhone(String sdt) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            // Query to find TaiKhoan based on email
+            TaiKhoan taiKhoan = em.createQuery(
+                            "SELECT t FROM TaiKhoan t JOIN FETCH t.nhanVien n WHERE n.sdt = :sdt",
+                            TaiKhoan.class)
+                    .setParameter("sdt", sdt)
+                    .getSingleResult();
+            return taiKhoan;
+        } catch (NoResultException e) {
+            // Handle case where no TaiKhoan is found with the given email
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+    public TaiKhoan findByUsername(String username) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try {
+            // Query to find TaiKhoan based on email
+            TaiKhoan taiKhoan = em.createQuery(
+                            "SELECT t FROM TaiKhoan t JOIN FETCH t.nhanVien n WHERE t.username = :username",
+                            TaiKhoan.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            return taiKhoan;
+        } catch (NoResultException e) {
+            // Handle case where no TaiKhoan is found with the given email
+            return null;
+        } finally {
+            em.close();
+        }
+    }
     public void testDao(){
         EntityManager em = JpaUtils.getEntityManager();
         System.out.println("chạy tới đây là kết nối hibernate ok");

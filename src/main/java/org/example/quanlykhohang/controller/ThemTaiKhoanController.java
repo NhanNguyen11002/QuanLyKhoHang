@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import org.example.quanlykhohang.dao.NhanVienDAO;
 import org.example.quanlykhohang.dao.TaiKhoanDAO;
 import org.example.quanlykhohang.entity.*;
@@ -172,6 +173,22 @@ public class ThemTaiKhoanController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        // Tạo một StringConverter cho enum Gender
+        StringConverter<Gender> genderStringConverter = new StringConverter<Gender>() {
+            @Override
+            public String toString(Gender gender) {
+                return (gender == Gender.Male) ? "Nam" : "Nữ";
+            }
+
+            @Override
+            public Gender fromString(String string) {
+                // Không cần implement phương thức này nếu bạn không cần chuyển đổi từ String sang Gender
+                return null;
+            }
+        };
+
+// Thiết lập StringConverter cho ChoiceBox
+        genderChoiceBox.setConverter(genderStringConverter);
         // Khởi tạo choice box giới tính
         genderChoiceBox.getItems().addAll(Gender.Male, Gender.Female);
 

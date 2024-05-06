@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.TonKhoController">
+<BorderPane prefHeight="800.0" prefWidth="1220.0" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.TonKhoController">
     <center>
         <AnchorPane prefHeight="700.0" prefWidth="1220.0">
             <children>
                 <TableView fx:id="productTable" layoutX="123.0" layoutY="34.0" prefHeight="660.0" prefWidth="1200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
                     <columns>
-                        <TableColumn prefWidth="110.97826766967773" text="Mã điện thoại" />
-                        <TableColumn prefWidth="235.34886169433594" text="Tên điện thoại" />
-                        <TableColumn prefWidth="75.0" text="Giá  nhập" />
-                        <TableColumn prefWidth="75.0" text="Giá xuất" />
-                  <TableColumn prefWidth="143.0" text="Số lượng trong kho" />
+                        <TableColumn fx:id="idPhoneColumn" prefWidth="110.97826766967773" text="Mã điện thoại" />
+                        <TableColumn fx:id="namePhoneColumn" prefWidth="235.34886169433594" text="Tên điện thoại" />
+                        <TableColumn fx:id="inputPriceColumn" prefWidth="75.0" text="Giá  nhập" />
+                        <TableColumn fx:id="outputPriceColumn" prefWidth="75.0" text="Giá xuất" />
+                  <TableColumn fx:id="soLuongColumn" prefWidth="143.0" text="Số lượng trong kho" />
                     </columns>
                 </TableView>
             </children></AnchorPane>
