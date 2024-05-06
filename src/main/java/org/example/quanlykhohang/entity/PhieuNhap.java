@@ -84,13 +84,12 @@ public class PhieuNhap {
     public void setTongTien(Double tongTien) {
         this.tongTien = tongTien;
     }
+  
+	  public PhieuStatus getStatus() {
+		  return status;
+	  }
 
-	public PhieuStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(PhieuStatus status) {
-		this.status = status;
-	}
-    
+  	public void setStatus(PhieuStatus status) {
+		  this.status = status;
+	  }
 }

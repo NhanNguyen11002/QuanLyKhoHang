@@ -78,10 +78,16 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
     @Override
     public long count() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "select count(u) from KhachHang u";
-        Query query = em.createQuery(japl);
-        em.close();
-        return ((Long) query.getSingleResult()).intValue();    
+        try{
+            String japl = "select count(u) from KhachHang u";
+            Query query = em.createQuery(japl);
+            return ((Long) query.getSingleResult()).intValue();
+        }  catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -151,7 +157,7 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
     public List<KhachHang> findByKeyword(String keyword) {
         EntityManager em = JpaUtils.getEntityManager();
         try{
-            String japl = "SELECT u FROM KhachHang u WHERE " +
+            String jpql = "SELECT u FROM KhachHang u WHERE " +
                     "u.tenKhachHang LIKE :keyword " +
                     "OR u.sdt LIKE :keyword " +
                     "OR u.diaChi LIKE :keyword " +
@@ -162,7 +168,7 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
                     "WHEN u.diaChi LIKE :keyword THEN 3 " +
                     "ELSE 4 " +
                     "END";
-            TypedQuery<KhachHang> query = em.createQuery(japl, KhachHang.class);
+            TypedQuery<KhachHang> query = em.createQuery(jpql, KhachHang.class);
             query.setParameter("keyword", "%" + keyword + "%");
             return query.getResultList();
         } catch (Exception e){

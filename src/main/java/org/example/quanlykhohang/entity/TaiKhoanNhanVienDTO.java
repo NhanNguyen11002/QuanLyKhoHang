@@ -15,7 +15,7 @@ public class TaiKhoanNhanVienDTO {
     private String ho;
     private String ten;
     private LocalDate ngaySinh;
-    private Gender gioiTinh;
+    private String gioiTinh;
     private String sdt;
     private String diaChi;
     private String tenDangNhap;
@@ -58,11 +58,11 @@ public class TaiKhoanNhanVienDTO {
         this.ngaySinh = ngaySinh;
     }
 
-    public Gender getGioiTinh() {
+    public String getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(Gender gioiTinh) {
+    public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 
