@@ -31,6 +31,8 @@ public class ChiTietDonXuatController {
     private void onXuatPDFBtnClick(){}
     @FXML
     private TableView ctDonXuatTbl;
+    @FXML
+    private Label statusLbl;
 
     private ObservableList<ChiTietDonXuatHang> chiTietDonXuatHangObservableList = FXCollections.observableArrayList();
 
@@ -40,19 +42,25 @@ public class ChiTietDonXuatController {
     @FXML
     public void initialize() {
         ctDonXuatTbl.getColumns().clear();
+        ctDonXuatTbl.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
         TableColumn<ChiTietDonXuatHang, String> prodId = new TableColumn<>("Mã điện thoại");
         prodId.setCellValueFactory(cellData  -> {
             String maDT = cellData.getValue().getDienThoai().getMaDT();
             return new SimpleStringProperty(maDT);
         });
+        prodId.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<ChiTietDonXuatHang, String> prodName = new TableColumn<>("Tên điện thoại");
         prodName.setCellValueFactory(cellData  -> {
             String tenDT = cellData.getValue().getDienThoai().getTenDT();
             return new SimpleStringProperty(tenDT);
         });
+        prodName.setStyle("-fx-alignment: CENTER;");
+
         TableColumn<ChiTietDonXuatHang, String> quantity = new TableColumn<>("Số lượng");
         quantity.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        quantity.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<ChiTietDonXuatHang, String> price = new TableColumn<>("Đơn giá");
         price.setCellValueFactory(cellData  -> {
@@ -61,6 +69,8 @@ public class ChiTietDonXuatController {
             String formattedValue = decimalFormat.format(value);
             return new SimpleStringProperty(formattedValue);
         });
+        price.setStyle("-fx-alignment: CENTER;");
+
         ctDonXuatTbl.getColumns().addAll(prodId, prodName,quantity,price);
 
     }
@@ -68,6 +78,7 @@ public class ChiTietDonXuatController {
         maPhieuLbl.setText(donXuatHang.getMaDon());
         thoiGianTaoLbl.setText(donXuatHang.getThoiGianTao().toString());
         nguoiTaoLbl.setText(donXuatHang.getNhanVien().getHo()+" "+donXuatHang.getNhanVien().getTen());
+        statusLbl.setText(donXuatHang.getTrangThai().equals("done")?"Hoàn thành":"Đang chờ");
         Double totalValue  = donXuatHang.getTongTien();
         DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         String formattedValue = decimalFormat.format(totalValue);

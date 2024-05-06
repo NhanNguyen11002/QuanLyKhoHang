@@ -75,6 +75,7 @@ public class DonXuatController {
                 alert.setHeaderText(null);
                 alert.setContentText("Bạn không thể sửa đơn hàng đã giải quyết");
                 alert.showAndWait();
+                return;
             }
             try {
                 Stage currentStage = (Stage) editBtn.getScene().getWindow();
@@ -110,6 +111,7 @@ public class DonXuatController {
                 alert.setHeaderText(null);
                 alert.setContentText("Bạn không thể xoá đơn hàng đã giải quyết");
                 alert.showAndWait();
+                return;
             }
 
             List<ChiTietDonXuatHang> chiTietDonXuatHangList = donXuatHang.getChiTietDonXuatHangList();
@@ -208,22 +210,29 @@ public class DonXuatController {
     @FXML
     private void initialize(){
         exportFormTable.getColumns().clear();
+        exportFormTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
         TableColumn<DonXuatHang, String> idColumn = new TableColumn<>("Mã đơn xuất");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("maDon"));
+        idColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DonXuatHang, String> authorColumn = new TableColumn<>("Người tạo đơn");
         authorColumn.setCellValueFactory(cellData  -> {
             String nguoiTaoDon = cellData.getValue().getNhanVien().getHo() + " " + cellData.getValue().getNhanVien().getTen();
             return new SimpleStringProperty(nguoiTaoDon);
         });
+        authorColumn.setStyle("-fx-alignment: CENTER;");
+
         TableColumn<DonXuatHang, String> customerColumn = new TableColumn<>("Khách hàng");
         customerColumn.setCellValueFactory(cellData  -> {
             String khachHang = cellData.getValue().getKhachHang().getTenKhachHang();
             return new SimpleStringProperty(khachHang);
         });
+        customerColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DonXuatHang, String> timeColumn = new TableColumn<>("Thời gian tạo");
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("thoiGianTao"));
+        timeColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DonXuatHang, String> totalColumn = new TableColumn<>("Tổng tiền");
         totalColumn.setCellValueFactory(cellData->{
@@ -232,6 +241,7 @@ public class DonXuatController {
             String formattedNumber = decimalFormat.format(value);
             return new SimpleStringProperty(formattedNumber);
         });
+        totalColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DonXuatHang, String> statusColumn = new TableColumn<>("Trạng thái");
         statusColumn.setCellValueFactory(cellData->{
@@ -239,6 +249,7 @@ public class DonXuatController {
             String formatTrangThai = value.equals("done")?"Hoàn thành":"Đang chờ";
             return new SimpleStringProperty(formatTrangThai);
         });
+        statusColumn.setStyle("-fx-alignment: CENTER;");
 
         exportFormTable.getColumns().addAll(idColumn, authorColumn,customerColumn, timeColumn, totalColumn,statusColumn);
         exportFormTable.setOnMouseClicked(event -> {
@@ -252,6 +263,7 @@ public class DonXuatController {
 
         exportFormTable.setItems(getAllDonXuat());
         setUpFilterBox();
+        searchTxt.setPromptText("Nhập từ khoá ở đây...");
     }
     private ObservableList<DonXuatHang> getAllDonXuat() {
         ObservableList<DonXuatHang> data = FXCollections.observableArrayList();

@@ -70,7 +70,7 @@ public class SuaDonXuatController {
     private ObservableList<SanPhamTrongDonHangDTO> exportList = FXCollections.observableArrayList();
     @FXML
     private void onSearchTxtAction(){
-
+        productTable.setItems(searchDienThoai());
     }
     @FXML
     private void onResetBtnClick(){
@@ -291,15 +291,20 @@ public class SuaDonXuatController {
 
         // setup total label
         setTotalMoneyLabel();
+        searchTxt.setPromptText("Nhập từ khoá ở đây...");
 
     }
     private void setUpProductTable(){
         productTable.getColumns().clear();
+        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
         TableColumn<DienThoai, String> idColumn = new TableColumn<>("Mã điện thoại");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+        idColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DienThoai, String> nameColumn = new TableColumn<>("Tên điện thoại");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+        nameColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DienThoai, String> visiblePrice = new TableColumn<>("Giá xuất");
         visiblePrice.setCellValueFactory(cellData->{
@@ -308,9 +313,12 @@ public class SuaDonXuatController {
             String formattedNumber = decimalFormat.format(value);
             return new SimpleStringProperty(formattedNumber);
         });
+        visiblePrice.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<DienThoai, Integer> quantityColumn = new TableColumn<>("Số lượng trong kho");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        quantityColumn.setStyle("-fx-alignment: CENTER;");
+
         productTable.getColumns().addAll(idColumn, nameColumn, visiblePrice,quantityColumn);
         productTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
@@ -324,6 +332,9 @@ public class SuaDonXuatController {
     }
     private void setUpExportFormTable(){
         exportFormTable.getColumns().clear();
+        exportFormTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
+
         TableColumn numberColumn = new TableColumn<>("#");
         numberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String>, ObservableValue<String>>() {
             @Override public ObservableValue<String> call(TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String> p) {
@@ -331,12 +342,15 @@ public class SuaDonXuatController {
             }
         });
         numberColumn.setSortable(false);
+        numberColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<SanPhamTrongDonHangDTO, String> idColumn = new TableColumn<>("Mã điện thoại");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+        idColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<SanPhamTrongDonHangDTO, String> nameColumn = new TableColumn<>("Tên điện thoại");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+        nameColumn.setStyle("-fx-alignment: CENTER;");
 
 
         TableColumn<SanPhamTrongDonHangDTO, String> visiblePrice = new TableColumn<>("Giá xuất");
@@ -346,11 +360,15 @@ public class SuaDonXuatController {
             String formattedNumber = decimalFormat.format(value);
             return new SimpleStringProperty(formattedNumber);
         });
+        visiblePrice.setStyle("-fx-alignment: CENTER;");
 
 
         TableColumn<SanPhamTrongDonHangDTO, Integer> quantityColumn = new TableColumn<>("Số lượng xuất hàng");
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
-        exportFormTable.getColumns().addAll(idColumn, nameColumn, visiblePrice,quantityColumn);
+        quantityColumn.setStyle("-fx-alignment: CENTER;");
+
+
+        exportFormTable.getColumns().addAll(numberColumn, idColumn, nameColumn, visiblePrice,quantityColumn);
         exportFormTable.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 SanPhamTrongDonHangDTO selectedRow = exportFormTable.getSelectionModel().getSelectedItem();
@@ -407,9 +425,7 @@ public class SuaDonXuatController {
     }
 
     public void setDonXuatHang(DonXuatHang donXuatHang){
-        System.out.println("truyền vào: "+donXuatHang.getMaDon());
         this.donXuatHang = donXuatHang;
-        System.out.println("trong controller: "+this.donXuatHang.getMaDon());
         List<ChiTietDonXuatHang>  chiTietDonXuatHangList = donXuatHang.getChiTietDonXuatHangList();
         for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
             DienThoai dt = ct.getDienThoai();
@@ -425,5 +441,13 @@ public class SuaDonXuatController {
         initialize();
         loadDataExport();
     }
-
+    private ObservableList<DienThoai> searchDienThoai(){
+        String keyword = searchTxt.getText();
+        ObservableList<DienThoai> data = FXCollections.observableArrayList();
+        List<DienThoai> dienThoaiList = dienThoaiDAO.findByKeyword(keyword);
+        for(DienThoai dt: dienThoaiList){
+            data.add(dt);
+        }
+        return data;
+    }
 }

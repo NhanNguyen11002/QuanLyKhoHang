@@ -11,7 +11,7 @@ public class PhieuXuat {
     @ManyToOne
     @JoinColumn(name = "nguoiTao", nullable = false)
     private NhanVien nguoiTao;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "maDon")
     private DonXuatHang donXuatHang;
     @Column(name="bienSoXe")
@@ -80,5 +80,13 @@ public class PhieuXuat {
 
     public void setThoiGianTao(Timestamp thoiGianTao) {
         this.thoiGianTao = thoiGianTao;
+    }
+
+    public PhieuStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PhieuStatus status) {
+        this.status = status;
     }
 }

@@ -258,20 +258,27 @@ public class NhaCungCapController {
     @FXML
     private void initialize(){
         providerTable.getColumns().clear();
+        providerTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
         TableColumn<NhaCungCap, String> idColumn = new TableColumn<>("Mã nhà cung cấp");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("maNhaCungCap"));
+        idColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<NhaCungCap, String> nameColumn = new TableColumn<>("Tên nhà cung cấp");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("tenNhaCungCap"));
+        nameColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<NhaCungCap, String> sdtColumn = new TableColumn<>("Số điện thoại");
         sdtColumn.setCellValueFactory(new PropertyValueFactory<>("sdt"));
+        sdtColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<NhaCungCap, String> diaChiColumn = new TableColumn<>("Địa chỉ");
         diaChiColumn.setCellValueFactory(new PropertyValueFactory<>("diaChi"));
+        diaChiColumn.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<NhaCungCap, String> emailColumn = new TableColumn<>("Email");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        emailColumn.setStyle("-fx-alignment: CENTER;");
 
         providerTable.getColumns().addAll(idColumn, nameColumn, sdtColumn, diaChiColumn, emailColumn);
         providerTable.setOnMouseClicked(event -> {
@@ -284,6 +291,7 @@ public class NhaCungCapController {
         });
 
         providerTable.setItems(getAllNhaCungCap());
+        searchTxt.setPromptText("Nhập từ khoá ở đây...");
 
     }
     public void resetData(){

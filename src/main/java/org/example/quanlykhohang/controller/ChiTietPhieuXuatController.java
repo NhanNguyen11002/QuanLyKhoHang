@@ -19,6 +19,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.quanlykhohang.entity.ChiTietDonXuatHang;
+import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.PhieuXuat;
 
 /**
@@ -44,6 +45,8 @@ public class ChiTietPhieuXuatController {
     private Button  xuatPDFBtn;
     @FXML
     private TableView  ctPhieuXuatTbl;
+    @FXML
+    private Label statusLbl;
     private ObservableList<ChiTietDonXuatHang> chiTietDonXuatHangObservableList = FXCollections.observableArrayList();
 
     /**
@@ -58,6 +61,7 @@ public class ChiTietPhieuXuatController {
         thoiGianTaoLbl.setText(phieuXuat.getThoiGianTao().toString());
         nguoiTaoLbl.setText(phieuXuat.getNguoiTao().getHo()+" "+phieuXuat.getNguoiTao().getTen());
         Double totalValue  = phieuXuat.getDonXuatHang().getTongTien();
+        statusLbl.setText(phieuXuat.getStatus().equals(PhieuStatus.Done)?"Hoàn thành":"Đã xoá");
         DecimalFormat decimalFormat = new DecimalFormat("#,##0");
         String formattedValue = decimalFormat.format(totalValue);
         tongTienLbl.setText(formattedValue);
@@ -69,18 +73,25 @@ public class ChiTietPhieuXuatController {
     @FXML
     public void initialize(){
         ctPhieuXuatTbl.getColumns().clear();
+        ctPhieuXuatTbl.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
         TableColumn<ChiTietDonXuatHang, String> prodId = new TableColumn<>("Mã điện thoại");
         prodId.setCellValueFactory(cellData  -> {
             String maDT = cellData.getValue().getDienThoai().getMaDT();
             return new SimpleStringProperty(maDT);
         });
+        prodId.setStyle("-fx-alignment: CENTER;");
+
         TableColumn<ChiTietDonXuatHang, String> prodName = new TableColumn<>("Tên điện thoại");
         prodName.setCellValueFactory(cellData  -> {
             String tenDT = cellData.getValue().getDienThoai().getTenDT();
             return new SimpleStringProperty(tenDT);
         });
+        prodName.setStyle("-fx-alignment: CENTER;");
+
         TableColumn<ChiTietDonXuatHang, String> quantity = new TableColumn<>("Số lượng");
         quantity.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        quantity.setStyle("-fx-alignment: CENTER;");
 
         TableColumn<ChiTietDonXuatHang, String> price = new TableColumn<>("Đơn giá");
         price.setCellValueFactory(cellData  -> {
@@ -89,6 +100,8 @@ public class ChiTietPhieuXuatController {
             String formattedValue = decimalFormat.format(value);
             return new SimpleStringProperty(formattedValue);
         });
+        price.setStyle("-fx-alignment: CENTER;");
+
         ctPhieuXuatTbl.getColumns().addAll(prodId, prodName,quantity,price);
     }
     @FXML

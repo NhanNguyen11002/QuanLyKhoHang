@@ -76,7 +76,7 @@
                 </Pane>
                 <Pane layoutX="501.0" prefHeight="100.0" prefWidth="720.0" styleClass="top-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <children>
-                        <TextField fx:id="searchTxt" layoutX="170.0" layoutY="29.0" prefHeight="40.0" prefWidth="400.0" />
+                        <TextField fx:id="searchTxt" layoutX="170.0" layoutY="29.0" prefHeight="40.0" prefWidth="400.0" onAction="#onSearchTxtAction"/>
                         <Button fx:id="resetBtn" layoutX="579.0" layoutY="29.0" mnemonicParsing="false" onAction="#onResetBtnClick" prefHeight="40.0" prefWidth="120.0" text="Làm mới">
                             <graphic>
                                 <FontIcon iconLiteral="mdi2r-reload" iconSize="30" />
