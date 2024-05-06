@@ -123,7 +123,6 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
             TypedQuery<Long> query = em.createQuery(jql, Long.class);
             query.setParameter("email", email);
             Long count = query.getSingleResult();
-            em.close();
             return count == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +140,6 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
             TypedQuery<Long> query = em.createQuery(jql, Long.class);
             query.setParameter("sdt", sdt);
             Long count = query.getSingleResult();
-            em.close();
             return count == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,7 +147,22 @@ public class NhaCungCapDAO implements InterfaceDAO<NhaCungCap, Integer> {
         } finally {
             em.close();
         }
+    }
+    public boolean existByTen(String ten) {
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
 
+            String jql = "SELECT COUNT(u.tenNhaCungCap) FROM NhaCungCap u WHERE u.tenNhaCungCap = :ten";
+            TypedQuery<Long> query = em.createQuery(jql, Long.class);
+            query.setParameter("ten", ten);
+            Long count = query.getSingleResult();
+            return count == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
     }
     
     public NhaCungCap findByName(String name) {

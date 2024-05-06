@@ -304,10 +304,22 @@ public class ChiTietPhieuNhapController implements Initializable {
             }
 
             String pdfName = maPhieuLbl.getText();
-            document.save("C:\\Documents\\"+pdfName+".pdf");
+//            String path  = "C:\\Documents\\"+pdfName+".pdf";
+            String path  = System.getProperty("user.home")+"/Documents/"+pdfName+".pdf";
+            document.save(path);
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Thông tin");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Xuất pdf thành công\nFile ở vị trí: "+path);
+            alert1.showAndWait();
         } catch (IOException e) {
-			e.printStackTrace();
-		}
+            e.printStackTrace();
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Lỗi ");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Đã có lỗi xảy ra khi xuất pdf");
+            alert1.showAndWait();
+        }
     }
 
     public float caculateTextWidth (PDType0Font font, String text, float fontSize) {

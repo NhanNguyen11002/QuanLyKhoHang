@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import org.example.quanlykhohang.Main;
 
@@ -44,6 +45,8 @@ public class AdminSidebarController {
     private Pane mainPane;
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private Label helloLabel;
     @FXML
     private void onProductPaneClick(){
         try {
@@ -107,7 +110,7 @@ public class AdminSidebarController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-xuat-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
-            applyStyle(storagePane);
+            applyStyle(exportTicketPane);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -192,6 +195,7 @@ public class AdminSidebarController {
     }
     @FXML
     private void initialize() {
+        helloLabel.setText("Hello, "+UserSession.getInstance().getUserName());
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/san-pham-view.fxml"));
             Pane item = fxmlLoader.load();

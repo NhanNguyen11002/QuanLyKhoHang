@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import org.example.quanlykhohang.Main;
 
 import java.io.IOException;
@@ -32,12 +33,25 @@ public class StaffSidebarController {
     private Pane logoutPane;
     @FXML
     private Pane informationPane;
-    private Pane storagePane;
-
+//    private Pane storagePane;
     @FXML
     private Pane mainPane;
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private Label helloLabel;
+    @FXML
+    private void initialize(){
+        helloLabel.setText("Hello, "+UserSession.getInstance().getUserName());
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/don-xuat-view.fxml"));
+            Pane item = fxmlLoader.load();
+            borderPane.setRight(item);
+            applyStyle(exportFormPane);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
     @FXML
     private void onExportFormPaneClick(){
         try {
@@ -66,7 +80,7 @@ public class StaffSidebarController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-xuat-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
-            applyStyle(storagePane);
+            applyStyle(exportTicketPane);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -142,8 +156,8 @@ public class StaffSidebarController {
         logoutPane.getStyleClass().add("logout-btn");
         informationPane.getStyleClass().clear();
         informationPane.getStyleClass().add("pane-btn");
-        storagePane.getStyleClass().clear();
-        storagePane.getStyleClass().add("pane-btn");
+//        storagePane.getStyleClass().clear();
+//        storagePane.getStyleClass().add("pane-btn");
         pane.getStyleClass().add("bg-teal");
     }
 

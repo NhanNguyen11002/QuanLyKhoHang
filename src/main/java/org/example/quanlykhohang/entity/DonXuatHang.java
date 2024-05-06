@@ -28,22 +28,13 @@ public class DonXuatHang {
     @OneToMany(mappedBy = "donXuatHang", cascade = CascadeType.ALL)
     private List<ChiTietDonXuatHang> chiTietDonXuatHangList;
     // one to one/many phieu xuat
-    @OneToOne(mappedBy = "donXuatHang", cascade = CascadeType.ALL)
-    private PhieuXuat phieuXuat;
+    @OneToMany(mappedBy = "donXuatHang", cascade = CascadeType.ALL)
+    private List<PhieuXuat> phieuXuat;
 
     public DonXuatHang() {
     }
 
-    public DonXuatHang(String maDon, Double tongTien, Timestamp thoiGianTao, String trangThai, NhanVien nhanVien, KhachHang khachHang, List<ChiTietDonXuatHang> chiTietDonXuatHangList, PhieuXuat phieuXuat) {
-        this.maDon = maDon;
-        this.tongTien = tongTien;
-        this.thoiGianTao = thoiGianTao;
-        this.trangThai = trangThai;
-        this.nhanVien = nhanVien;
-        this.khachHang = khachHang;
-        this.chiTietDonXuatHangList = chiTietDonXuatHangList;
-        this.phieuXuat = phieuXuat;
-    }
+
 
     public DonXuatHang(String maDon, Double tongTien, Timestamp thoiGianTao, String trangThai, NhanVien nhanVien, KhachHang khachHang) {
         this.maDon = maDon;
@@ -110,13 +101,7 @@ public class DonXuatHang {
         this.chiTietDonXuatHangList = chiTietDonXuatHangList;
     }
 
-    public PhieuXuat getPhieuXuat() {
-        return phieuXuat;
-    }
 
-    public void setPhieuXuat(PhieuXuat phieuXuat) {
-        this.phieuXuat = phieuXuat;
-    }
 
     @Override
     public String toString() {

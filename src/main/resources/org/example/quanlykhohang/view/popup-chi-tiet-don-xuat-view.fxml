@@ -8,37 +8,41 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.ChiTietDonXuatController">
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="600.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.ChiTietDonXuatController">
     <children>
-        <Pane layoutY="50.0" prefHeight="352.0" prefWidth="600.0" styleClass="bg-teal">
+        <Pane layoutY="50.0" prefHeight="402.0" prefWidth="600.0" styleClass="bg-teal">
             <children>
                 <Label layoutX="45.0" layoutY="14.0" text="Mã phiếu: " />
                 <Label layoutX="334.0" layoutY="14.0" text="Thời gian tạo:" />
-                <Label layoutX="334.0" layoutY="50.0" text="Người tạo:" />
+                <Label layoutX="336.0" layoutY="42.0" text="Người tạo:" />
                 <Label fx:id="maPhieuLbl" layoutX="101.0" layoutY="14.0" text="Label" />
                 <Label fx:id="thoiGianTaoLbl" layoutX="413.0" layoutY="14.0" text="Label" />
-                <Label fx:id="nguoiTaoLbl" layoutX="392.0" layoutY="50.0" text="Label" />
-                <Label layoutX="41.0" layoutY="306.0" text="Tổng tiền:">
+                <Label fx:id="nguoiTaoLbl" layoutX="413.0" layoutY="42.0" text="Label" />
+                <Label layoutX="41.0" layoutY="344.0" text="Tổng tiền:">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                 </Label>
-                <Label fx:id="tongTienLbl" layoutX="120.0" layoutY="307.0" text="...đ">
+                <Label fx:id="tongTienLbl" layoutX="120.0" layoutY="345.0" text="...đ">
                     <font>
                         <Font name="System Bold" size="17.0" />
                     </font>
                 </Label>
-                <TableView fx:id="ctDonXuatTbl" layoutX="10.0" layoutY="74.0" prefHeight="229.0" prefWidth="580.0">
+                <TableView fx:id="ctDonXuatTbl" layoutX="10.0" layoutY="112.0" prefHeight="229.0" prefWidth="580.0">
                     <columns>
                         <TableColumn prefWidth="75.0" text="C1" />
                         <TableColumn prefWidth="75.0" text="C2" />
                     </columns>
                 </TableView>
-                <Button layoutX="497.0" layoutY="315.0" mnemonicParsing="false" onAction="#onXuatPDFBtnClick" text="Xuất PDF" fx:id="xuatPDFBtn">
+                <Button layoutX="497.0" layoutY="353.0" mnemonicParsing="false" onAction="#onXuatPDFBtnClick" text="Xuất PDF" fx:id="xuatPDFBtn">
                     <font>
                         <Font name="System Italic" size="15.0" />
                     </font>
                 </Button>
+            <Label layoutX="45.0" layoutY="42.0" text="Trạng thái:" />
+            <Label fx:id="statusLbl" layoutX="108.0" layoutY="42.0" text="Label" />
+            <Label layoutX="337.0" layoutY="71.0" text="Khách hàng: " />
+            <Label fx:id="khachHangLbl" layoutX="411.0" layoutY="70.0" text="Label" />
             </children>
         </Pane>
         <Label layoutX="180.0" layoutY="14.0" text="Chi tiết phiếu xuất">

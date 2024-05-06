@@ -4,6 +4,8 @@
  */
 package org.example.quanlykhohang.dao;
 
+import org.example.quanlykhohang.entity.DonXuatHang;
+import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.PhieuXuat;
 import jakarta.persistence.*;
 
@@ -84,10 +86,15 @@ public class PhieuXuatDAO implements InterfaceDAO<PhieuXuat, String> {
     @Override
     public List<PhieuXuat> findAll() {
         EntityManager em = JpaUtils.getEntityManager();
-        String japl = "SELECT u FROM PhieuXuat u order by u.maPhieu";
-        TypedQuery<PhieuXuat> query = em.createQuery(japl, PhieuXuat.class);
-        em.close();
-        return query.getResultList();    
+        try{
+            String jpql = "SELECT u FROM PhieuXuat u join fetch u.donXuatHang don join fetch don.chiTietDonXuatHangList order by u.maPhieu";
+            TypedQuery<PhieuXuat> query = em.createQuery(jpql, PhieuXuat.class);
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -99,6 +106,67 @@ public class PhieuXuatDAO implements InterfaceDAO<PhieuXuat, String> {
         Long count = query.getSingleResult();
         em.close();
         return count == 1;    
+    }
+    public List<PhieuXuat> searchByKeyword(String keyword, String status){
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String jpql = "SELECT px FROM PhieuXuat px " +
+                    "JOIN FETCH px.donXuatHang don " +
+                    "JOIN FETCH don.chiTietDonXuatHangList chiTiet " +
+                    "WHERE (don.khachHang.tenKhachHang LIKE :keyword " +
+                    "OR px.maPhieu LIKE :keyword " +
+                    "OR don.maDon LIKE :keyword " +
+                    "OR px.bienSoXe LIKE :keyword " +
+                    "OR px.nguoiTao.ten LIKE :keyword " +
+                    "OR px.nguoiTao.ho LIKE :keyword) " +
+                    "AND (:status = '0' OR px.status = :status) " +
+                    "ORDER BY CASE " +
+                    "WHEN px.maPhieu LIKE :keyword THEN 1 " +
+                    "WHEN px.bienSoXe LIKE :keyword THEN 2 " +
+                    "WHEN don.khachHang.tenKhachHang LIKE :keyword THEN 3 " +
+                    "WHEN px.nguoiTao.ten LIKE :keyword THEN 4 " +
+                    "WHEN px.nguoiTao.ho LIKE :keyword THEN 5 " +
+                    "ELSE 6 " +
+                    "END";
+            TypedQuery<PhieuXuat> query = em.createQuery(jpql, PhieuXuat.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            PhieuStatus cvt = status.equals("done")?PhieuStatus.Done:PhieuStatus.Deleted;
+            query.setParameter("status",status.equals("all")?"0":cvt);
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
+    public List<PhieuXuat> searchByKeyword(String keyword){
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String jpql = "SELECT px FROM PhieuXuat px " +
+                    "JOIN FETCH px.donXuatHang don " +
+                    "JOIN FETCH don.chiTietDonXuatHangList chiTiet " +
+                    "WHERE (don.khachHang.tenKhachHang LIKE :keyword " +
+                    "OR px.maPhieu LIKE :keyword " +
+                    "OR don.maDon LIKE :keyword " +
+                    "OR px.bienSoXe LIKE :keyword " +
+                    "OR px.nguoiTao.ten LIKE :keyword " +
+                    "OR px.nguoiTao.ho LIKE :keyword) " +
+                    "ORDER BY CASE " +
+                    "WHEN px.maPhieu LIKE :keyword THEN 1 " +
+                    "WHEN px.bienSoXe LIKE :keyword THEN 2 " +
+                    "WHEN don.khachHang.tenKhachHang LIKE :keyword THEN 3 " +
+                    "WHEN px.nguoiTao.ten LIKE :keyword THEN 4 " +
+                    "WHEN px.nguoiTao.ho LIKE :keyword THEN 5 " +
+                    "ELSE 6 " +
+                    "END";
+            TypedQuery<PhieuXuat> query = em.createQuery(jpql, PhieuXuat.class);
+            query.setParameter("keyword", "%" + keyword + "%");
+            return query.getResultList();
+        } catch (Exception e){
+            throw e;
+        } finally {
+            em.close();
+        }
     }
     
 }

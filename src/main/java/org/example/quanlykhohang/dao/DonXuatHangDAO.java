@@ -110,7 +110,7 @@ public class DonXuatHangDAO implements InterfaceDAO<DonXuatHang, String> {
     public List<DonXuatHang> searchByKeyword(String keyword, String status){
         EntityManager em = JpaUtils.getEntityManager();
         try{
-            String jpql = "SELECT u FROM DonXuatHang u WHERE " +
+            String jpql = "SELECT u FROM DonXuatHang u join fetch u.chiTietDonXuatHangList WHERE " +
                     "(u.khachHang.tenKhachHang LIKE :keyword " +
                     "OR u.maDon LIKE :keyword " +
                     "OR u.nhanVien.ten LIKE :keyword " +
