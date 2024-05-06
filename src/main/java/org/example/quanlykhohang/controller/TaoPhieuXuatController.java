@@ -135,11 +135,9 @@ public class TaoPhieuXuatController {
             if (event.getClickCount() == 1) {
                 DonXuatHang donXuatHang = exportFormTable.getSelectionModel().getSelectedItem();
                 if(donXuatHang!= null){
-                    System.out.println("Đã chọn đơn "+ donXuatHang.getMaDon());
                     exportList.clear();
                     List<ChiTietDonXuatHang> chiTietDonXuatHangList = donXuatHang.getChiTietDonXuatHangList();
                     for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
-                        System.out.println("chi tiet: "+ct.getDienThoai().getTenDT());
                         exportList.add(ct);
                     }
                     exportFormDetailTable.refresh();
@@ -155,7 +153,7 @@ public class TaoPhieuXuatController {
         TableColumn numberColumn = new TableColumn<>("#");
         numberColumn.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String>, ObservableValue<String>>() {
             @Override public ObservableValue<String> call(TableColumn.CellDataFeatures<SanPhamTrongDonHangDTO, String> p) {
-                return new ReadOnlyObjectWrapper((exportFormTable.getItems().indexOf(p.getValue()) +1) + "");
+                return new ReadOnlyObjectWrapper((exportFormDetailTable.getItems().indexOf(p.getValue()) + 1) + "");
             }
         });
         numberColumn.setSortable(false);
@@ -230,6 +228,11 @@ public class TaoPhieuXuatController {
             phieuXuatDAO.create(phieuXuat);
             donXuatHang.setTrangThai("done");
             donXuatHangDAO.update(donXuatHang);
+            Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+            alert1.setTitle("Thông tin");
+            alert1.setHeaderText(null);
+            alert1.setContentText("Tạo phiếu xuất thành công");
+            alert1.showAndWait();
             back();
 
         } catch (Exception e){
