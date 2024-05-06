@@ -73,11 +73,11 @@ public class ChiTietPhieuNhapController implements Initializable {
 	private TableColumn<ChiTietPhieuNhap, Double> inputPriceColumn;
 	@FXML
 	private TableColumn<ChiTietPhieuNhap, Integer> soLuongColumn;
-    
+
     private PhieuNhapController phieuNhapController;
-    
+
     private final DecimalFormat format = new DecimalFormat("#,###.0");
-    
+
     public void setPhieuNhapController(PhieuNhapController phieuNhapController) {
 		try {
 			ChiTietPhieuNhapDAO ctpnDAO = new ChiTietPhieuNhapDAO();
@@ -150,9 +150,9 @@ public class ChiTietPhieuNhapController implements Initializable {
 	            stage.close();
 	        });
 		}
-			
+
 	}
-    
+
     @FXML
     private void onXuatPDFBtnClick(){
     	String maPhieu = maPhieuLbl.getText();
@@ -160,7 +160,7 @@ public class ChiTietPhieuNhapController implements Initializable {
     	String tg = thoiGianTaoLbl.getText();
     	String nguoiTao = nguoiTaoLbl.getText();
     	String tongTien = tongTienLbl.getText();
-    	
+
     	try (PDDocument document = new PDDocument()) {
             PDPage page = new PDPage();
             document.addPage(page);
@@ -172,40 +172,40 @@ public class ChiTietPhieuNhapController implements Initializable {
             	PDType0Font boldFont = PDType0Font.load(document, inputBoldStream);
             	InputStream inputItalicStream = getClass().getResourceAsStream("/fonts/Arial_Italic.ttf");
             	PDType0Font italicFont = PDType0Font.load(document, inputItalicStream);
-            	
+
             	float pageWidth = page.getMediaBox().getWidth();
             	float pageHeight = page.getMediaBox().getHeight();
-            	
+
             	contentStream.beginText();
                 contentStream.setFont(boldFont, 20);
                 contentStream.newLineAtOffset(pageWidth / 3, pageHeight - 50);
                 contentStream.showText("CHI TIẾT PHIẾU NHẬP");
                 contentStream.endText();
-                
+
                 contentStream.beginText();
                 contentStream.setFont(italicFont, 13);
                 contentStream.newLineAtOffset(pageWidth*1/2, pageHeight - 80);
                 contentStream.showText("Thời gian tạo: " + tg);
                 contentStream.endText();
-            	
+
                 contentStream.beginText();
                 contentStream.setFont(normalFont, 13);
                 contentStream.newLineAtOffset(pageWidth/6, pageHeight - 130);
                 contentStream.showText("Mã phiếu: " + maPhieu);
                 contentStream.endText();
-                
+
                 contentStream.beginText();
                 contentStream.setFont(normalFont, 13);
                 contentStream.newLineAtOffset(pageWidth/6, pageHeight - 150);
                 contentStream.showText("Người tạo: " + nguoiTao);
                 contentStream.endText();
-                
+
                 contentStream.beginText();
                 contentStream.setFont(normalFont, 13);
                 contentStream.newLineAtOffset(pageWidth/6, pageHeight - 170);
                 contentStream.showText("Nhà cung cấp: " + ncc);
                 contentStream.endText();
-                
+
                 // table chi tiết phiếu nhập
                 ObservableList<ChiTietPhieuNhap> dataList = ctPhieuNhapTbl.getItems();
                 float tableWidth = 500;
@@ -235,10 +235,10 @@ public class ChiTietPhieuNhapController implements Initializable {
                 contentStream.moveTo(startX+500, startY);
                 contentStream.lineTo(startX+500, startY - tableHeight);
                 contentStream.stroke();
-                
+
                 // Hiển thị dữ liệu trong bảng
                 float textY = startY - 22; // Độ lệch dọc cho dữ liệu
-                
+
                 // Header
                 contentStream.beginText();
                 contentStream.setFont(normalFont, 14);
@@ -295,7 +295,7 @@ public class ChiTietPhieuNhapController implements Initializable {
                     contentStream.showText(content4);
                     contentStream.endText();
                 }
-                
+
                 contentStream.beginText();
                 contentStream.setFont(boldFont, 16);
                 contentStream.newLineAtOffset(pageWidth/6, startY - (dataList.size()+1)*40 -50);
@@ -309,7 +309,7 @@ public class ChiTietPhieuNhapController implements Initializable {
 			e.printStackTrace();
 		}
     }
-    
+
     public float caculateTextWidth (PDType0Font font, String text, float fontSize) {
     	float textWidth = 0;
 		try {
@@ -319,7 +319,7 @@ public class ChiTietPhieuNhapController implements Initializable {
 		}
 		return textWidth;
     }
-    
+
     public float caculateStartXCenter (PDType0Font font, String text, float fontSize,
     		float columnStart, float columnEnd) {
     	float startX = 0;
@@ -330,14 +330,14 @@ public class ChiTietPhieuNhapController implements Initializable {
 			e.printStackTrace();
 		}
     	return startX;
-    }   
-    
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

@@ -41,7 +41,7 @@ public class DangNhapController {
                 showAlert("Tên đăng nhập hoặc mật khẩu không đúng!");
             } else {
                 if (taiKhoan.isDangHoatDong() == true) { // Kiểm tra tài khoản có bị khóa không
-                    UserSession.getInstance().setCurrentUser(taiKhoan.getId(), taiKhoan.getUsername());
+                    UserSession.getInstance().setCurrentUser(taiKhoan.getId(), taiKhoan.getUsername(), taiKhoan.getNhanVien().getMaNhanVien());
                     Role role = taiKhoan.getVaiTro();
                     if (role.equals(Role.Admin)) {
                         showSuccess("Đăng nhập thành công!");
@@ -49,7 +49,10 @@ public class DangNhapController {
                         System.out.println(UserSession.getInstance().getUserId());
                         System.out.println(UserSession.getInstance().getUserName());
                     } else if (role.equals(Role.Staff)) {
-                        showAlert("!!!!");
+                        showSuccess("Đăng nhập thành công!");
+                        openStaffSidebar();
+                        System.out.println(UserSession.getInstance().getUserId());
+                        System.out.println(UserSession.getInstance().getUserName());
                     }
                     Stage currentStage = (Stage) usernameTxt.getScene().getWindow();
                     currentStage.close();
@@ -90,6 +93,37 @@ public class DangNhapController {
             // Xử lý ngoại lệ, ví dụ: hiển thị thông báo lỗi
         }
     }
+    private void openStaffSidebar() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/staff-sidebar.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage adminStage = new Stage();
+            adminStage.setTitle("Quản lý kho hàng");
+            adminStage.setScene(new Scene(root));
+            adminStage.setResizable(false);
+            adminStage.show();
+        } catch (IOException e) {
+            System.out.println("Error loading staff-sidebar.fxml: " + e.getMessage()); // In ra thông báo lỗi
+            e.printStackTrace();
+            // Xử lý ngoại lệ, ví dụ: hiển thị thông báo lỗi
+        }
+    }
     @FXML
-    private void onForgotLabelClick(){}
+    private void onForgotLabelClick(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-khoi-phuc-mat-khau-view.fxml"));
+            Pane item = fxmlLoader.load();
+//            KhoiPhucMatKhauController controller = fxmlLoader.getController();
+            // Create a new scene with the loaded pane
+            Scene scene = new Scene(item);
+
+            // Create a new stage and set the scene
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.show(); // Show the stage
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

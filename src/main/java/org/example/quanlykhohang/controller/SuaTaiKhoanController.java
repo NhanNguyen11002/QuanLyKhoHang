@@ -7,6 +7,8 @@ package org.example.quanlykhohang.controller;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -59,6 +61,16 @@ public class SuaTaiKhoanController implements Initializable {
     private  Button saveButton;
     @FXML
     private  Button cancelButton;
+    private ObservableList<TaiKhoanNhanVienDTO> data;
+
+    public void setData(ObservableList<TaiKhoanNhanVienDTO> data) {
+        this.data = data;
+    }
+    private TaiKhoanController taiKhoanController;
+    // Tạo setter để thiết lập đối tượng TaiKhoanController
+    public void setTaiKhoanController(TaiKhoanController taiKhoanController) {
+        this.taiKhoanController = taiKhoanController;
+    }
     @FXML
     private void onSaveButtonClick(){
         Integer id = Integer.valueOf(idTxt.getText());
@@ -105,15 +117,13 @@ public class SuaTaiKhoanController implements Initializable {
         taiKhoanDAO.update(taiKhoan);
 
         // Hiển thị thông báo thành công
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        alert.setContentText("Cập nhật tài khoản và nhân viên thành công.");
-        alert.showAndWait();
+        showSuccess("Cập nật tài khoản và nhân viên thành công");
 
         // Đóng cửa sổ
         Stage stage = (Stage) saveButton.getScene().getWindow();
         stage.close();
+        taiKhoanController.updateTable();
+
     }
     @FXML
     private void onCancelButtonClick(){
@@ -138,6 +148,13 @@ public class SuaTaiKhoanController implements Initializable {
         usernameTxt.setText(taiKhoan.getTenDangNhap());
         statusChoiceBox.setValue(taiKhoan.getTrangThai()? "Đang hoạt động" : "Đã khóa");
         // Tương tự cho các trường khác
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thành công");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
     /**
      * Initializes the controller class.

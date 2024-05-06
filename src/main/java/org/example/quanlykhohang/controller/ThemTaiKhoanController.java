@@ -85,46 +85,47 @@ public class ThemTaiKhoanController implements Initializable {
         if (ho.isEmpty() || ten.isEmpty() || sdt.isEmpty() || diaChi.isEmpty() || email.isEmpty() ||
                 ngayBatDau == null  || ngaySinh == null || gioiTinh == null ||
                 tenTaiKhoan.isEmpty() || matKhau.isEmpty() || vaiTro == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
-            alert.setHeaderText(null);
-            alert.setContentText("Vui lòng điền đầy đủ thông tin.");
-            alert.showAndWait();
+            showAlert("Vui lòng điền đủ thông tin");
             return;
         }
-        if (!isValid(email))
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi");
-            alert.setHeaderText(null);
-            alert.setContentText("Email không đúng định dạng!!");
-            alert.showAndWait();
-            return;
+        else {
+            if (!isValid(email))
+            {
+                showAlert("Email không đúng định dạng");
+                return;
+            }
+            else {
+                // Tạo một đối tượng Nhân viên
+                NhanVienDAO nhanVienDAO = new NhanVienDAO();
+                NhanVien nhanVien = new NhanVien(ten, ho, ngaySinh, gioiTinh, ngayBatDau, null, sdt, diaChi, email);
+
+//                System.out.println("Ket qua:");
+//                System.out.printf("Ket qua day:", nhanVienDAO.existsByEmail(nhanVien));
+
+                if (nhanVienDAO.existsByEmail(nhanVien))
+                {
+                    showAlert("Email đã tồn tại trên hệ thống, hãy nhập email khác");
+                }
+                else{
+                    nhanVienDAO.create(nhanVien);
+                    // Tạo một đối tượng TaiKhoan
+                    TaiKhoan taiKhoan = new TaiKhoan(tenTaiKhoan, matKhau, vaiTro, true, nhanVien);
+                    // Thiết lập quan hệ giữa nhân viên và tài khoản
+                    taiKhoan.setNhanVien(nhanVien);
+                    TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+
+                    // Lưu tài khoản và nhân viên vào cơ sở dữ liệu
+                    taiKhoanDAO.create(taiKhoan);
+                    showSuccess("Tạo tài khoản và nhân viên thành công");
+
+                    // Đóng cửa sổ
+                    Stage stage = (Stage) saveButton.getScene().getWindow();
+                    stage.close();
+                    taiKhoanController.updateTable();
+                }
+
+            }
         }
-        // Tạo một đối tượng Nhân viên
-        NhanVien nhanVien = new NhanVien(ten, ho, ngaySinh, gioiTinh, ngayBatDau, null, sdt, diaChi, email);
-        NhanVienDAO nhanVienDAO = new NhanVienDAO();
-        nhanVienDAO.create(nhanVien);
-        // Tạo một đối tượng TaiKhoan
-        TaiKhoan taiKhoan = new TaiKhoan(tenTaiKhoan, matKhau, vaiTro, true, nhanVien);
-        // Thiết lập quan hệ giữa nhân viên và tài khoản
-        taiKhoan.setNhanVien(nhanVien);
-        TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
-
-        // Lưu tài khoản và nhân viên vào cơ sở dữ liệu
-        taiKhoanDAO.create(taiKhoan);
-
-        // Hiển thị thông báo thành công
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Thông báo");
-        alert.setHeaderText(null);
-        alert.setContentText("Tạo tài khoản và nhân viên thành công.");
-        alert.showAndWait();
-
-        // Đóng cửa sổ
-        Stage stage = (Stage) saveButton.getScene().getWindow();
-        stage.close();
-        taiKhoanController.updateTable();
     }
     @FXML
     private void onCancelButtonClick(){
@@ -154,6 +155,13 @@ public class ThemTaiKhoanController implements Initializable {
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thành công");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

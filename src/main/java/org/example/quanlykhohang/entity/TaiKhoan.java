@@ -51,8 +51,11 @@ public class TaiKhoan {
         this.nhanVien = nhanVien;
     }
 
-    
-    
+    public TaiKhoan(Integer id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+
     public Integer getId() {
         return id;
     }
