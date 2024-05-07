@@ -244,4 +244,26 @@ public class ThongKeDAO {
             em.close();
         }
     }
+    public double getIncome(){
+        EntityManager em = JpaUtils.getEntityManager();
+        try{
+            String jpql = "select sum(u.tongTien) from PhieuNhap u where u.status = :status";
+            String jpql2 = "select sum(u.donXuatHang.tongTien) from PhieuXuat u where u.status = :status";
+            Query query = em.createQuery(jpql);
+            query.setParameter("status", PhieuStatus.Done);
+            Double totalPn = query.getSingleResult() !=null?(Double) query.getSingleResult():0;
+            Query query2 = em.createQuery(jpql2);
+            query2.setParameter("status", PhieuStatus.Done);
+            Double totalPx = query2.getSingleResult() !=null ?(Double) query2.getSingleResult():0;
+            if ((totalPx - totalPn)<0)
+                return 0;
+            else
+                return totalPx - totalPn;
+        }  catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

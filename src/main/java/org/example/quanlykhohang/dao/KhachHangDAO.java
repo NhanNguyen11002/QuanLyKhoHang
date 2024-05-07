@@ -62,6 +62,7 @@ public class KhachHangDAO implements InterfaceDAO<KhachHang, Integer> {
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         } finally {
             em.close();
         }    

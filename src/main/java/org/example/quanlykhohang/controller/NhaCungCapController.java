@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -111,25 +112,30 @@ public class NhaCungCapController {
     }
     @FXML
     private void onDeleteBtnClick(){
-        NhaCungCap selectedRow = (NhaCungCap)providerTable.getSelectionModel().getSelectedItem();
-        if (selectedRow != null) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận xóa");
-            alert.setHeaderText(null);
-            alert.setContentText("Bạn có chắc chắn muốn xóa nhà cung cấp này?");
+            NhaCungCap selectedRow = (NhaCungCap)providerTable.getSelectionModel().getSelectedItem();
+            if (selectedRow != null) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Xác nhận xóa");
+                alert.setHeaderText(null);
+                alert.setContentText("Bạn có chắc chắn muốn xóa nhà cung cấp này?");
 
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                nhaCungCapDAO.delete(selectedRow.getMaNhaCungCap());
-                providerTable.getItems().remove(selectedRow);
+                Optional<ButtonType> result = alert.showAndWait();
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    try {
+                        nhaCungCapDAO.delete(selectedRow.getMaNhaCungCap());
+                        providerTable.getItems().remove(selectedRow);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        showError("Không thể xóa do có bản ghi liên kết");
+                    }
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Cảnh báo");
+                alert.setHeaderText(null);
+                alert.setContentText("Vui lòng chọn một nhà cung cấp để xóa.");
+                alert.showAndWait();
             }
-        } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Cảnh báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Vui lòng chọn một nhà cung cấp để xóa.");
-            alert.showAndWait();
-        }
     }
     @FXML
     private void onImportExcelBtnClick(){
@@ -320,5 +326,12 @@ public class NhaCungCapController {
         }
 
         return data;
+    }
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

@@ -92,6 +92,7 @@ public class TaiKhoanDAO implements InterfaceDAO<TaiKhoan, Integer>{
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         } finally {
             em.close();
         }
