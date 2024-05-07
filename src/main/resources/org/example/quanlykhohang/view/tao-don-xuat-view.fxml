@@ -93,17 +93,12 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="importExcelBtn" layoutX="90.0" layoutY="674.0" mnemonicParsing="false" onAction="#onImportExcelBtnClick" text="Nhập  excel">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi2f-file-excel-box-outline" iconSize="30" />
-                    </graphic>
-                </Button>
                 <Button fx:id="deleteProductBtn" layoutX="382.0" layoutY="674.0" mnemonicParsing="false" onAction="#onDeleteProductBtnClick" text="Xoá sản phẩm">
                     <graphic>
                         <FontIcon iconLiteral="mdi2t-trash-can-outline" iconSize="30" />
                     </graphic>
                 </Button>
-                <Button fx:id="editQuantityBtn" layoutX="233.0" layoutY="674.0" mnemonicParsing="false" onAction="#onEditQuantityBtnClick" text="Sửa số lượng">
+                <Button fx:id="editQuantityBtn" layoutX="100.0" layoutY="674.0" mnemonicParsing="false" onAction="#onEditQuantityBtnClick" text="Sửa số lượng">
                     <graphic>
                         <FontIcon iconLiteral="mdi2p-pencil-box-outline" iconSize="30" />
                     </graphic>
