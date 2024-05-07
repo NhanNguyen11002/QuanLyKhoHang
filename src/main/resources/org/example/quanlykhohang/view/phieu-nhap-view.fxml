@@ -22,6 +22,7 @@
                         <TableColumn text="Nhà cung cấp" fx:id="nhaCungCapColumn" />
                   		<TableColumn text="Thời gian tạo" fx:id="thoiGianTaoColumn" />
                         <TableColumn text="Tổng tiền" fx:id="tongTienColumn" />
+                        <TableColumn text="Trạng thái" fx:id="trangThaiColumn" />
                     </columns>
                 </TableView>
             </children></AnchorPane>
@@ -39,22 +40,6 @@
                                 <FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="40" />
                             </graphic>
                         </Button>
-                        <Button fx:id="exportExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="399.0" layoutY="16.0" mnemonicParsing="false" onAction="#onExportExcelBtnClick" text="Xuất excel">
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2f-file-export-outline" iconSize="40" />
-                            </graphic>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="importExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="311.0" layoutY="16.0" mnemonicParsing="false" onAction="#onImportExcelBtnClick" text="Nhập excel">
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2f-file-excel-outline" iconSize="40" />
-                            </graphic>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
                         <Button fx:id="detailBtn" alignment="CENTER" contentDisplay="TOP" layoutX="205.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDetailBtnClick" text="Xem chi tiết">
                             <font>
                                 <Font size="14.0" />
@@ -63,15 +48,7 @@
                                 <FontIcon iconLiteral="mdi2e-eye-outline" iconSize="40" />
                             </graphic>
                         </Button>
-                        <Button fx:id="editBtn" alignment="CENTER" contentDisplay="TOP" layoutX="143.0" layoutY="16.0" mnemonicParsing="false" onAction="#onEditBtnClick" text="Sửa">
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2p-pencil-outline" iconSize="40" />
-                            </graphic>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="deleteBtn" alignment="CENTER" contentDisplay="TOP" layoutX="81.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDeleteBtnClick" text="Xoá">
+                        <Button fx:id="deleteBtn" alignment="CENTER" contentDisplay="TOP" layoutX="415.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDeleteBtnClick" text="Xoá">
                             <graphic>
                                 <FontIcon iconLiteral="mdi2t-trash-can-outline" iconSize="40" />
                             </graphic>

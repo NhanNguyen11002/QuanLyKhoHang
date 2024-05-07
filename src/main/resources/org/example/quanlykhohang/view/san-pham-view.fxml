@@ -82,7 +82,7 @@
             </Pane>
             <Pane layoutX="501.0" prefHeight="100.0" prefWidth="720.0" styleClass="top-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="searchTxt" layoutX="170.0" layoutY="29.0" onAction="#handleSearchTextFieldKeyPress" prefHeight="40.0" prefWidth="400.0" promptText="Nhập từ khóa tìm kiếm" />
+                  <TextField fx:id="searchTxt" layoutX="100.0" layoutY="29.0" onAction="#handleSearchTextFieldKeyPress" prefHeight="40.0" prefWidth="400.0" promptText="Nhập từ khóa tìm kiếm" />
                   <Button fx:id="resetBtn" layoutX="579.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Làm mới" onAction="#onResetBtnClick">
                      <graphic>
                         <FontIcon iconLiteral="mdi2r-reload" iconSize="30" />
@@ -91,7 +91,6 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <ComboBox fx:id="filterCbbox" layoutX="13.0" layoutY="29.0" onAction="#onFilterCbboxAction" prefHeight="40.0" prefWidth="150.0" promptText="Tất cả" />
                </children>
             </Pane>
          </children>
