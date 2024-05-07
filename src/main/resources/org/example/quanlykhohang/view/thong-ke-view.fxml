@@ -70,23 +70,12 @@
       </Pane>
       <TabPane layoutX="60.0" layoutY="210.0" prefHeight="650.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
         <tabs>
-          <Tab text="Sản phẩm">
+          <Tab onSelectionChanged="#onProductTabChange" text="Sản phẩm">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1200.0">
                      <children>
-                        <TextField fx:id="searchTxt" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" prefHeight="40.0" prefWidth="450.0" />
+                        <TextField fx:id="searchTxt" onAction="#onSearchProductTxtAction" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" prefHeight="40.0" prefWidth="450.0" />
                         <Label layoutX="69.0" layoutY="11.0" text="Tìm kiếm" />
-                        <Label layoutX="575.0" layoutY="11.0" text="Lọc thời gian" />
-                        <DatePicker fx:id="fromDatePicker" layoutX="600.0" layoutY="36.0" onAction="#onFromDatePickerAction" prefHeight="30.0" prefWidth="175.0" />
-                        <DatePicker fx:id="toDatePicker" layoutX="852.0" layoutY="36.0" onAction="#onToDatePickerAction" prefHeight="30.0" prefWidth="175.0" />
-                        <Label layoutX="576.0" layoutY="42.0" text="Từ">
-                           <font>
-                              <Font size="12.0" />
-                           </font></Label>
-                        <Label layoutX="812.0" layoutY="42.0" text="Đến">
-                           <font>
-                              <Font size="12.0" />
-                           </font></Label>
                         <Button fx:id="resetBtn" layoutX="1082.0" layoutY="28.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới" AnchorPane.rightAnchor="30.0">
                            <graphic>
                               <FontIcon iconLiteral="mdi2r-reload" iconSize="30" />
@@ -97,11 +86,10 @@
                         </Button>
                         <TableView fx:id="productTable" layoutX="143.0" layoutY="248.0" prefHeight="500.0" prefWidth="1140.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="STT" />
-                            <TableColumn prefWidth="117.0" text="Mã điện thoại" />
-                              <TableColumn prefWidth="268.0" text="Tên điện thoại" />
-                              <TableColumn prefWidth="128.0" text="Số lượng nhập" />
-                              <TableColumn prefWidth="164.0" text="Số lượng xuất" />
+                            <TableColumn text="Mã điện thoại" fx:id="maDTColumn" />
+                              <TableColumn text="Tên điện thoại" fx:id="tenDTColumn" />
+                              <TableColumn text="Số lượng nhập" fx:id="soLuongNhapColumn" />
+                              <TableColumn text="Số lượng xuất" fx:id="soLuongXuatColumn" />
                           </columns>
                         </TableView>
                         <Line endX="30.5" endY="-74.5" layoutX="519.0" layoutY="83.0" startX="30.5" startY="-1.5" />
@@ -109,7 +97,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab onSelectionChanged="#onTicketTabChange" text="Phiếu">
+          <Tab  text="Phiếu">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1200.0">
                      <children>
@@ -182,16 +170,6 @@
                         <Label fx:id="totalLabel" layoutX="674.0" layoutY="580.0" text="1.000.000đ" textFill="#8bbf4f">
                            <font>
                               <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="244.0" layoutY="582.0" text="Doanh thu">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="incomeLabel" layoutX="362.0" layoutY="582.0" text="100000">
-                           <font>
-                              <Font name="System Bold" size="20.0" />
                            </font>
                         </Label>
                      </children>

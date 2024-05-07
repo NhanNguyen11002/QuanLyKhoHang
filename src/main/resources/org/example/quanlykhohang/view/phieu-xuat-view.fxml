@@ -39,24 +39,8 @@
                             <graphic>
                                 <FontIcon iconLiteral="mdi2p-plus-circle-outline" iconSize="40" />
                             </graphic>
-                        </Button>
-                        <Button fx:id="exportExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="399.0" layoutY="16.0" mnemonicParsing="false" onAction="#onExportExcelBtnClick" text="Xuất excel">
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2f-file-export-outline" iconSize="40" />
-                            </graphic>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="importExcelBtn" alignment="CENTER" contentDisplay="TOP" layoutX="311.0" layoutY="16.0" mnemonicParsing="false" onAction="#onImportExcelBtnClick" text="Nhập excel">
-                            <graphic>
-                                <FontIcon iconLiteral="mdi2f-file-excel-outline" iconSize="40" />
-                            </graphic>
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Button>
-                        <Button fx:id="detailBtn" alignment="CENTER" contentDisplay="TOP" layoutX="176.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDetailBtnClick" text="Xem chi tiết">
+                        </Button>	
+                        <Button fx:id="detailBtn" alignment="CENTER" contentDisplay="TOP" layoutX="329.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDetailBtnClick" text="Xem chi tiết">
                             <font>
                                 <Font size="14.0" />
                             </font>
@@ -64,7 +48,7 @@
                                 <FontIcon iconLiteral="mdi2e-eye-outline" iconSize="40" />
                             </graphic>
                         </Button>
-                        <Button fx:id="deleteBtn" alignment="CENTER" contentDisplay="TOP" layoutX="98.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDeleteBtnClick" text="Xoá">
+                        <Button fx:id="deleteBtn" alignment="CENTER" contentDisplay="TOP" layoutX="169.0" layoutY="16.0" mnemonicParsing="false" onAction="#onDeleteBtnClick" text="Xoá">
                             <graphic>
                                 <FontIcon iconLiteral="mdi2t-trash-can-outline" iconSize="40" />
                             </graphic>

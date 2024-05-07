@@ -3,6 +3,9 @@ package org.example.quanlykhohang.dao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+
+import org.example.quanlykhohang.entity.ChiTietDonXuatHang;
+import org.example.quanlykhohang.entity.ChiTietPhieuNhap;
 import org.example.quanlykhohang.entity.PhieuNhap;
 import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.PhieuXuat;
@@ -244,26 +247,41 @@ public class ThongKeDAO {
             em.close();
         }
     }
-    public double getIncome(){
+
+    public List<Object> searchAllProduct(String keyword){
         EntityManager em = JpaUtils.getEntityManager();
         try{
-            String jpql = "select sum(u.tongTien) from PhieuNhap u where u.status = :status";
-            String jpql2 = "select sum(u.donXuatHang.tongTien) from PhieuXuat u where u.status = :status";
-            Query query = em.createQuery(jpql);
-            query.setParameter("status", PhieuStatus.Done);
-            Double totalPn = query.getSingleResult() !=null?(Double) query.getSingleResult():0;
-            Query query2 = em.createQuery(jpql2);
-            query2.setParameter("status", PhieuStatus.Done);
-            Double totalPx = query2.getSingleResult() !=null ?(Double) query2.getSingleResult():0;
-            if ((totalPx - totalPn)<0)
-                return 0;
-            else
-                return totalPx - totalPn;
-        }  catch (Exception e){
-            e.printStackTrace();
+            List<Object> list = new ArrayList<>();
+            String jpql1 = "SELECT q1.maDT, q1.tenDT, q1.soLuongNhap, q2.soLuongXuat " +
+                    "FROM ( " +
+                    "    SELECT dt.maDT maDT, dt.tenDT as tenDT, SUM(ctpn.soLuong) soLuongNhap " +
+                    "    FROM ChiTietPhieuNhap ctpn JOIN ctpn.dienThoai dt " +
+                    "    WHERE ctpn.phieuNhap.maPhieu IN ( " +
+                    "        SELECT u.maPhieu FROM PhieuNhap u WHERE u.status = :statusNhap " +
+                    "    ) " +
+                    "    GROUP BY dt.maDT " +
+                    ") q1 " +
+                    "JOIN ( " +
+                    "    SELECT dt.maDT maDT, dt.tenDT tenDT, SUM(ctdx.soLuong) soLuongXuat " +
+                    "    FROM ChiTietDonXuatHang ctdx JOIN ctdx.donXuatHang dx " +
+                    "    JOIN ctdx.dienThoai dt " +
+                    "    WHERE dx.trangThai = :statusXuat " +
+                    "    GROUP BY dt.maDT " +
+                    ") q2 ON q1.maDT = q2.maDT "
+                    + "WHERE q1.maDT LIKE :keyword OR q1.tenDT LIKE :keyword";
+            Query query = em.createQuery(jpql1);
+            query.setParameter("statusNhap", PhieuStatus.Done);
+            query.setParameter("statusXuat", "Done");
+            query.setParameter("keyword", "%" + keyword + "%");
+            List ctpnList = query.getResultList();
+            list.addAll(ctpnList);
+            return list;
+        } catch (Exception e){
+        	e.printStackTrace();
             throw e;
         } finally {
             em.close();
         }
     }
+    
 }

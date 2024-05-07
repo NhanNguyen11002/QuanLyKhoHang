@@ -72,5 +72,11 @@ public class ChiTietPhieuNhap {
     public void setDonGia(Double donGia) {
         this.donGia = donGia;
     }
+
+	@Override
+	public String toString() {
+		return "ChiTietPhieuNhap [id=" + id + ", phieuNhap=" + phieuNhap + ", dienThoai=" + dienThoai + ", soLuong="
+				+ soLuong + ", donGia=" + donGia + "]";
+	}
     
 }
