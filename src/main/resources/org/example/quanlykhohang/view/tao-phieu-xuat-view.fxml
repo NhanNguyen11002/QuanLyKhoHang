@@ -26,7 +26,7 @@
             <children>
                 <Pane prefHeight="100.0" prefWidth="590.0" styleClass="top-pane" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <children>
-                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" prefHeight="50.0" prefWidth="400.0" />
+                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" onAction="#onSearchTxtAction" prefHeight="50.0" prefWidth="400.0" />
                         <Button fx:id="resetBtn" layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới">
                             <font>
                                 <Font size="14.0" />
@@ -37,7 +37,7 @@
                         </Button>
                     </children>
                 </Pane>
-                <TableView fx:id="exportFormTable" layoutX="78.0" layoutY="254.0" prefHeight="580.0" prefWidth="590.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                <TableView fx:id="exportFormTable" layoutX="10.0" layoutY="120.0" prefHeight="580.0" prefWidth="590.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                     <columns>
                         <TableColumn prefWidth="93.19187927246094" text="Mã đơn xuất" />
                         <TableColumn prefWidth="94.91792297363281" text="Khách hàng" />
@@ -55,19 +55,13 @@
         </AnchorPane>
         <AnchorPane maxWidth="610.0" prefHeight="200.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
             <children>
-                <Label layoutX="35.0" layoutY="22.0" text="Mã phiếu xuất">
+                <Label layoutX="40.0" layoutY="42.0" text="Người tạo phiếu">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="ticketIdTxt" disable="true" layoutX="164.0" layoutY="13.0" prefHeight="40.0" prefWidth="400.0" />
-                <Label layoutX="34.0" layoutY="78.0" text="Người tạo phiếu">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="creatorTxt" disable="true" layoutX="164.0" layoutY="70.0" prefHeight="40.0" prefWidth="400.0" />
-                <TableView fx:id="exportFormDetailTable" layoutX="79.0" layoutY="481.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                <TextField fx:id="creatorTxt" disable="true" layoutX="170.0" layoutY="34.0" prefHeight="40.0" prefWidth="400.0" />
+                <TableView fx:id="exportFormDetailTable" layoutX="10.0" layoutY="86.0" prefHeight="620.0" prefWidth="590.0" AnchorPane.bottomAnchor="94.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                     <columns>
                         <TableColumn prefWidth="67.0" text="STT" />
                         <TableColumn prefWidth="91.0" text="Mã điện thoại" />
@@ -76,11 +70,21 @@
                         <TableColumn minWidth="0.0" prefWidth="121.0" text="Số lượng nhập" />
                     </columns>
                 </TableView>
-                <Button fx:id="exportBtn" layoutX="486.0" layoutY="690.0" mnemonicParsing="false" onAction="#onExportBtnClick" text="Tạo phiếu">
+                <Button fx:id="exportBtn" layoutX="496.0" layoutY="738.0" mnemonicParsing="false" onAction="#onExportBtnClick" text="Tạo phiếu">
                     <font>
                         <Font size="14.0" />
                     </font>
                 </Button>
+            <TextField fx:id="vehicleTxt" layoutX="100.0" layoutY="737.0" prefHeight="30.0" prefWidth="160.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="350.0">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <Label layoutX="14.0" layoutY="740.0" text="Biển số xe" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="519.5">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </children>

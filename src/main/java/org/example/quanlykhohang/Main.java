@@ -4,14 +4,16 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.quanlykhohang.entity.SeedDataInitializer;
 
 import java.io.IOException;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/admin-sidebar.fxml"));
+        SeedDataInitializer dataInitializer = new SeedDataInitializer();
+        dataInitializer.initialize();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/dang-nhap-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Quản lý kho hàng");
         stage.setScene(scene);

@@ -17,10 +17,10 @@
          <children>
             <TableView fx:id="productTable" layoutX="123.0" layoutY="34.0" prefHeight="660.0" prefWidth="1200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="30.0">
               <columns>
-                <TableColumn prefWidth="110.97826766967773" text="Mã điện thoại" />
-                <TableColumn prefWidth="235.34886169433594" text="Tên điện thoại" />
-                  <TableColumn prefWidth="75.0" text="Giá  nhập" />
-                  <TableColumn prefWidth="75.0" text="Giá xuất" />
+                <TableColumn text="Mã điện thoại" fx:id="idPhoneColumn" />
+                <TableColumn text="Tên điện thoại" fx:id="namePhoneColumn" />
+                  <TableColumn text="Giá  nhập" fx:id="inputPriceColumn" />
+                  <TableColumn text="Giá xuất" fx:id="outputPriceColumn" />
               </columns>
             </TableView>
          </children></AnchorPane>
@@ -82,8 +82,8 @@
             </Pane>
             <Pane layoutX="501.0" prefHeight="100.0" prefWidth="720.0" styleClass="top-pane" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <TextField fx:id="searchTxt" layoutX="170.0" layoutY="29.0" onAction="#onResetBtnClick" prefHeight="40.0" prefWidth="400.0" />
-                  <Button fx:id="resetBtn" layoutX="579.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Làm mới">
+                  <TextField fx:id="searchTxt" layoutX="100.0" layoutY="29.0" onAction="#handleSearchTextFieldKeyPress" prefHeight="40.0" prefWidth="400.0" promptText="Nhập từ khóa tìm kiếm" />
+                  <Button fx:id="resetBtn" layoutX="579.0" layoutY="29.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Làm mới" onAction="#onResetBtnClick">
                      <graphic>
                         <FontIcon iconLiteral="mdi2r-reload" iconSize="30" />
                      </graphic>
@@ -91,7 +91,6 @@
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <ComboBox fx:id="filterCbbox" layoutX="13.0" layoutY="29.0" onAction="#onFilterCbboxAction" prefHeight="40.0" prefWidth="150.0" promptText="Tất cả" />
                </children>
             </Pane>
          </children>

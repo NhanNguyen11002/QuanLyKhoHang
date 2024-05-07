@@ -3,13 +3,20 @@ package org.example.quanlykhohang.controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import org.example.quanlykhohang.Main;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.quanlykhohang.dao.NhanVienDAO;
+import org.example.quanlykhohang.entity.UserSession;
 
 public class AdminSidebarController {
     @FXML
@@ -38,6 +45,8 @@ public class AdminSidebarController {
     private Pane mainPane;
     @FXML
     private BorderPane borderPane;
+    @FXML
+    private Label helloLabel;
     @FXML
     private void onProductPaneClick(){
         try {
@@ -101,7 +110,7 @@ public class AdminSidebarController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-xuat-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
-            applyStyle(storagePane);
+            applyStyle(exportTicketPane);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -140,7 +149,28 @@ public class AdminSidebarController {
         }
     }
     @FXML
-    private void onLogoutPaneClick(){}
+    private void onLogoutPaneClick(){
+        showConfirm("Bạn có chắc chắn muốn đăng xuất?", () -> {
+            // Nếu người dùng chọn Yes (OK), thực hiện các hành động sau
+            // Reset thông tin của UserSession
+            UserSession.getInstance().clearSession();
+
+            try {
+                // Load FXML file for login page
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/dang-nhap-view.fxml"));
+                Parent root = fxmlLoader.load();
+
+                // Create a new scene with the loaded root
+                Scene scene = new Scene(root);
+
+                // Get the current stage and set the scene
+                Stage stage = (Stage) logoutPane.getScene().getWindow();
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
     @FXML
     private void onInformationPaneClick(){
         try {
@@ -148,7 +178,9 @@ public class AdminSidebarController {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/popup-sua-thong-tin-ca-nhan-view.fxml"));
             // Load the root pane
             Pane item = fxmlLoader.load();
-
+            SuaThongTinCaNhanController suaThongTinCaNhanController = fxmlLoader.getController();
+            NhanVienDAO nhanVienDao = new NhanVienDAO();
+            suaThongTinCaNhanController.setUserInfo(nhanVienDao.findById(UserSession.getInstance().getMaNhanVien()));
             // Create a new scene with the loaded pane
             Scene scene = new Scene(item);
 
@@ -163,6 +195,7 @@ public class AdminSidebarController {
     }
     @FXML
     private void initialize() {
+        helloLabel.setText("Hello, "+UserSession.getInstance().getUserName());
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/san-pham-view.fxml"));
             Pane item = fxmlLoader.load();
@@ -171,6 +204,27 @@ public class AdminSidebarController {
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+    private void showConfirm(String message, Runnable onConfirmation) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Xác nhận");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Nếu người dùng chọn OK (Yes), thực hiện hành động được định nghĩa trong hàm onConfirmation
+            onConfirmation.run();
+        } else {
+            // Người dùng chọn Cancel (No), không thực hiện hành động nào
+        }
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Thành công");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
     private void applyStyle(Pane pane){
         productPane.getStyleClass().clear();

@@ -34,7 +34,7 @@
                 </Label>
                 <Pane prefHeight="100.0" prefWidth="590.0" styleClass="top-pane" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                     <children>
-                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" prefHeight="50.0" prefWidth="400.0" />
+                        <TextField fx:id="searchTxt" layoutX="32.0" layoutY="25.0" onAction="#onSearchTxtAction" prefHeight="50.0" prefWidth="400.0" />
                         <Button fx:id="resetBtn" layoutX="461.0" layoutY="25.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới">
                             <font>
                                 <Font size="14.0" />
@@ -43,6 +43,7 @@
                                 <FontIcon iconLiteral="mdi2r-reload" iconSize="40" wrappingWidth="43.410980224609375" />
                             </graphic>
                         </Button>
+                  <Label layoutX="32.0" layoutY="6.0" text="Tìm sản  phẩm" />
                     </children>
                 </Pane>
                 <TableView fx:id="productTable" layoutX="78.0" layoutY="254.0" prefHeight="580.0" prefWidth="590.0" AnchorPane.bottomAnchor="90.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
@@ -71,20 +72,14 @@
         </AnchorPane>
         <AnchorPane maxWidth="610.0" prefHeight="200.0" prefWidth="610.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647">
             <children>
-                <ComboBox fx:id="customerCbbox" layoutX="164.0" layoutY="127.0" onAction="#onCustomerCbboxAction" prefHeight="40.0" prefWidth="400.0" />
-                <Label layoutX="35.0" layoutY="22.0" text="Mã đơn xuất">
+                <ComboBox fx:id="customerCbbox" layoutX="159.0" layoutY="88.0" onAction="#onCustomerCbboxAction" prefHeight="40.0" prefWidth="400.0" />
+                <Label layoutX="29.0" layoutY="39.0" text="Người tạo đơn">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <TextField fx:id="formIdTxt" disable="true" layoutX="164.0" layoutY="13.0" prefHeight="40.0" prefWidth="400.0" />
-                <Label layoutX="34.0" layoutY="78.0" text="Người tạo đơn">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                </Label>
-                <TextField fx:id="creatorTxt" disable="true" layoutX="164.0" layoutY="70.0" prefHeight="40.0" prefWidth="400.0" />
-                <TableView fx:id="exportFormTable" layoutX="79.0" layoutY="481.0" prefHeight="470.0" prefWidth="590.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                <TextField fx:id="creatorTxt" disable="true" layoutX="159.0" layoutY="31.0" prefHeight="40.0" prefWidth="400.0" />
+                <TableView fx:id="exportFormTable" layoutX="79.0" layoutY="481.0" prefHeight="500.0" prefWidth="590.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                     <columns>
                         <TableColumn prefWidth="67.0" text="STT" />
                         <TableColumn prefWidth="91.0" text="Mã điện thoại" />
@@ -93,22 +88,17 @@
                         <TableColumn minWidth="0.0" prefWidth="121.0" text="Số lượng xuất" />
                     </columns>
                 </TableView>
-                <Label layoutX="34.0" layoutY="135.0" text="Khách hàng">
+                <Label layoutX="29.0" layoutY="96.0" text="Khách hàng">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Button fx:id="importExcelBtn" layoutX="90.0" layoutY="674.0" mnemonicParsing="false" onAction="#onImportExcelBtnClick" text="Nhập  excel">
-                    <graphic>
-                        <FontIcon iconLiteral="mdi2f-file-excel-box-outline" iconSize="30" />
-                    </graphic>
-                </Button>
                 <Button fx:id="deleteProductBtn" layoutX="382.0" layoutY="674.0" mnemonicParsing="false" onAction="#onDeleteProductBtnClick" text="Xoá sản phẩm">
                     <graphic>
                         <FontIcon iconLiteral="mdi2t-trash-can-outline" iconSize="30" />
                     </graphic>
                 </Button>
-                <Button fx:id="editQuantityBtn" layoutX="233.0" layoutY="674.0" mnemonicParsing="false" onAction="#onEditQuantityBtnClick" text="Sửa số lượng">
+                <Button fx:id="editQuantityBtn" layoutX="100.0" layoutY="674.0" mnemonicParsing="false" onAction="#onEditQuantityBtnClick" text="Sửa số lượng">
                     <graphic>
                         <FontIcon iconLiteral="mdi2p-pencil-box-outline" iconSize="30" />
                     </graphic>

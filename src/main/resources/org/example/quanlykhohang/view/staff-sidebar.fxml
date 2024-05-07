@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<BorderPane fx:id="borderPane" prefHeight="800.0" prefWidth="1420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.StaffSidebarController">
+    <left>
+        <AnchorPane fx:id="adminSidePane" prefHeight="800.0" prefWidth="200.0" styleClass="bg-green" stylesheets="@../../../../style.css" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="helloLabel" layoutX="53.0" layoutY="58.0" text="Hello, " textFill="WHITE">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+                <Pane fx:id="exportFormPane" layoutY="212.0" onMouseClicked="#onExportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+                    <children>
+                        <Label layoutX="72.0" layoutY="7.0" text="Đơn xuất" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-export-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
+                    </children>
+                </Pane>
+                <Pane fx:id="importTicketPane" layoutY="249.0" onMouseClicked="#onImportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+                    <children>
+                        <Label layoutX="72.0" layoutY="7.0" text="Phiếu nhập" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-download-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
+                    </children>
+                </Pane>
+                <Pane fx:id="exportTicketPane" layoutY="286.0" onMouseClicked="#onExportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+                    <children>
+                        <Label layoutX="72.0" layoutY="7.0" text="Phiếu xuất" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-move-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
+                    </children>
+                </Pane>
+                <Pane fx:id="logoutPane" layoutY="731.0" onMouseClicked="#onLogoutPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="logout-btn">
+                    <children>
+                        <Label layoutX="72.0" layoutY="7.0" text="Đăng xuất" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2p-power" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
+                    </children>
+                </Pane>
+                <Pane fx:id="informationPane" layoutY="694.0" onMouseClicked="#onInformationPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
+                    <children>
+                        <Label layoutX="72.0" layoutY="7.0" text="Đổi thông tin" textFill="WHITE">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <FontIcon iconColor="WHITE" iconLiteral="mdi2i-information-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
+                    </children>
+                </Pane>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <Pane fx:id="mainPane" prefHeight="800.0" prefWidth="1220.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="777.0" layoutY="313.0" text="Cuu tao" />
+            </children></Pane>
+    </right>
+</BorderPane>
