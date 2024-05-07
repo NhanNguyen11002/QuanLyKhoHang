@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -119,13 +120,13 @@ public class KhachHangController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                khachHangDAO.delete(selectedRow.getMaKhachHang());
-                customerTable.getItems().remove(selectedRow);
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Thông báo");
-                alert1.setHeaderText(null);
-                alert1.setContentText("Xoá khách hàng thành công.");
-                alert1.showAndWait();
+                try {
+                    khachHangDAO.delete(selectedRow.getMaKhachHang());
+                    customerTable.getItems().remove(selectedRow);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showError("Không thể xóa do có bản ghi liên kết");
+                }
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -134,6 +135,7 @@ public class KhachHangController {
             alert.setContentText("Vui lòng chọn một khách hàng để xóa.");
             alert.showAndWait();
         }
+
     }
     @FXML
     private void onImportExcelBtnClick(){
@@ -322,6 +324,20 @@ public class KhachHangController {
         }
 
         return data;
+    }
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

@@ -13,16 +13,10 @@ import javafx.stage.Stage;
 import org.example.quanlykhohang.Main;
 import org.example.quanlykhohang.dao.*;
 import org.example.quanlykhohang.dto.ProductDTO;
-import org.example.quanlykhohang.entity.ChiTietPhieuNhap;
-import org.example.quanlykhohang.entity.DienThoai;
-import org.example.quanlykhohang.entity.KhachHang;
 import org.example.quanlykhohang.entity.PhieuNhap;
 import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.PhieuXuat;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -157,9 +151,6 @@ public class ThongKeController {
     @FXML
     private void onProductTabChange(){
     	searchAllProduct();
-    	for (ProductDTO p : productList) {
-    		System.out.println(p.toString());
-    	}
     }
     
     private void searchAllProduct(){
@@ -167,14 +158,12 @@ public class ThongKeController {
         List<Object> objectList;
         String keyword = searchTxt.getText();
         objectList = thongKeDAO.searchAllProduct(keyword);
-        System.out.println("List ne ==========================================");
         for(Object obj : objectList){
         	Object[] row = (Object[]) obj;
         	String maDT = (String) row[0];
             String tenDT = (String) row[1];
             Long soLuongNhap = (Long) row[2];
             Long soLuongXuat = (Long) row[3];
-            System.out.println(maDT + " " + tenDT + " " + soLuongNhap + " " + soLuongXuat);
             ProductDTO productDTO = new ProductDTO(maDT, tenDT, soLuongNhap, soLuongXuat);
             productList.add(productDTO);
         }
@@ -247,17 +236,55 @@ public class ThongKeController {
     @FXML
     private void onSearchTicketTxtAction(){
         ticketTable.setItems(searchAllPhieu());
+        updateTotalAmount(ticketTable);
+
     }
+    private void updateTotalAmount(TableView<Object> tableView) {
+        double totalAmount = 0.0;
+        TableColumn<Object, String> totalColumn = getColumnByName(tableView, "Tổng tiền");
+        if (totalColumn != null) {
+            for (Object item : tableView.getItems()) {
+                String cellValue = totalColumn.getCellObservableValue(item).getValue();
+                String formattedValue = cellValue.replaceAll(",", "");
+                double amount = Double.parseDouble(formattedValue);
+                totalAmount += amount;
+            }
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+        // Chuyển đổi totalAmount thành chuỗi định dạng
+        String formattedTotalAmount = decimalFormat.format(totalAmount);
+        // Gán giá trị đã định dạng cho totalLabel
+        totalLabel.setText(formattedTotalAmount);
+        int numTickets = tableView.getItems().size();
+        numTicketLabel.setText(String.valueOf(numTickets));
+    }
+
+
+
+
+    // Phương thức để lấy cột từ tên cột
+    @SuppressWarnings("unchecked")
+    private TableColumn<Object, String> getColumnByName(TableView<Object> tableView, String columnName) {
+        for (TableColumn<Object, ?> col : tableView.getColumns()) {
+            if (col.getText().equals(columnName)) {
+                return (TableColumn<Object, String>) col;
+            }
+        }
+        return null;
+    }
+
     @FXML
     private void onTicketFromDatePickerAction(){
         if(ticketToDatePicker.getValue() == null) return;
         ticketTable.setItems(searchAllPhieu());
+        updateTotalAmount(ticketTable);
     }
 
     @FXML
     private void onTicketToDatePickerAction(){
         if(ticketFromDatePicker.getValue() == null) return;
         ticketTable.setItems(searchAllPhieu());
+        updateTotalAmount(ticketTable);
     }
 
     @FXML
@@ -268,6 +295,7 @@ public class ThongKeController {
         ticketFromDatePicker.setValue(null);
         ticketToDatePicker.setValue(null);
         ticketTable.setItems(searchAllPhieu());
+        updateTotalAmount(ticketTable);
     }
 
     @FXML
@@ -322,7 +350,6 @@ public class ThongKeController {
         double number = thongKeDAO.getTotal();
         String formattedNumber = decimalFormat.format(number);
         totalLabel.setText(formattedNumber);
-
         numTicketLabel.setText(String.valueOf(thongKeDAO.count()));
     }
     @FXML
@@ -331,7 +358,7 @@ public class ThongKeController {
             if(toTotalTxt.getText().equals("")) return;
             double parse = Double.parseDouble(fromTotalTxt.getText());
             ticketTable.setItems(searchAllPhieu());
-
+            updateTotalAmount(ticketTable);
         } catch (Exception e){
             e.printStackTrace();
             String message = e instanceof NumberFormatException?"Vui lòng nhập số tiền thích hợp":"Có lỗi xảy ra khi lọc";
@@ -349,6 +376,7 @@ public class ThongKeController {
             if(fromTotalTxt.getText().equals("")) return;
             double parse = Double.parseDouble(toTotalTxt.getText());
             ticketTable.setItems(searchAllPhieu());
+            updateTotalAmount(ticketTable);
         } catch (Exception e){
             e.printStackTrace();
             String message = e instanceof NumberFormatException?"Vui lòng nhập số tiền thích hợp":"Có lỗi xảy ra khi lọc";
@@ -389,10 +417,6 @@ public class ThongKeController {
             objectList = thongKeDAO.searchAllPhieu(keyword);
         }
         data.addAll(objectList);
-        System.out.println("List ne ==========================================");
-        for(Object obj:objectList){
-            System.out.println(obj.toString());
-        }
         return data;
 
     }

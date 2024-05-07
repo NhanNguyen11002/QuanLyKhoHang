@@ -247,7 +247,7 @@ public class ThongKeDAO {
             em.close();
         }
     }
-    
+
     public List<Object> searchAllProduct(String keyword){
         EntityManager em = JpaUtils.getEntityManager();
         try{
@@ -277,10 +277,11 @@ public class ThongKeDAO {
             list.addAll(ctpnList);
             return list;
         } catch (Exception e){
-            e.printStackTrace();
+        	e.printStackTrace();
             throw e;
         } finally {
             em.close();
         }
     }
+    
 }

@@ -5,13 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -22,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -185,16 +180,28 @@ public class SanPhamController {
 			DienThoai selectedPhone = productTable.getSelectionModel().getSelectedItem();
 			if (selectedPhone != null) {
 				String idPhone = selectedPhone.getMaDT();
-				phoneDAO.delete(idPhone);
-				reloadPhoneList();
+				DienThoaiDAO phoneDAO = new DienThoaiDAO();
+				Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+				alert.setTitle("Xác nhận xóa");
+				alert.setHeaderText(null);
+				alert.setContentText("Bạn có chắc chắn muốn xóa sản phẩm này?");
+
+				Optional<ButtonType> result = alert.showAndWait();
+				if (result.isPresent() && result.get() == ButtonType.OK) {
+					try {
+						phoneDAO.delete(idPhone);
+						reloadPhoneList();
+						showSuccess("Xóa sản phẩm thành công");
+					} catch (Exception e) {
+						e.printStackTrace();
+						showError("Không thể xóa do có bản ghi liên kết");
+					}
+				}
 			} else {
 				throw new IOException("Không có sản phẩm nào được chọn");
 			}
 		} catch (IOException e) {
-			Alert alert = new Alert(Alert.AlertType.ERROR);
-			alert.setTitle("Lỗi");
-			alert.setHeaderText(e.getMessage());
-			alert.showAndWait();
+			showError("Lỗi");
 		}
 	}
 
@@ -363,5 +370,19 @@ public class SanPhamController {
 
 	@FXML
 	private void onFilterCbboxAction() {
+	}
+	private void showError(String message) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Lỗi");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+	private void showSuccess(String message) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("Lỗi");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 }

@@ -61,6 +61,7 @@ public class NhanVienDAO implements InterfaceDAO<NhanVien, Integer> {
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         } finally {
             em.close();
         }    
