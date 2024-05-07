@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -130,36 +132,44 @@ public class TaiKhoanController {
         }
     }
     @FXML
-    private void onDeleteBtnClick(){
-        // Lấy hàng được chọn
-        TaiKhoanNhanVienDTO selectedRow = accountTable.getSelectionModel().getSelectedItem();
-        if (selectedRow != null) {
-            // Tạo hộp thoại xác nhận
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Xác nhận xóa");
-            alert.setHeaderText(null);
-            alert.setContentText("Bạn có chắc chắn muốn xóa tài khoản này?");
+    private void onDeleteBtnClick() {
 
-            // Xác nhận xóa
-            Optional<ButtonType> result = alert.showAndWait();
-            if (result.isPresent() && result.get() == ButtonType.OK) {
-                // Gọi phương thức xóa từ TaiKhoanDAO
-                TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
-                NhanVienDAO nhanVienDAO = new NhanVienDAO();
-                taiKhoanDAO.delete(selectedRow.getMaNhanVien());
-                nhanVienDAO.delete(selectedRow.getMaNhanVien());
-                // Refresh bảng sau khi xóa
-                accountTable.getItems().remove(selectedRow);
+            // Lấy hàng được chọn
+            TaiKhoanNhanVienDTO selectedRow = accountTable.getSelectionModel().getSelectedItem();
+            if (selectedRow.getMaNhanVien() == UserSession.getInstance().getMaNhanVien()) {
+                showError("Không thể xóa tài khoản của chính mình!!!");
+            } else {
+                if (selectedRow != null) {
+                    // Tạo hộp thoại xác nhận
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Xác nhận xóa");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Bạn có chắc chắn muốn xóa tài khoản này?");
+
+                    // Xác nhận xóa
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        // Gọi phương thức xóa từ TaiKhoanDAO
+                        TaiKhoanDAO taiKhoanDAO = new TaiKhoanDAO();
+                        NhanVienDAO nhanVienDAO = new NhanVienDAO();
+                        try {
+                            taiKhoanDAO.delete(selectedRow.getMaNhanVien());
+                            nhanVienDAO.delete(selectedRow.getMaNhanVien());
+                            // Refresh bảng sau khi xóa
+                            accountTable.getItems().remove(selectedRow);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            showError("Không thể xóa do có bản ghi liên kết");
+                        }
+                    }
+                } else {
+                    // Hiển thị thông báo nếu không có hàng nào được chọn
+                    showAlert("Vui lòng chọn một tài khoản để xóa");
+                }
             }
-        } else {
-            // Hiển thị thông báo nếu không có hàng nào được chọn
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Cảnh báo");
-            alert.setHeaderText(null);
-            alert.setContentText("Vui lòng chọn một tài khoản để xóa.");
-            alert.showAndWait();
-        }
+
     }
+
     @FXML
     private void onDetailBtnClick(){
         // Lấy hàng được chọn từ bảng
@@ -536,6 +546,13 @@ public class TaiKhoanController {
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Thành công");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();

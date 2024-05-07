@@ -60,6 +60,7 @@ public class DienThoaiDAO implements InterfaceDAO<DienThoai, String> {
         } catch (Exception e) {
             em.getTransaction().rollback();
             e.printStackTrace();
+            throw e;
         } finally {
             em.close();
         }    

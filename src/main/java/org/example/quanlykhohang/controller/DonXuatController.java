@@ -124,22 +124,27 @@ public class DonXuatController {
 
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
+                try {
+                    donXuatHangDAO.delete(donXuatHang.getMaDon());
+                    exportFormTable.getItems().remove(donXuatHang);
 
-                donXuatHangDAO.delete(donXuatHang.getMaDon());
-                exportFormTable.getItems().remove(donXuatHang);
+                    for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
+                        DienThoai dt = ct.getDienThoai();
+                        dt.setSoLuong(dt.getSoLuong()+ ct.getSoLuong());
+                        dienThoaiDAO.update(dt);
+                    }
 
-                for(ChiTietDonXuatHang ct: chiTietDonXuatHangList){
-                    DienThoai dt = ct.getDienThoai();
-                    dt.setSoLuong(dt.getSoLuong()+ ct.getSoLuong());
-                    dienThoaiDAO.update(dt);
+
+                    Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                    alert1.setTitle("Thông báo");
+                    alert1.setHeaderText(null);
+                    alert1.setContentText("Xoá đơn hàng thành công.");
+                    alert1.showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    showError("Không thể xóa do có bản ghi liên kết");
                 }
 
-
-                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
-                alert1.setTitle("Thông báo");
-                alert1.setHeaderText(null);
-                alert1.setContentText("Xoá đơn hàng thành công.");
-                alert1.showAndWait();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -291,6 +296,13 @@ public class DonXuatController {
             data.add(dh);
         }
         return data;
+    }
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 
