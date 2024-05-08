@@ -12,13 +12,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.example.quanlykhohang.Main;
 import org.example.quanlykhohang.dao.*;
-import org.example.quanlykhohang.entity.KhachHang;
+import org.example.quanlykhohang.dto.ProductDTO;
 import org.example.quanlykhohang.entity.PhieuNhap;
 import org.example.quanlykhohang.entity.PhieuStatus;
 import org.example.quanlykhohang.entity.PhieuXuat;
 
-import java.io.IOException;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -39,12 +37,11 @@ public class ThongKeController {
     @FXML
     private Label numAccountLabel;
     @FXML
-    private Label incomeLabel;
-    @FXML
     private void initialize(){
-
         setUp4Label();
         setUpTicketTable();
+        setUpProductTable();
+        searchAllProduct();
     }
     private void setUp4Label(){
         Long numProduct = dienThoaiDAO.count();
@@ -125,16 +122,94 @@ public class ThongKeController {
     @FXML
     private Button resetBtn;
     @FXML
-    private TableView productTable;
+    private TableView<ProductDTO> productTable;
+    @FXML
+	private TableColumn<ProductDTO, String> maDTColumn;
+	@FXML
+	private TableColumn<ProductDTO, String> tenDTColumn;
+	@FXML
+	private TableColumn<ProductDTO, Long> soLuongNhapColumn;
+	@FXML
+	private TableColumn<ProductDTO, Long> soLuongXuatColumn;
+	
+	private ObservableList<ProductDTO> productList = FXCollections.observableArrayList();
+    
+    private void setUpProductTable(){
+    	productTable.getColumns().clear();
+    	productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+    	maDTColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+    	maDTColumn.setStyle("-fx-alignment: CENTER;");
+    	tenDTColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+    	tenDTColumn.setStyle("-fx-alignment: CENTER;");
+    	soLuongNhapColumn.setCellValueFactory(new PropertyValueFactory<>("soLuongNhap"));
+    	soLuongNhapColumn.setStyle("-fx-alignment: CENTER;");
+    	soLuongXuatColumn.setCellValueFactory(new PropertyValueFactory<>("soLuongXuat"));
+    	soLuongXuatColumn.setStyle("-fx-alignment: CENTER;");
+    	productTable.getColumns().addAll(maDTColumn, tenDTColumn, soLuongNhapColumn, soLuongXuatColumn);
+    }
+    
+    @FXML
+    private void onProductTabChange(){
+    	searchAllProduct();
+    }
+    
+    private void searchAllProduct(){
+    	productList.clear();
+        List<Object> objectList;
+        String keyword = searchTxt.getText();
+        objectList = thongKeDAO.searchAllProduct(keyword);
+        for(Object obj : objectList){
+        	Object[] row = (Object[]) obj;
+        	String maDT = (String) row[0];
+            String tenDT = (String) row[1];
+            Long soLuongNhap = (Long) row[2];
+            Long soLuongXuat = (Long) row[3];
+            ProductDTO productDTO = new ProductDTO(maDT, tenDT, soLuongNhap, soLuongXuat);
+            productList.add(productDTO);
+        }
+        productTable.getItems().clear();
+    	productTable.getItems().addAll(productList);
+        productTable.refresh();
+    }
+    
+    @FXML
+    private void onSearchProductTxtAction(){
+    	productList.clear();
+    	String keyword = searchTxt.getText();
+    	List<Object> objectList;
+        objectList = thongKeDAO.searchAllProduct(keyword);
+        for(Object obj : objectList){
+        	Object[] row = (Object[]) obj;
+        	String maDT = (String) row[0];
+            String tenDT = (String) row[1];
+            Long soLuongNhap = (Long) row[2];
+            Long soLuongXuat = (Long) row[3];
+            ProductDTO productDTO = new ProductDTO(maDT, tenDT, soLuongNhap, soLuongXuat);
+            productList.add(productDTO);
+        }
+        productTable.getItems().clear();
+    	productTable.getItems().addAll(productList);
+        productTable.refresh();
+    }
 
     @FXML
-    private void onFromDatePickerAction(){}
-
-    @FXML
-    private void onToDatePickerAction(){}
-
-    @FXML
-    private void onResetBtnClick(){}
+    private void onResetBtnClick(){
+    	productList.clear();
+    	List<Object> objectList;
+        objectList = thongKeDAO.searchAllProduct("");
+        for(Object obj : objectList){
+        	Object[] row = (Object[]) obj;
+        	String maDT = (String) row[0];
+            String tenDT = (String) row[1];
+            Long soLuongNhap = (Long) row[2];
+            Long soLuongXuat = (Long) row[3];
+            ProductDTO productDTO = new ProductDTO(maDT, tenDT, soLuongNhap, soLuongXuat);
+            productList.add(productDTO);
+        }
+        productTable.getItems().clear();
+    	productTable.getItems().addAll(productList);
+        productTable.refresh();
+    }
 
 
     // ticket tab
@@ -274,10 +349,7 @@ public class ThongKeController {
         ticketTable.setItems(searchAllPhieu());
         double number = thongKeDAO.getTotal();
         String formattedNumber = decimalFormat.format(number);
-        double allIncome = thongKeDAO.getIncome();
-        String formattedAllIncome = decimalFormat.format(allIncome);
         totalLabel.setText(formattedNumber);
-        incomeLabel.setText(formattedAllIncome);
         numTicketLabel.setText(String.valueOf(thongKeDAO.count()));
     }
     @FXML
@@ -345,10 +417,6 @@ public class ThongKeController {
             objectList = thongKeDAO.searchAllPhieu(keyword);
         }
         data.addAll(objectList);
-        System.out.println("List ne ==========================================");
-        for(Object obj:objectList){
-            System.out.println(obj.toString());
-        }
         return data;
 
     }

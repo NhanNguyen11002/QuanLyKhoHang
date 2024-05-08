@@ -95,4 +95,10 @@ public class PhieuNhap {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "PhieuNhap [maPhieu=" + maPhieu + ", thoiGianTao=" + thoiGianTao + ", nguoiTao=" + nguoiTao
+				+ ", nhaCungCap=" + nhaCungCap + ", tongTien=" + tongTien + ", status=" + status + "]";
+	}
+	
 }

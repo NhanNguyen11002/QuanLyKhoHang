@@ -7,7 +7,7 @@ public class JpaUtils {
 
     public static EntityManager getEntityManager() {
         if (factory == null || !factory.isOpen()) {
-            factory = Persistence.createEntityManagerFactory("quanlykhohang2");
+            factory = Persistence.createEntityManagerFactory("quanlykhohang");
         }
         return factory.createEntityManager();
     }
