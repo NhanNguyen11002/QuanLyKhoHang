@@ -17,6 +17,7 @@ import org.example.quanlykhohang.entity.DienThoai;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TonKhoController {
@@ -130,11 +131,41 @@ public class TonKhoController {
 
         // Thiết lập cột và đổ dữ liệu vào TableView
         idPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+        idPhoneColumn.setStyle("-fx-alignment: CENTER;");
         namePhoneColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+        namePhoneColumn.setStyle("-fx-alignment: CENTER;");
         inputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaNhap"));
-        outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
-        soLuongColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        inputPriceColumn.setStyle("-fx-alignment: CENTER;");
+        inputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#,###.0");
 
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item));
+                }
+            }
+        });
+        outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
+        outputPriceColumn.setStyle("-fx-alignment: CENTER;");
+        outputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#,###.0");
+
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item));
+                }
+            }
+        });
+        soLuongColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        soLuongColumn.setStyle("-fx-alignment: CENTER;");
         // Lấy danh sách điện thoại từ DAO
         List<DienThoai> phoneList = phoneDAO.findAll();
 
