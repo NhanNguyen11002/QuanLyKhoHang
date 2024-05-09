@@ -74,7 +74,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1200.0">
                      <children>
-                        <TextField fx:id="searchTxt" onAction="#onSearchProductTxtAction" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" prefHeight="40.0" prefWidth="450.0" />
+                        <TextField fx:id="searchTxt" layoutX="69.0" layoutY="30.0" maxHeight="40.0" maxWidth="450.0" onAction="#onSearchProductTxtAction" prefHeight="40.0" prefWidth="450.0" />
                         <Label layoutX="69.0" layoutY="11.0" text="Tìm kiếm" />
                         <Button fx:id="resetBtn" layoutX="1082.0" layoutY="28.0" mnemonicParsing="false" onAction="#onResetBtnClick" text="Làm mới" AnchorPane.rightAnchor="30.0">
                            <graphic>
@@ -86,10 +86,10 @@
                         </Button>
                         <TableView fx:id="productTable" layoutX="143.0" layoutY="248.0" prefHeight="500.0" prefWidth="1140.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
                           <columns>
-                            <TableColumn text="Mã điện thoại" fx:id="maDTColumn" />
-                              <TableColumn text="Tên điện thoại" fx:id="tenDTColumn" />
-                              <TableColumn text="Số lượng nhập" fx:id="soLuongNhapColumn" />
-                              <TableColumn text="Số lượng xuất" fx:id="soLuongXuatColumn" />
+                            <TableColumn fx:id="maDTColumn" text="Mã điện thoại" />
+                              <TableColumn fx:id="tenDTColumn" text="Tên điện thoại" />
+                              <TableColumn fx:id="soLuongNhapColumn" text="Số lượng nhập" />
+                              <TableColumn fx:id="soLuongXuatColumn" text="Số lượng xuất" />
                           </columns>
                         </TableView>
                         <Line endX="30.5" endY="-74.5" layoutX="519.0" layoutY="83.0" startX="30.5" startY="-1.5" />
@@ -97,7 +97,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab  text="Phiếu">
+          <Tab onSelectionChanged="#onTicketTabChange" text="Phiếu">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="615.0" prefWidth="1200.0">
                      <children>

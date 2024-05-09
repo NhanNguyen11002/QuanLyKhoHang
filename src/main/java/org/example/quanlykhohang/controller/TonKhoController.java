@@ -1,5 +1,6 @@
 package org.example.quanlykhohang.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -17,6 +18,7 @@ import org.example.quanlykhohang.entity.DienThoai;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TonKhoController {
@@ -73,13 +75,29 @@ public class TonKhoController {
                 }
                 for (int j = 0; j < productTable.getItems().size(); j++) {
                     XSSFRow row = sheet.createRow(j + 1);
+                    ObservableList<TableColumn<DienThoai, ?>> columns = productTable.getColumns();
+
+//                    for (int k = 0; k < productTable.getColumns().size(); k++) {
+//                        XSSFCell cell = row.createCell(k);
+//
+//                        if (productTable.getColumns().get(k).getCellData(j) != null) {
+//                            cell.setCellValue(productTable.getColumns().get(k).getCellData(j).toString());
+//                        }
+//
+//                    }
                     for (int k = 0; k < productTable.getColumns().size(); k++) {
                         XSSFCell cell = row.createCell(k);
-
-                        if (productTable.getColumns().get(k).getCellData(j) != null) {
-                            cell.setCellValue(productTable.getColumns().get(k).getCellData(j).toString());
+                        String cellValue = "";
+                        TableColumn column = columns.get(k);
+                        if (column.getCellData(j) != null) {
+                            Object value = column.getCellData(j);
+                            if (value instanceof Double) {
+                                cell.setCellValue((Double)value);
+                            } else {
+                                cellValue = value.toString();
+                                cell.setCellValue(cellValue);
+                            }
                         }
-
                     }
                 }
                 FileOutputStream out = new FileOutputStream(selectedFile.getAbsolutePath()+"/Inventory.xlsx");
@@ -126,15 +144,46 @@ public class TonKhoController {
 
     @FXML
     private void initialize() {
+        importExcelBtn.setDisable(true);
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Thiết lập cột và đổ dữ liệu vào TableView
         idPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("maDT"));
+        idPhoneColumn.setStyle("-fx-alignment: CENTER;");
         namePhoneColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
+        namePhoneColumn.setStyle("-fx-alignment: CENTER;");
         inputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaNhap"));
-        outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
-        soLuongColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        inputPriceColumn.setStyle("-fx-alignment: CENTER;");
+        inputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#,###.0");
 
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item));
+                }
+            }
+        });
+        outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
+        outputPriceColumn.setStyle("-fx-alignment: CENTER;");
+        outputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
+            private final DecimalFormat format = new DecimalFormat("#,###.0");
+
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(format.format(item));
+                }
+            }
+        });
+        soLuongColumn.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        soLuongColumn.setStyle("-fx-alignment: CENTER;");
         // Lấy danh sách điện thoại từ DAO
         List<DienThoai> phoneList = phoneDAO.findAll();
 

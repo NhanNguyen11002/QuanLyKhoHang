@@ -77,7 +77,7 @@ public class KhoiPhucMatKhauController implements Initializable {
     private void onConfirmButtonClick(){
         long currentTime = System.currentTimeMillis();
         long timeElapsed = currentTime - otpCreationTime;
-        long otpExpirationTime = 2 * 60 * 1000; // 1 phút, có thể thay đổi thời gian hết hạn theo ý muốn
+        long otpExpirationTime = 5 * 60 * 1000; // 1 phút, có thể thay đổi thời gian hết hạn theo ý muốn
 
         String otp = confirmCodeTxt.getText();
         if (otp.equals("")) {

@@ -44,10 +44,10 @@ public class StaffSidebarController {
     private void initialize(){
         helloLabel.setText("Hello, "+UserSession.getInstance().getUserName());
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/don-xuat-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("view/phieu-nhap-view.fxml"));
             Pane item = fxmlLoader.load();
             borderPane.setRight(item);
-            applyStyle(exportFormPane);
+            applyStyle(importTicketPane);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -146,8 +146,8 @@ public class StaffSidebarController {
     }
     private void applyStyle(Pane pane){
 
-        exportFormPane.getStyleClass().clear();
-        exportFormPane.getStyleClass().add("pane-btn");
+//        exportFormPane.getStyleClass().clear();
+//        exportFormPane.getStyleClass().add("pane-btn");
         importTicketPane.getStyleClass().clear();
         importTicketPane.getStyleClass().add("pane-btn");
         exportTicketPane.getStyleClass().clear();

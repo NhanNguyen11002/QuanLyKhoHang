@@ -94,7 +94,7 @@ public class SanPhamController {
 		namePhoneColumn.setCellValueFactory(new PropertyValueFactory<>("tenDT"));
 		namePhoneColumn.setStyle("-fx-alignment: CENTER;");
 		inputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaNhap"));
-		inputPriceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+		inputPriceColumn.setStyle("-fx-alignment: CENTER;");
 		inputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
 			private final DecimalFormat format = new DecimalFormat("#,###.0");
 			
@@ -109,7 +109,7 @@ public class SanPhamController {
 		    }
 		});
 		outputPriceColumn.setCellValueFactory(new PropertyValueFactory<>("giaXuat"));
-		outputPriceColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+		outputPriceColumn.setStyle("-fx-alignment: CENTER;");
 		outputPriceColumn.setCellFactory(tc -> new TableCell<DienThoai, Double>() {
 			private final DecimalFormat format = new DecimalFormat("#,###.0");
 			

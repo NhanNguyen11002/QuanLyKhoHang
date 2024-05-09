@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="315.0" prefWidth="470.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.ChiTietSanPhamController">
+<AnchorPane id="AnchorPane" prefHeight="315.0" prefWidth="470.0" styleClass="bg-green" stylesheets="@../../../../style.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.quanlykhohang.controller.ChiTietSanPhamController">
     <children>
       <Pane layoutX="-11.0" layoutY="49.0" prefHeight="214.0" prefWidth="480.0" styleClass="bg-teal">
          <children>
-            <TextField id="lastNameTxt" fx:id="idPhoneTxt" layoutX="55.0" layoutY="75.0" />
-            <TextField id="firstNameTxt" fx:id="namePhoneTxt" layoutX="55.0" layoutY="126.0" />
-            <TextField id="phoneTxt" fx:id="inputPriceTxt" layoutX="263.0" layoutY="75.0" />
-            <TextField id="addressTxt" fx:id="outputPriceTxt" layoutX="263.0" layoutY="126.0" />
+            <TextField id="lastNameTxt" fx:id="idPhoneTxt" editable="false" layoutX="55.0" layoutY="75.0" />
+            <TextField id="firstNameTxt" fx:id="namePhoneTxt" editable="false" layoutX="55.0" layoutY="126.0" />
+            <TextField id="phoneTxt" fx:id="inputPriceTxt" editable="false" layoutX="263.0" layoutY="75.0" />
+            <TextField id="addressTxt" fx:id="outputPriceTxt" editable="false" layoutX="263.0" layoutY="126.0" />
             <Label layoutX="59.0" layoutY="50.0" text="Mã điện thoại" />
             <Label layoutX="58.0" layoutY="109.0" text="Tên điện thoại" />
             <Label layoutX="268.0" layoutY="50.0" text="Giá nhập" />
