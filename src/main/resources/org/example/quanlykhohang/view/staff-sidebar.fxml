@@ -16,16 +16,16 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Pane fx:id="exportFormPane" layoutY="212.0" onMouseClicked="#onExportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
-                    <children>
-                        <Label layoutX="72.0" layoutY="7.0" text="Đơn xuất" textFill="WHITE">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                        <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-export-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />
-                    </children>
-                </Pane>
+<!--                <Pane fx:id="exportFormPane" layoutY="212.0" onMouseClicked="#onExportFormPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">-->
+<!--                    <children>-->
+<!--                        <Label layoutX="72.0" layoutY="7.0" text="Đơn xuất" textFill="WHITE">-->
+<!--                            <font>-->
+<!--                                <Font size="18.0" />-->
+<!--                            </font>-->
+<!--                        </Label>-->
+<!--                        <FontIcon iconColor="WHITE" iconLiteral="mdi2f-file-export-outline" iconSize="20" layoutX="48.0" layoutY="25.0" wrappingWidth="14.0" />-->
+<!--                    </children>-->
+<!--                </Pane>-->
                 <Pane fx:id="importTicketPane" layoutY="249.0" onMouseClicked="#onImportTicketPaneClick" prefHeight="37.0" prefWidth="200.0" styleClass="pane-btn">
                     <children>
                         <Label layoutX="72.0" layoutY="7.0" text="Phiếu nhập" textFill="WHITE">

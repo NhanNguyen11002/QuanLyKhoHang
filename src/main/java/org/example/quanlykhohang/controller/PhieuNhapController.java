@@ -130,7 +130,7 @@ public class PhieuNhapController {
     	});
     	thoiGianTaoColumn.setStyle("-fx-alignment: CENTER;");
     	tongTienColumn.setCellValueFactory(new PropertyValueFactory<>("tongTien"));
-    	tongTienColumn.setStyle("-fx-alignment: CENTER-RIGHT;");
+    	tongTienColumn.setStyle("-fx-alignment: CENTER;");
     	tongTienColumn.setCellFactory(tc -> new TableCell<PhieuNhap, Double>() {
 			@Override
 			protected void updateItem(Double item, boolean empty) {

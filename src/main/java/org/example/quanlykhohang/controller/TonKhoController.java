@@ -1,5 +1,6 @@
 package org.example.quanlykhohang.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -74,13 +75,29 @@ public class TonKhoController {
                 }
                 for (int j = 0; j < productTable.getItems().size(); j++) {
                     XSSFRow row = sheet.createRow(j + 1);
+                    ObservableList<TableColumn<DienThoai, ?>> columns = productTable.getColumns();
+
+//                    for (int k = 0; k < productTable.getColumns().size(); k++) {
+//                        XSSFCell cell = row.createCell(k);
+//
+//                        if (productTable.getColumns().get(k).getCellData(j) != null) {
+//                            cell.setCellValue(productTable.getColumns().get(k).getCellData(j).toString());
+//                        }
+//
+//                    }
                     for (int k = 0; k < productTable.getColumns().size(); k++) {
                         XSSFCell cell = row.createCell(k);
-
-                        if (productTable.getColumns().get(k).getCellData(j) != null) {
-                            cell.setCellValue(productTable.getColumns().get(k).getCellData(j).toString());
+                        String cellValue = "";
+                        TableColumn column = columns.get(k);
+                        if (column.getCellData(j) != null) {
+                            Object value = column.getCellData(j);
+                            if (value instanceof Double) {
+                                cell.setCellValue((Double)value);
+                            } else {
+                                cellValue = value.toString();
+                                cell.setCellValue(cellValue);
+                            }
                         }
-
                     }
                 }
                 FileOutputStream out = new FileOutputStream(selectedFile.getAbsolutePath()+"/Inventory.xlsx");
@@ -127,6 +144,7 @@ public class TonKhoController {
 
     @FXML
     private void initialize() {
+        importExcelBtn.setDisable(true);
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Thiết lập cột và đổ dữ liệu vào TableView
